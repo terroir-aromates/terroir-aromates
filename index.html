@@ -795,6 +795,7 @@
                     option.textContent = method.charAt(0).toUpperCase() + method.slice(1);
                     shippingMethodSelect.appendChild(option);
                 });
+                shippingMethodSelect.disabled = false; // Activer le champ après avoir ajouté les options
             }
             updateShippingDetails();
         }
