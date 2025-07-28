@@ -209,6 +209,25 @@
                 </div>
             </div>
             <div class="mb-4">
+                <label for="shipping-carrier" class="block text-gray-700 text-sm font-medium mb-1">Transporteur</label>
+                <select id="shipping-carrier" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                    <option value="">Sélectionner un transporteur</option>
+                    <option value="ups">UPS</option>
+                    <option value="dhl">DHL</option>
+                    <option value="chronopost">Chronopost</option>
+                    <option value="mondialrelay">Mondial Relay</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="shipping-method" class="block text-gray-700 text-sm font-medium mb-1">Mode de livraison</label>
+                <select id="shipping-method" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" disabled>
+                    <option value="">Sélectionner un mode</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <p id="shipping-details" class="text-gray-600 text-sm">Prix : -€ | Délai : - jours</p>
+            </div>
+            <div class="mb-4">
                 <label for="payment" class="block text-gray-700 text-sm font-medium mb-1">Paiement</label>
                 <select id="payment" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
                     <option value="visa">Visa</option>
@@ -266,7 +285,6 @@
     <script>
         // Products
         const products = [
-            // Café
             {
                 id: 'coffee1',
                 name: 'Café Éthiopien Yirgacheffe',
@@ -291,7 +309,6 @@
                 image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Notes de fruits rouges.'
             },
-            // Thé
             {
                 id: 'tea1',
                 name: 'Thé Vert Sencha',
@@ -316,7 +333,6 @@
                 image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Doux et floral.'
             },
-            // Huiles essentielles
             {
                 id: 'oil1',
                 name: 'Huile Essentielle Lavande',
@@ -372,13 +388,40 @@
         const newsletterBanner = document.getElementById('newsletter-banner');
         const newsletterEmail = document.getElementById('newsletter-email');
         const newsletterSubmit = document.getElementById('newsletter-submit');
+        const shippingCarrierSelect = document.getElementById('shipping-carrier');
+        const shippingMethodSelect = document.getElementById('shipping-method');
+        const shippingDetails = document.getElementById('shipping-details');
+
+        // Shipping Options (Simulated data - replace with API call)
+        const shippingRates = {
+            ups: {
+                standard: { price: 5.99, days: '10-15' },
+                express: { price: 15.99, days: '2-4' },
+                relay: { price: 3.99, days: '7-12' }
+            },
+            dhl: {
+                standard: { price: 6.49, days: '10-15' },
+                express: { price: 16.49, days: '1-3' },
+                relay: { price: 4.49, days: '7-12' }
+            },
+            chronopost: {
+                standard: { price: 5.49, days: '10-15' },
+                express: { price: 14.99, days: '2-5' },
+                relay: { price: 3.49, days: '7-12' }
+            },
+            mondialrelay: {
+                standard: { price: 4.99, days: '10-15' },
+                express: { price: 13.99, days: '2-5' },
+                relay: { price: 2.99, days: '7-12' }
+            }
+        };
 
         // Toggle Modal
         function toggleModal() {
-            console.log('Toggle modal called');
             cartModal.classList.toggle('open');
             document.body.classList.toggle('overflow-hidden');
             updateBlockchainVisibility();
+            updateShippingOptions();
         }
 
         cartBtn.addEventListener('click', toggleModal);
@@ -386,7 +429,6 @@
 
         // Update Blockchain Visibility
         function updateBlockchainVisibility() {
-            console.log('Updating blockchain visibility, payment:', paymentSelect.value);
             usdtBlockchainDiv.classList.toggle('hidden', paymentSelect.value !== 'usdt');
         }
 
@@ -394,9 +436,10 @@
 
         // Update Cart
         function updateCart() {
-            console.log('Cart:', cart);
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            let totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const shippingCost = parseFloat(shippingDetails.dataset.price) || 0;
+            totalPrice += shippingCost;
 
             cartCount.textContent = totalItems;
             cartTotal.textContent = totalPrice.toFixed(2) + '€';
@@ -404,6 +447,9 @@
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Votre panier est vide</p>';
                 confirmBtn.disabled = true;
+                shippingCarrierSelect.disabled = true;
+                shippingMethodSelect.disabled = true;
+                shippingDetails.textContent = 'Prix : -€ | Délai : - jours';
             } else {
                 cartItems.innerHTML = cart.map(item => `
                     <div class="flex items-center py-2 border-b">
@@ -424,12 +470,13 @@
                     </div>
                 `).join('');
                 confirmBtn.disabled = false;
+                shippingCarrierSelect.disabled = false;
+                updateShippingOptions();
             }
         }
 
         // Change Quantity
         function changeQuantity(id, delta) {
-            console.log(`Change quantity: id=${id}, delta=${delta}`);
             const item = cart.find(i => i.compositeId === id);
             if (item) {
                 item.quantity += delta;
@@ -437,14 +484,11 @@
                     cart = cart.filter(i => i.compositeId !== id);
                 }
                 updateCart();
-            } else {
-                console.error('Item not found:', id);
             }
         }
 
         // Render Products
         function renderProducts(category = 'all') {
-            console.log('Rendering products for category:', category);
             const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
             productGrid.innerHTML = filteredProducts.map(product => `
                 <div class="product-card bg-white rounded-lg shadow-md transition">
@@ -514,7 +558,6 @@
 
             document.querySelectorAll('.add-to-cart').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    console.log('Add to cart:', e.target.dataset.id);
                     const productId = e.target.dataset.id;
                     const product = products.find(p => p.id === productId);
                     const capacity = document.getElementById(`capacity-${productId}`).value;
@@ -555,14 +598,12 @@
         // Category Filter
         document.querySelectorAll('.category-filter').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                console.log('Category filter clicked:', e.target.dataset.category);
                 renderProducts(e.target.dataset.category);
             });
         });
 
         // Show Confirmation Message
-        function showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total) {
-            console.log('Showing confirmation message');
+        function showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total, shippingDetails) {
             const messageDiv = document.createElement('div');
             messageDiv.className = 'confirmation-message';
             messageDiv.innerHTML = `
@@ -571,7 +612,8 @@
                 <p>Email: ${email}</p>
                 <p>Adresse: ${address}, ${city}, ${postalCode}</p>
                 <p>Méthode: ${paymentMethod === 'visa' ? 'Visa' : paymentMethod === 'mastercard' ? 'Mastercard' : paymentMethod === 'paypal' ? 'PayPal' : paymentMethod === 'usdt' ? 'USDT' : 'Virement bancaire'}${paymentMethod === 'usdt' ? ` (Blockchain: ${blockchain.charAt(0).toUpperCase() + blockchain.slice(1)})` : ''}</p>
-                <p>Montant: ${total.toFixed(2)}€</p>
+                <p>Livraison: ${shippingDetails.carrier} - ${shippingDetails.method} (${shippingDetails.price}€, ${shippingDetails.days} jours)</p>
+                <p>Montant total: ${total.toFixed(2)}€</p>
                 <p class="font-bold mt-2">Merci pour votre achat !</p>
             `;
             document.body.appendChild(messageDiv);
@@ -582,7 +624,6 @@
 
         // Confirm Order
         confirmBtn.addEventListener('click', () => {
-            console.log('Confirm button clicked');
             if (cart.length === 0) {
                 alert('Votre panier est vide');
                 return;
@@ -595,8 +636,12 @@
             const postalCode = postalCodeInput.value.trim();
             const paymentMethod = paymentSelect.value;
             const blockchain = paymentMethod === 'usdt' ? blockchainSelect.value : '';
+            const carrier = shippingCarrierSelect.value;
+            const method = shippingMethodSelect.value;
+            const shippingCost = parseFloat(shippingDetails.dataset.price) || 0;
+            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + shippingCost;
 
-            if (!firstName || !lastName || !email || !email.includes('@') || !address || !city || !postalCode) {
+            if (!firstName || !lastName || !email || !email.includes('@') || !address || !city || !postalCode || !carrier || !method) {
                 alert('Veuillez remplir tous les champs correctement');
                 return;
             }
@@ -605,9 +650,12 @@
                 return;
             }
 
-            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total);
-            console.log('Order confirmed:', { firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total, cart });
+            showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total, {
+                carrier: carrier.charAt(0).toUpperCase() + carrier.slice(1),
+                method: method.charAt(0).toUpperCase() + method.slice(1),
+                price: shippingCost.toFixed(2),
+                days: shippingRates[carrier][method].days
+            });
             cart = [];
             firstNameInput.value = '';
             lastNameInput.value = '';
@@ -615,6 +663,9 @@
             addressInput.value = '';
             cityInput.value = '';
             postalCodeInput.value = '';
+            shippingCarrierSelect.value = '';
+            shippingMethodSelect.innerHTML = '<option value="">Sélectionner un mode</option>';
+            shippingMethodSelect.disabled = true;
             blockchainSelect.value = 'arbitrum';
             updateBlockchainVisibility();
             updateCart();
@@ -623,24 +674,17 @@
 
         // USDT Price
         function fetchUsdtPrice() {
-            console.log('Fetching USDT price');
             const usdtPriceDisplay = document.getElementById('usdtPriceDisplay');
-            if (usdtPriceDisplay) {
-                fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd')
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('USDT price fetched:', data);
-                        usdtPriceDisplay.textContent = `Prix USDT : ${data.tether.usd} USD`;
-                        usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
-                    })
-                    .catch(error => {
-                        console.error('Erreur API:', error);
-                        usdtPriceDisplay.textContent = 'Erreur prix USDT';
-                        usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
-                    });
-            } else {
-                console.error('usdtPriceDisplay not found');
-            }
+            fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd')
+                .then(response => response.json())
+                .then(data => {
+                    usdtPriceDisplay.textContent = `Prix USDT : ${data.tether.usd} USD`;
+                    usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
+                })
+                .catch(error => {
+                    usdtPriceDisplay.textContent = 'Erreur prix USDT';
+                    usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
+                });
         }
 
         // Contact Form
@@ -677,7 +721,6 @@
 
         // Chatbot
         function addChatMessage(message, isUser = false) {
-            console.log('Adding chat message:', message, 'isUser:', isUser);
             const messageDiv = document.createElement('div');
             messageDiv.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
             messageDiv.textContent = message;
@@ -686,7 +729,6 @@
         }
 
         function getBotResponse(userInput) {
-            console.log('Processing user input:', userInput);
             userInput = userInput.toLowerCase().trim();
             if (userInput.includes('café') || userInput.includes('coffee')) {
                 return 'Nos cafés : Yirgacheffe, Colombien Supremo, Kenyan AA. Choisissez 250g/500g/1kg, entier/moulu/espresso, classique/décaféiné.';
@@ -705,7 +747,7 @@
             } else if (userInput.includes('contenance huile') || userInput.includes('volume huile')) {
                 return 'Huiles essentielles en 10ml, 30ml, ou 50ml.';
             } else if (userInput.includes('livraison') || userInput.includes('délai')) {
-                return 'Livraison en 3-5 jours ouvrables. Contactez-nous pour plus de détails !';
+                return 'Choisissez votre transporteur (UPS, DHL, Chronopost, Mondial Relay) et mode (Standard, Express, Relais) dans le panier pour voir les délais.';
             } else if (userInput.includes('paiement') || userInput.includes('payer') || userInput.includes('usdt')) {
                 return 'Nous acceptons Visa, Mastercard, PayPal, USDT (via Arbitrum, Optimism, Base, Linea), et Virement bancaire.';
             } else if (userInput.includes('blockchain') || userInput.includes('chain')) {
@@ -721,18 +763,16 @@
             } else if (userInput.includes('compte') || userInput.includes('register') || userInput.includes('login')) {
                 return 'Connectez-vous ou inscrivez-vous via "Se connecter" en haut à droite !';
             } else {
-                return 'Désolé, je n’ai pas compris. Parlez-moi de café, thé, huiles, paiement, contact, promotions, newsletter ou compte !';
+                return 'Désolé, je n’ai pas compris. Parlez-moi de café, thé, huiles, livraison, paiement, contact, promotions, newsletter ou compte !';
             }
         }
 
         chatbotToggle.addEventListener('click', () => {
-            console.log('Chatbot toggle clicked');
             chatbotContainer.classList.toggle('open');
         });
 
         chatbotInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && chatbotInput.value.trim()) {
-                console.log('Chatbot input submitted:', chatbotInput.value);
                 const userMessage = chatbotInput.value.trim();
                 addChatMessage(userMessage, true);
                 const botResponse = getBotResponse(userMessage);
@@ -743,9 +783,43 @@
             }
         });
 
+        // Update Shipping Options
+        function updateShippingOptions() {
+            const carrier = shippingCarrierSelect.value;
+            shippingMethodSelect.innerHTML = '<option value="">Sélectionner un mode</option>';
+            shippingMethodSelect.disabled = !carrier;
+            if (carrier && shippingRates[carrier]) {
+                ['standard', 'express', 'relay'].forEach(method => {
+                    const option = document.createElement('option');
+                    option.value = method;
+                    option.textContent = method.charAt(0).toUpperCase() + method.slice(1);
+                    shippingMethodSelect.appendChild(option);
+                });
+            }
+            updateShippingDetails();
+        }
+
+        shippingCarrierSelect.addEventListener('change', updateShippingOptions);
+
+        // Update Shipping Details
+        function updateShippingDetails() {
+            const carrier = shippingCarrierSelect.value;
+            const method = shippingMethodSelect.value;
+            if (carrier && method && shippingRates[carrier][method]) {
+                const { price, days } = shippingRates[carrier][method];
+                shippingDetails.textContent = `Prix : ${price.toFixed(2)}€ | Délai : ${days} jours`;
+                shippingDetails.dataset.price = price;
+            } else {
+                shippingDetails.textContent = 'Prix : -€ | Délai : - jours';
+                shippingDetails.dataset.price = 0;
+            }
+            updateCart();
+        }
+
+        shippingMethodSelect.addEventListener('change', updateShippingDetails);
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM loaded');
             renderProducts();
             updateCart();
             fetchUsdtPrice();
