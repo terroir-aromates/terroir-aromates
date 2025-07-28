@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terroir & Aromates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hero {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), 
+                              url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.open {
+            display: flex;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .confirmation-message {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .chatbot {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 100;
+        }
+        .chatbot-container {
+            display: none;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .chatbot-container.open {
+            display: block;
+        }
+        .chat-message {
+            padding: 0.5rem;
+            margin: 0.5rem;
+            border-radius: 0.5rem;
+        }
+        .user-message {
+            background: #f3f4f6;
+            text-align: right;
+        }
+        .bot-message {
+            background: #fee2e2;
+            text-align: left;
+        }
+    </style>
+</head>
+<body class="font-sans bg-beige-50 text-gray-800">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-red-800">Terroir & Aromates</h1>
+            <button id="cart-btn" class="relative">
+                <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero flex items-center justify-center">
+        <div class="text-center px-4">
+            <h2 class="text-3xl font-bold text-red-800 mb-4">Saveurs d'exception</h2>
+            <a href="#products" class="bg-red-800 hover:bg-red-900 text-white px-6 py-2 rounded-full transition">Voir les produits</a>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-bold text-center text-red-800 mb-8">Nos Produits</h2>
+            <div class="flex justify-center space-x-4 mb-8">
+                <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="all">Tous</button>
+                <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="coffee">Café</button>
+                <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="tea">Thé</button>
+                <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="oil">Huiles essentielles</button>
+            </div>
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- Cart & Checkout Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="bg-white rounded-lg p-6 w-full max-w-3xl mx-4 max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-red-800">Panier & Commande</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="mb-4 max-h-[300px] overflow-y-auto">
+                <p class="text-gray-500 text-center py-4">Votre panier est vide</p>
+            </div>
+            <div class="border-t pt-4 mb-4">
+                <div class="flex justify-between mb-4">
+                    <span class="font-medium">Total</span>
+                    <span id="cart-total">0,00€</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <div>
+                    <label for="first-name" class="block text-gray-700 text-sm font-medium mb-1">Prénom</label>
+                    <input type="text" id="first-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Jean">
+                </div>
+                <div>
+                    <label for="last-name" class="block text-gray-700 text-sm font-medium mb-1">Nom</label>
+                    <input type="text" id="last-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Dupont">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email</label>
+                <input type="email" id="email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="jean.dupont@gmail.com">
+            </div>
+            <div class="mb-3">
+                <label for="address" class="block text-gray-700 text-sm font-medium mb-1">Adresse</label>
+                <input type="text" id="address" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="123 Rue Exemple">
+            </div>
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div>
+                    <label for="city" class="block text-gray-700 text-sm font-medium mb-1">Ville</label>
+                    <input type="text" id="city" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Paris">
+                </div>
+                <div>
+                    <label for="postal-code" class="block text-gray-700 text-sm font-medium mb-1">Code postal</label>
+                    <input type="text" id="postal-code" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="75001">
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="payment" class="block text-gray-700 text-sm font-medium mb-1">Paiement</label>
+                <select id="payment" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                    <option value="visa">Visa</option>
+                    <option value="mastercard">Mastercard</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="usdt">USDT</option>
+                    <option value="bank_transfer">Virement bancaire</option>
+                </select>
+                <div id="usdt-blockchain" class="hidden mt-2">
+                    <label for="blockchain" class="block text-gray-700 text-sm font-medium mb-1">Blockchain</label>
+                    <select id="blockchain" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                        <option value="arbitrum">Arbitrum</option>
+                        <option value="optimism">Optimism</option>
+                        <option value="base">Base</option>
+                        <option value="linea">Linea</option>
+                    </select>
+                </div>
+                <div id="usdtPriceDisplay" class="hidden text-gray-700 mt-2"></div>
+            </div>
+            <div class="flex justify-end space-x-4">
+                <button id="confirm-btn" class="px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition" disabled>Confirmer la commande</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot">
+        <button id="chatbot-toggle" class="bg-red-800 text-white p-3 rounded-full hover:bg-red-900">
+            <i class="fas fa-comment text-xl"></i>
+        </button>
+        <div id="chatbot-container" class="chatbot-container">
+            <div id="chatbot-messages" class="p-4"></div>
+            <div class="p-4 border-t">
+                <input id="chatbot-input" type="text" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Posez votre question...">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-red-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-red-100">&copy; 2025 Terroir & Aromates. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Products
+        const products = [
+            // Café
+            {
+                id: 'coffee1',
+                name: 'Café Éthiopien Yirgacheffe',
+                price: 12.90,
+                category: 'coffee',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                description: 'Notes florales et citronnées.'
+            },
+            {
+                id: 'coffee2',
+                name: 'Café Colombien Supremo',
+                price: 14.50,
+                category: 'coffee',
+                image: 'https://images.unsplash.com/photo-1518832553480-08e15d9a5d73?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                description: 'Arômes de chocolat et noisette.'
+            },
+            {
+                id: 'coffee3',
+                name: 'Café Kenyan AA',
+                price: 15.20,
+                category: 'coffee',
+                image: 'https://images.unsplash.com/photo-1507133750048-4a8f57092e8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                description: 'Notes de fruits rouges.'
+            },
+            // Thé
+            {
+                id: 'tea1',
+                name: 'Thé Vert Sencha',
+                price: 9.80,
+                category: 'tea',
+                image: 'https://images.unsplash.com/photo-1571931468259-4d5c1c7a7e8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                description: 'Frais et herbacé.'
+            },
+            {
+                id: 'tea2',
+                name: 'Thé Noir Darjeeling',
+                price: 11.30,
+                category: 'tea',
+                image: 'https://images.unsplash.com/photo-1586767770683-c775f3c0d301?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                description: 'Notes muscatées.'
+            },
+            {
+                id: 'tea3',
+                name: 'Thé Blanc Pai Mu Tan',
+                price: 13.40,
+                category: 'tea',
+                image: 'https://images.unsplash.com/photo-1563227812-8e39629b36b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                description: 'Doux et floral.'
+            },
+            // Huiles essentielles
+            {
+                id: 'oil1',
+                name: 'Huile Essentielle Lavande',
+                price: 8.90,
+                category: 'oil',
+                image: 'https://images.unsplash.com/photo-1518494796951-6b66ac9c29b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                description: 'Relaxante, pour le sommeil.'
+            },
+            {
+                id: 'oil2',
+                name: 'Huile Essentielle Menthe Poivrée',
+                price: 7.50,
+                category: 'oil',
+                image: 'https://images.unsplash.com/photo-1597063893719-6b4c63848ed8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                description: 'Rafraîchissante, énergisante.'
+            },
+            {
+                id: 'oil3',
+                name: 'Huile Essentielle Eucalyptus',
+                price: 6.80,
+                category: 'oil',
+                image: 'https://images.unsplash.com/photo-1596434064020-4b3e3f6e7db8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
+                description: 'Purifiante, pour la respiration.'
+            }
+        ];
+
+        // Cart
+        let cart = [];
+
+        // DOM Elements
+        const cartBtn = document.getElementById('cart-btn');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartModal = document.getElementById('cart-modal');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const cartCount = document.getElementById('cart-count');
+        const confirmBtn = document.getElementById('confirm-btn');
+        const firstNameInput = document.getElementById('first-name');
+        const lastNameInput = document.getElementById('last-name');
+        const emailInput = document.getElementById('email');
+        const addressInput = document.getElementById('address');
+        const cityInput = document.getElementById('city');
+        const postalCodeInput = document.getElementById('postal-code');
+        const paymentSelect = document.getElementById('payment');
+        const blockchainSelect = document.getElementById('blockchain');
+        const usdtBlockchainDiv = document.getElementById('usdt-blockchain');
+        const productGrid = document.getElementById('product-grid');
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const chatbotMessages = document.getElementById('chatbot-messages');
+        const chatbotInput = document.getElementById('chatbot-input');
+
+        // Toggle Modal
+        function toggleModal() {
+            console.log('Toggle modal called');
+            cartModal.classList.toggle('open');
+            document.body.classList.toggle('overflow-hidden');
+            updateBlockchainVisibility();
+        }
+
+        cartBtn.addEventListener('click', toggleModal);
+        closeCartBtn.addEventListener('click', toggleModal);
+
+        // Update Blockchain Visibility
+        function updateBlockchainVisibility() {
+            console.log('Updating blockchain visibility, payment:', paymentSelect.value);
+            usdtBlockchainDiv.classList.toggle('hidden', paymentSelect.value !== 'usdt');
+        }
+
+        paymentSelect.addEventListener('change', updateBlockchainVisibility);
+
+        // Update Cart
+        function updateCart() {
+            console.log('Cart:', cart);
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+            cartCount.textContent = totalItems;
+            cartTotal.textContent = totalPrice.toFixed(2) + '€';
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Votre panier est vide</p>';
+                confirmBtn.disabled = true;
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="flex items-center py-2 border-b">
+                        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+                        <div class="ml-3 flex-1">
+                            <h4 class="font-medium text-sm">${item.name} (${item.capacity}${item.caffeine ? ', ' + item.caffeine : ''}${item.grind ? ', ' + item.grind : ''}${item.type ? ', ' + item.type : ''}${item.usage ? ', ' + item.usage : ''})</h4>
+                            <p class="text-gray-600 text-xs">${item.price.toFixed(2)}€</p>
+                        </div>
+                        <div class="flex items-center">
+                            <button onclick="changeQuantity('${item.compositeId}', -1)" class="text-gray-500 hover:text-red-800 px-1">
+                                <i class="fas fa-minus text-xs"></i>
+                            </button>
+                            <span class="quantity mx-1 text-sm">${item.quantity}</span>
+                            <button onclick="changeQuantity('${item.compositeId}', 1)" class="text-gray-500 hover:text-red-800 px-1">
+                                <i class="fas fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                confirmBtn.disabled = false;
+            }
+        }
+
+        // Change Quantity
+        function changeQuantity(id, delta) {
+            console.log(`Change quantity: id=${id}, delta=${delta}`);
+            const item = cart.find(i => i.compositeId === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.compositeId !== id);
+                }
+                updateCart();
+            } else {
+                console.error('Item not found:', id);
+            }
+        }
+
+        // Render Products
+        function renderProducts(category = 'all') {
+            console.log('Rendering products for category:', category);
+            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+            productGrid.innerHTML = filteredProducts.map(product => `
+                <div class="product-card bg-white rounded-lg shadow-md transition">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded-t-lg">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold">${product.name}</h3>
+                        <p class="text-gray-600 text-sm mb-2">${product.description}</p>
+                        <div class="mb-2">
+                            <label for="capacity-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
+                            <select id="capacity-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                                ${product.category === 'coffee' ? `
+                                    <option value="250g">250g</option>
+                                    <option value="500g">500g</option>
+                                    <option value="1kg">1kg</option>
+                                ` : product.category === 'tea' ? `
+                                    <option value="100g">100g</option>
+                                    <option value="200g">200g</option>
+                                    <option value="500g">500g</option>
+                                ` : `
+                                    <option value="10ml">10ml</option>
+                                    <option value="30ml">30ml</option>
+                                    <option value="50ml">50ml</option>
+                                `}
+                            </select>
+                        </div>
+                        ${product.category === 'coffee' ? `
+                            <div class="mb-2">
+                                <label for="grind-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
+                                <select id="grind-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                                    <option value="entier">Entier</option>
+                                    <option value="moulu">Moulu</option>
+                                    <option value="espresso">Espresso</option>
+                                </select>
+                            </div>
+                            <div class="mb-2 flex items-center space-x-4">
+                                <label class="flex items-center">
+                                    <input type="radio" name="caffeine-${product.id}" value="classique" checked class="mr-2">
+                                    Classique
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="caffeine-${product.id}" value="décaféiné" class="mr-2">
+                                    Décaféiné
+                                </label>
+                            </div>
+                        ` : product.category === 'tea' ? `
+                            <div class="mb-2">
+                                <label for="type-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Type</label>
+                                <select id="type-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                                    <option value="${product.name.includes('Sencha') ? 'vert' : product.name.includes('Darjeeling') ? 'noir' : 'blanc'}">${product.name.includes('Sencha') ? 'Vert' : product.name.includes('Darjeeling') ? 'Noir' : 'Blanc'}</option>
+                                </select>
+                            </div>
+                        ` : `
+                            <div class="mb-2">
+                                <label for="usage-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Usage</label>
+                                <select id="usage-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                                    <option value="${product.name.includes('Lavande') ? 'relaxant' : product.name.includes('Menthe') ? 'énergisant' : 'purifiant'}">${product.name.includes('Lavande') ? 'Relaxant' : product.name.includes('Menthe') ? 'Énergisant' : 'Purifiant'}</option>
+                                </select>
+                            </div>
+                        `}
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-800 font-bold">${product.price.toFixed(2)}€</span>
+                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="${product.id}">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    console.log('Add to cart:', e.target.dataset.id);
+                    const productId = e.target.dataset.id;
+                    const product = products.find(p => p.id === productId);
+                    const capacity = document.getElementById(`capacity-${productId}`).value;
+                    let caffeine = '';
+                    let grind = '';
+                    let type = '';
+                    let usage = '';
+                    if (product.category === 'coffee') {
+                        caffeine = document.querySelector(`input[name="caffeine-${productId}"]:checked`).value;
+                        grind = document.getElementById(`grind-${productId}`).value;
+                    } else if (product.category === 'tea') {
+                        type = document.getElementById(`type-${product.id}`).value;
+                    } else {
+                        usage = document.getElementById(`usage-${product.id}`).value;
+                    }
+                    const compositeId = `${productId}-${capacity}-${caffeine || type || usage}-${grind || type || usage}`;
+                    const existingItem = cart.find(item => item.compositeId === compositeId);
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({
+                            ...product,
+                            compositeId,
+                            capacity,
+                            caffeine,
+                            grind,
+                            type,
+                            usage,
+                            quantity: 1
+                        });
+                    }
+                    updateCart();
+                    toggleModal();
+                });
+            });
+        }
+
+        // Category Filter
+        document.querySelectorAll('.category-filter').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                console.log('Category filter clicked:', e.target.dataset.category);
+                renderProducts(e.target.dataset.category);
+            });
+        });
+
+        // Show Confirmation Message
+        function showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total) {
+            console.log('Showing confirmation message');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'confirmation-message';
+            messageDiv.innerHTML = `
+                <p class="font-bold">Commande passée !</p>
+                <p>Client: ${firstName} ${lastName}</p>
+                <p>Email: ${email}</p>
+                <p>Adresse: ${address}, ${city}, ${postalCode}</p>
+                <p>Méthode: ${paymentMethod === 'visa' ? 'Visa' : paymentMethod === 'mastercard' ? 'Mastercard' : paymentMethod === 'paypal' ? 'PayPal' : paymentMethod === 'usdt' ? 'USDT' : 'Virement bancaire'}${paymentMethod === 'usdt' ? ` (Blockchain: ${blockchain.charAt(0).toUpperCase() + blockchain.slice(1)})` : ''}</p>
+                <p>Montant: ${total.toFixed(2)}€</p>
+                <p class="font-bold mt-2">Merci pour votre achat !</p>
+            `;
+            document.body.appendChild(messageDiv);
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+        // Confirm Order
+        confirmBtn.addEventListener('click', () => {
+            console.log('Confirm button clicked');
+            if (cart.length === 0) {
+                alert('Votre panier est vide');
+                return;
+            }
+            const firstName = firstNameInput.value.trim();
+            const lastName = lastNameInput.value.trim();
+            const email = emailInput.value.trim();
+            const address = addressInput.value.trim();
+            const city = cityInput.value.trim();
+            const postalCode = postalCodeInput.value.trim();
+            const paymentMethod = paymentSelect.value;
+            const blockchain = paymentMethod === 'usdt' ? blockchainSelect.value : '';
+
+            if (!firstName || !lastName || !email || !email.includes('@') || !address || !city || !postalCode) {
+                alert('Veuillez remplir tous les champs correctement');
+                return;
+            }
+            if (paymentMethod === 'usdt' && !blockchain) {
+                alert('Veuillez sélectionner une blockchain pour le paiement USDT');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total);
+            console.log('Order confirmed:', { firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total, cart });
+            cart = [];
+            firstNameInput.value = '';
+            lastNameInput.value = '';
+            emailInput.value = '';
+            addressInput.value = '';
+            cityInput.value = '';
+            postalCodeInput.value = '';
+            blockchainSelect.value = 'arbitrum';
+            updateBlockchainVisibility();
+            updateCart();
+            toggleModal();
+        });
+
+        // USDT Price
+        function fetchUsdtPrice() {
+            console.log('Fetching USDT price');
+            const usdtPriceDisplay = document.getElementById('usdtPriceDisplay');
+            if (usdtPriceDisplay) {
+                fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('USDT price fetched:', data);
+                        usdtPriceDisplay.textContent = `Prix USDT : ${data.tether.usd} USD`;
+                        usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
+                    })
+                    .catch(error => {
+                        console.error('Erreur API:', error);
+                        usdtPriceDisplay.textContent = 'Erreur prix USDT';
+                        usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
+                    });
+            } else {
+                console.error('usdtPriceDisplay not found');
+            }
+        }
+
+        // Chatbot
+        function addChatMessage(message, isUser = false) {
+            console.log('Adding chat message:', message, 'isUser:', isUser);
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            chatbotMessages.appendChild(messageDiv);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+
+        function getBotResponse(userInput) {
+            console.log('Processing user input:', userInput);
+            userInput = userInput.toLowerCase().trim();
+            if (userInput.includes('café') || userInput.includes('coffee')) {
+                return 'Nos cafés : Yirgacheffe, Colombien Supremo, Kenyan AA. Choisissez 250g/500g/1kg, entier/moulu/espresso, classique/décaféiné.';
+            } else if (userInput.includes('contenance café') || userInput.includes('poids café')) {
+                return 'Cafés disponibles en 250g, 500g, ou 1kg.';
+            } else if (userInput.includes('caféine') || userInput.includes('déca')) {
+                return 'Choisissez classique (avec caféine) ou décaféiné pour chaque café.';
+            } else if (userInput.includes('moulu') || userInput.includes('grain') || userInput.includes('espresso')) {
+                return 'Cafés disponibles en grain entier, moulu, ou espresso.';
+            } else if (userInput.includes('thé') || userInput.includes('tea')) {
+                return 'Nos thés : Sencha (vert), Darjeeling (noir), Pai Mu Tan (blanc). Choisissez 100g/200g/500g.';
+            } else if (userInput.includes('contenance thé') || userInput.includes('poids thé')) {
+                return 'Thés disponibles en 100g, 200g, ou 500g.';
+            } else if (userInput.includes('huile') || userInput.includes('oil')) {
+                return 'Nos huiles essentielles : Lavande (relaxant), Menthe Poivrée (énergisant), Eucalyptus (purifiant). Choisissez 10ml/30ml/50ml.';
+            } else if (userInput.includes('contenance huile') || userInput.includes('volume huile')) {
+                return 'Huiles essentielles en 10ml, 30ml, ou 50ml.';
+            } else if (userInput.includes('livraison') || userInput.includes('délai')) {
+                return 'Livraison en 3-5 jours ouvrables. Contactez-nous pour plus de détails !';
+            } else if (userInput.includes('paiement') || userInput.includes('payer') || userInput.includes('usdt')) {
+                return 'Nous acceptons Visa, Mastercard, PayPal, USDT (via Arbitrum, Optimism, Base, Linea), et Virement bancaire.';
+            } else if (userInput.includes('blockchain') || userInput.includes('chain')) {
+                return 'Pour USDT, choisissez parmi Arbitrum, Optimism, Base, ou Linea dans le formulaire de paiement.';
+            } else if (userInput.includes('panier') || userInput.includes('cart')) {
+                return 'Ajoutez des produits via "Ajouter". Consultez le panier via l’icône en haut à droite.';
+            } else {
+                return 'Désolé, je n’ai pas compris. Parlez-moi de café, thé, huiles, contenances, paiement, ou blockchain !';
+            }
+        }
+
+        chatbotToggle.addEventListener('click', () => {
+            console.log('Chatbot toggle clicked');
+            chatbotContainer.classList.toggle('open');
+        });
+
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && chatbotInput.value.trim()) {
+                console.log('Chatbot input submitted:', chatbotInput.value);
+                const userMessage = chatbotInput.value.trim();
+                addChatMessage(userMessage, true);
+                const botResponse = getBotResponse(userMessage);
+                setTimeout(() => {
+                    addChatMessage(botResponse);
+                }, 500);
+                chatbotInput.value = '';
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded');
+            renderProducts();
+            updateCart();
+            fetchUsdtPrice();
+            addChatMessage('Bonjour ! Posez-moi une question sur nos cafés, thés, huiles essentielles, contenances, paiement, ou blockchain !');
+        });
+    </script>
+</body>
+</html>
