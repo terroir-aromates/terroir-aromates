@@ -421,7 +421,7 @@
             cartModal.classList.toggle('open');
             document.body.classList.toggle('overflow-hidden');
             updateBlockchainVisibility();
-            updateShippingOptions();
+            if (cart.length > 0) updateShippingOptions(); // Mettre à jour les options de livraison uniquement si le panier n'est pas vide
         }
 
         cartBtn.addEventListener('click', toggleModal);
@@ -450,6 +450,7 @@
                 shippingCarrierSelect.disabled = true;
                 shippingMethodSelect.disabled = true;
                 shippingDetails.textContent = 'Prix : -€ | Délai : - jours';
+                shippingDetails.dataset.price = 0;
             } else {
                 cartItems.innerHTML = cart.map(item => `
                     <div class="flex items-center py-2 border-b">
@@ -471,7 +472,6 @@
                 `).join('');
                 confirmBtn.disabled = false;
                 shippingCarrierSelect.disabled = false;
-                updateShippingOptions();
             }
         }
 
@@ -814,7 +814,7 @@
                 shippingDetails.textContent = 'Prix : -€ | Délai : - jours';
                 shippingDetails.dataset.price = 0;
             }
-            updateCart();
+            // Ne pas rappeler updateCart ici pour éviter la boucle infinie
         }
 
         shippingMethodSelect.addEventListener('change', updateShippingDetails);
