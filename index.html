@@ -3,747 +3,931 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terroir & Aromates</title>
+    <title>Terroir & Aromates - Cafés, Thés & Huiles Essentielles</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .hero {
             background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), 
-                              url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');
+                              url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
             background-size: cover;
             background-position: center;
-            height: 50vh;
+            height: 70vh;
         }
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 50;
-            align-items: center;
-            justify-content: center;
+        .cart-slide {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
         }
-        .modal.open {
-            display: flex;
+        .cart-slide.open {
+            transform: translateX(0);
         }
         .product-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
         }
-        .confirmation-message {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            background: #10b981;
-            color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            z-index: 100;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .customization-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
         }
-        .chatbot {
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            z-index: 100;
+        .customization-panel.open {
+            max-height: 500px;
         }
-        .chatbot-container {
-            display: none;
-            background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            max-height: 400px;
-            overflow-y: auto;
+        #currency-selector {
+            padding: 12px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            margin-top: 16px;
         }
-        .chatbot-container.open {
+        .lang-selector:hover .lang-dropdown {
             display: block;
-        }
-        .chat-message {
-            padding: 0.5rem;
-            margin: 0.5rem;
-            border-radius: 0.5rem;
-        }
-        .user-message {
-            background: #f3f4f6;
-            text-align: right;
-        }
-        .bot-message {
-            background: #fee2e2;
-            text-align: left;
-        }
-        .newsletter-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #f5f5dc;
-            color: #4b5563; /* Changé de white à text-gray-600 */
-            padding: 1rem;
-            text-align: center;
-            z-index: 100;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body class="font-sans bg-beige-50 text-gray-800">
-    <!-- Header -->
+    <!-- Sticky Header -->
     <header class="sticky top-0 z-50 bg-white shadow-md">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-red-800">Terroir & Aromates</h1>
-            <nav class="space-x-4">
-                <a href="#products" class="text-gray-700 hover:text-red-800">Produits</a>
-                <a href="#about" class="text-gray-700 hover:text-red-800">À propos</a>
-                <a href="#contact" class="text-gray-700 hover:text-red-800">Contact</a>
-                <a href="promotions.html" class="text-gray-700 hover:text-red-800">Promotions</a>
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold text-red-800">Terroir & Aromates</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#products" class="text-gray-700 hover:text-red-800 transition">Nos Produits</a>
+                <a href="#about" class'$\'text-gray-700 hover:text-red-800 transition">Notre Histoire</a>
+                <a href="#contact" class="text-gray-700 hover:text-red-800 transition">Contact</a>
             </nav>
-            <button id="cart-btn" class="relative">
-                <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
-                <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-            </button>
+            <div class="flex items-center space-x-4">
+                <div class="relative group lang-selector">
+                    <button class="flex items-center space-x-1">
+                        <i class="fas fa-globe text-gray-700 hover:text-red-800"></i>
+                        <span class="hidden md:inline" id="current-lang">FR</span>
+                    </button>
+                    <div class="lang-dropdown absolute right-0 mt-2 w-20 bg-white shadow-lg rounded-md hidden">
+                        <button data-lang="fr" class="lang-btn block w-full text-left px-4 py-2 hover:bg-gray-100">Français</button>
+                        <button data-lang="en" class="lang-btn block w-full text-left px-4 py-2 hover:bg-gray-100">English</button>
+                        <button data-lang="es" class="lang-btn block w-full text-left px-4 py-2 hover:bg-gray-100">Español</button>
+                    </div>
+                </div>
+                <button id="cart-btn" class="relative">
+                    <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+                <button class="md:hidden" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden bg-white border-t md:hidden">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#products" class="text-gray-700 hover:text-red-800 transition py-2">Nos Produits</a>
+                <a href="#about" class="text-gray-700 hover:text-red-800 transition py-2">Notre Histoire</a>
+                <a href="#contact" class="text-gray-700 hover:text-red-800 transition py-2">Contact</a>
+            </div>
         </div>
     </header>
 
-    <!-- Hero -->
+    <!-- Hero Section -->
     <section class="hero flex items-center justify-center">
         <div class="text-center px-4">
-            <h2 class="text-3xl font-bold text-red-800 mb-4">Saveurs d'exception</h2>
-            <a href="#products" class="bg-red-800 hover:bg-red-900 text-white px-6 py-2 rounded-full transition">Voir les produits</a>
+            <h2 class="text-4xl md:text-5xl font-bold text-red-800 mb-4">Découvrez des saveurs d'exception</h2>
+            <p class="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">Cafés de terroir, thés raffinés et huiles essentielles pures pour éveiller vos sens</p>
+            <a href="#products" class="bg-red-800 hover:bg-red-900 text-white px-8 py-3 rounded-full font-medium transition duration-300 inline-block">Explorer notre sélection</a>
         </div>
     </section>
 
-    <!-- Products -->
-    <section id="products" class="py-12 bg-white">
+    <!-- Products Section -->
+    <section id="products" class="py-16 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center text-red-800 mb-8">Nos Produits</h2>
-            <div class="flex justify-center space-x-4 mb-8">
-                <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="all">Tous</button>
-                <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="coffee">Café</button>
-                <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="tea">Thé</button>
-                <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="oil">Huiles essentielles</button>
+            <h2 class="text-3xl font-bold text-center text-red-800 mb-12">Nos Produits Phares</h2>
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex rounded-md shadow-sm">
+                    <button data-category="coffee" class="category-tab px-4 py-2 text-sm font-medium rounded-l-lg bg-red-800 text-white">Cafés</button>
+                    <button data-category="tea" class="category-tab px-4 py-2 text-sm font-medium bg-beige-200 text-gray-700">Thés</button>
+                    <button data-category="oil" class="category-tab px-4 py-2 text-sm font-medium rounded-r-lg bg-beige-200 text-gray-700">Huiles Essentielles</button>
+                </div>
             </div>
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
-        </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="py-12 bg-beige-100">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold text-red-800 mb-4">À propos</h2>
-            <p class="text-gray-600 mb-4">Terroir & Aromates célèbre les saveurs authentiques du monde entier. Depuis 2025, nous sélectionnons avec soin des cafés, thés et huiles essentielles pour vous offrir une expérience unique. <a href="#" class="text-red-800 underline">Découvrez notre histoire</a>.</p>
-            <div class="flex justify-center space-x-4 mt-4">
-                <i class="fab fa-instagram text-2xl text-gray-700 hover:text-red-800"></i>
-                <i class="fab fa-facebook-f text-2xl text-gray-700 hover:text-red-800"></i>
-                <i class="fab fa-twitter text-2xl text-gray-700 hover:text-red-800"></i>
+            <!-- Coffee Section -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold text-red-800 mb-6">Cafés</h3>
+                <div class="coffee-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            </div>
+            <!-- Tea Section -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold text-red-800 mb-6">Thés</h3>
+                <div class="tea-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            </div>
+            <!-- Essential Oils Section -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold text-red-800 mb-6">Huiles Essentielles</h3>
+                <div class="oil-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
             </div>
         </div>
     </section>
 
-    <!-- Contact -->
-    <section id="contact" class="py-12 bg-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold text-red-800 mb-4">Contact</h2>
-            <p class="text-gray-600 mb-4">123 Rue des Saveurs, 75001 Paris, France | Email : contact@terroir-aromates.com</p>
-            <form id="contact-form" class="max-w-md mx-auto space-y-4">
-                <div>
-                    <input type="text" id="contact-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre nom">
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-beige-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Intérieur de la boutique Terroir & Aromates avec des produits exposés" class="rounded-lg shadow-md w-full" loading="lazy">
                 </div>
-                <div>
-                    <input type="email" id="contact-email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre email">
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold text-red-800 mb-6">Notre Histoire</h2>
+                    <p class="text-gray-700 mb-4">Fondée en 2010, Terroir & Aromates est née de la passion pour les produits authentiques et de qualité. Nous parcourons le monde à la recherche des meilleurs cafés, thés et huiles essentielles, en établissant des relations directes avec les producteurs.</p>
+                    <p class="text-gray-700 mb-4">Notre engagement : vous offrir des produits exceptionnels, éthiques et respectueux de l'environnement.</p>
+                    <p class="text-gray-700">Visitez notre boutique pour une expérience sensorielle unique.</p>
                 </div>
-                <div>
-                    <textarea id="contact-message" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre message" rows="4"></textarea>
-                </div>
-                <button type="submit" class="w-full px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition">Envoyer</button>
-            </form>
+            </div>
         </div>
     </section>
 
-    <!-- Cart & Checkout Modal -->
-    <div id="cart-modal" class="modal">
-        <div class="bg-white rounded-lg p-6 w-full max-w-3xl mx-4 max-h-[80vh] overflow-y-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-red-800">Panier & Commande</h3>
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-red-800 mb-12">Contactez-nous</h2>
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Informations</h3>
+                    <p class="text-gray-700 mb-4"><i class="fas fa-map-marker-alt text-red-800 mr-2"></i> 12 Rue des Aromates, 75005 Paris</p>
+                    <p class="text-gray-700 mb-4"><i class="fas fa-phone text-red-800 mr-2"></i> +33 1 23 45 67 89</p>
+                    <p class="text-gray-700 mb-4"><i class="fas fa-envelope text-red-800 mr-2"></i> contact@terroir-aromates.com</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mt-6 mb-4">Horaires</h3>
+                    <p class="text-gray-700"><span class="font-medium">Lundi - Vendredi:</span> 9h - 19h</p>
+                    <p class="text-gray-700"><span class="font-medium">Samedi:</span> 10h - 20h</p>
+                    <p class="text-gray-700"><span class="font-medium">Dimanche:</span> 10h - 18h</p>
+                    <div class="mt-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Suivez-nous</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-700 hover:text-red-800 transition"><i class="fab fa-facebook-f text-xl"></i></a>
+                            <a href="#" class="text-gray-700 hover:text-red-800 transition"><i class="fab fa-instagram text-xl"></i></a>
+                            <a href="#" class="text-gray-700 hover:text-red-800 transition"><i class="fab fa-twitter text-xl"></i></a>
+                            <a href="#" class="text-gray-700 hover:text-red-800 transition"><i class="fab fa-pinterest text-xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <form class="bg-beige-50 p-6 rounded-lg shadow-md">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 text-sm font-medium mb-1">Nom complet</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                        </div>
+                        <div class="mb-4">
+                            <label for="subject" class="block text-gray-700 text-sm font-medium mb-1">Sujet</label>
+                            <input type="text" id="subject" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-700 text-sm font-medium mb-1">Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-red-800 hover:bg-red-900 text-white py-2 rounded transition">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-slide fixed top-0 right-0 w-full md:w-1/3 h-full bg-white shadow-lg z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-red-800">Votre Panier</h3>
                 <button id="close-cart" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-            <div id="cart-items" class="mb-4 max-h-[300px] overflow-y-auto">
-                <p class="text-gray-500 text-center py-4">Votre panier est vide</p>
+            <div id="cart-items" class="mb-6">
+                <p class="text-gray-500 text-center py-8">Votre panier est vide</p>
             </div>
-            <div class="border-t pt-4 mb-4">
+            <div class="border-t pt-4">
+                <div class="flex justify-between mb-2">
+                    <span class="font-medium">Sous-total</span>
+                    <span id="cart-subtotal">0,00€</span>
+                </div>
                 <div class="flex justify-between mb-4">
-                    <span class="font-medium">Total</span>
+                    <span class="font-medium">Livraison</span>
+                    <span>Calculé à l'étape suivante</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold">
+                    <span>Total</span>
                     <span id="cart-total">0,00€</span>
                 </div>
+                <button id="checkout-btn" class="w-full bg-red-800 hover:bg-red-900 text-white py-3 rounded mt-6 transition">Passer la commande</button>
+                <button class="w-full bg-beige-200 hover:bg-beige-300 text-gray-800 py-3 rounded mt-3 transition">Continuer mes achats</button>
             </div>
-            <div class="grid grid-cols-2 gap-3 mb-3">
-                <div>
-                    <label for="first-name" class="block text-gray-700 text-sm font-medium mb-1">Prénom</label>
-                    <input type="text" id="first-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Jean">
+        </div>
+    </div>
+    <div id="cart-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-6 w-full max-w-2xl mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-red-800">Finaliser la commande</h3>
+                <button id="close-checkout" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="checkout-form">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label for="first-name" class="block text-gray-700 text-sm font-medium mb-1">Prénom</label>
+                        <input type="text" id="first-name" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                    </div>
+                    <div>
+                        <label for="last-name" class="block text-gray-700 text-sm font-medium mb-1">Nom</label>
+                        <input type="text" id="last-name" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                    </div>
                 </div>
-                <div>
-                    <label for="last-name" class="block text-gray-700 text-sm font-medium mb-1">Nom</label>
-                    <input type="text" id="last-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Dupont">
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email</label>
+                    <input type="email" id="email" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email</label>
-                <input type="email" id="email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="jean.dupont@gmail.com">
-            </div>
-            <div class="mb-3">
-                <label for="address" class="block text-gray-700 text-sm font-medium mb-1">Adresse</label>
-                <input type="text" id="address" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="123 Rue Exemple">
-            </div>
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <div>
-                    <label for="city" class="block text-gray-700 text-sm font-medium mb-1">Ville</label>
-                    <input type="text" id="city" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Paris">
+                <div class="mb-4">
+                    <label for="address" class="block text-gray-700 text-sm font-medium mb-1">Adresse</label>
+                    <input type="text" id="address" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
                 </div>
-                <div>
-                    <label for="postal-code" class="block text-gray-700 text-sm font-medium mb-1">Code postal</label>
-                    <input type="text" id="postal-code" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="75001">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <label for="postal-code" class="block text-gray-700 text-sm font-medium mb-1">Code postal</label>
+                        <input type="text" id="postal-code" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                    </div>
+                    <div>
+                        <label for="city" class="block text-gray-700 text-sm font-medium mb-1">Ville</label>
+                        <input type="text" id="city" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                    </div>
+                    <div>
+                        <label for="country" class="block text-gray-700 text-sm font-medium mb-1">Pays</label>
+                        <select id="country" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                            <option>France</option>
+                            <option>Belgique</option>
+                            <option>Suisse</option>
+                            <option>Luxembourg</option>
+                        </select>
+                    </div>
+                    <div id="blockchain-container">
+                        <label for="blockchain" class="block text-gray-700 text-sm font-medium mb-1">Blockchain</label>
+                        <select id="blockchain" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                            <option>Arbitrum</option>
+                            <option>Optimism</option>
+                            <option>Linea</option>
+                            <option>Base</option>
+                            <option>Bitcoin SegWit</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-4">
-                <label for="payment" class="block text-gray-700 text-sm font-medium mb-1">Paiement</label>
-                <select id="payment" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                    <option value="visa">Visa</option>
-                    <option value="mastercard">Mastercard</option>
-                    <option value="paypal">PayPal</option>
-                    <option value="usdt">USDT</option>
-                    <option value="bank_transfer">Virement bancaire</option>
-                </select>
-                <div id="usdt-blockchain" class="hidden mt-2">
-                    <label for="blockchain" class="block text-gray-700 text-sm font-medium mb-1">Blockchain</label>
-                    <select id="blockchain" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                        <option value="arbitrum">Arbitrum</option>
-                        <option value="optimism">Optimism</option>
-                        <option value="base">Base</option>
-                        <option value="linea">Linea</option>
+                <div class="mb-6">
+                    <label for="payment" class="block text-gray-700 text-sm font-medium mb-1">Méthode de paiement</label>
+                    <select id="payment" required class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                        <option value="visa">Visa</option>
+                        <option value="mastercard">Mastercard</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="bitcoin">Bitcoin</option>
+                        <option value="usdt">USDT (Crypto)</option>
+                        <option value="bank">Virement bancaire</option>
                     </select>
+                    <div id="currency-selector" class="mt-4">
+                        <div id="usdt-network-selector" class="hidden mt-4">
+                            <label class="block text-gray-700 text-sm font-medium mb-1">Réseau USDT</label>
+                            <select class="w-full p-2 border rounded">
+                                <option value="arbitrum">Arbitrum</option>
+                                <option value="optimism">Optimism</option>
+                                <option value="linea">Linea</option>
+                                <option value="base">Base</option>
+                            </select>
+                        </div>
+                        <label class="block text-gray-700 text-sm font-medium mb-1">Devise</label>
+                        <div class="flex space-x-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="currency" value="eur" checked class="text-red-800">
+                                <span class="ml-2">EUR (€)</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="currency" value="usd" class="text-red-800">
+                                <span class="ml-2">USD ($)</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="currency" value="usdt" class="text-red-800">
+                                <span class="ml-2">USDT (Crypto $)</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="currency" value="btc" class="text-red-800">
+                                <span class="ml-2">BTC (₿)</span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div id="usdtPriceDisplay" class="hidden text-gray-700 mt-2"></div>
-            </div>
-            <div class="flex justify-end space-x-4">
-                <button id="confirm-btn" class="px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition" disabled>Confirmer la commande</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Chatbot -->
-    <div class="chatbot">
-        <button id="chatbot-toggle" class="bg-red-800 text-white p-3 rounded-full hover:bg-red-900">
-            <i class="fas fa-comment text-xl"></i>
-        </button>
-        <div id="chatbot-container" class="chatbot-container">
-            <div id="chatbot-messages" class="p-4"></div>
-            <div class="p-4 border-t">
-                <input id="chatbot-input" type="text" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Posez votre question...">
-            </div>
-        </div>
-    </div>
-
-    <!-- Newsletter Banner -->
-    <div id="newsletter-banner" class="newsletter-banner hidden">
-        <p class="mb-2 text-gray-600">Inscrivez-vous à notre newsletter pour des offres exclusives !</p> <!-- Changé de color: white à text-gray-600 -->
-        <div class="flex justify-center space-x-2">
-            <input type="email" id="newsletter-email" class="px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre email">
-            <button id="newsletter-submit" class="px-4 py-1.5 bg-red-800 hover:bg-red-900 text-white rounded transition">S’inscrire</button>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" id="cancel-checkout" class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded transition">Annuler</button>
+                    <button type="submit" class="px-6 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition">Confirmer la commande</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-red-800 text-white py-6">
-        <div class="container mx-auto px-4 text-center">
-            <p class="text-red-100">&copy; 2025 Terroir & Aromates. Tous droits réservés.</p>
+    <footer class="bg-red-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Terroir & Aromates</h4>
+                    <p class="text-red-100">Découvrez une sélection raffinée de cafés, thés et huiles essentielles du monde entier.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Navigation</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#products" class="text-red-100 hover:text-white transition">Nos Produits</a></li>
+                        <li><a href="#about" class="text-red-100 hover:text-white transition">Notre Histoire</a></li>
+                        <li><a href="#contact" class="text-red-100 hover:text-white transition">Contact</a></li>
+                        <li><a href="#" class="text-red-100 hover:text-white transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Informations</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-red-100 hover:text-white transition">Livraison</a></li>
+                        <li><a href="#" class="text-red-100 hover:text-white transition">Paiement sécurisé</a></li>
+                        <li><a href="#" class="text-red-100 hover:text-white transition">Conditions générales</a></li>
+                        <li><a href="#" class="text-red-100 hover:text-white transition">Confidentialité</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Newsletter</h4>
+                    <p class="text-red-100 mb-2">Abonnez-vous pour recevoir nos offres et actualités</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Votre email" class="px-3 py-2 text-gray-800 rounded-l w-full focus:outline-none">
+                        <button type="submit" class="bg-beige-200 hover:bg-beige-300 text-gray-800 px-4 py-2 rounded-r transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-red-700 mt-8 pt-6 text-center text-red-100">
+                <p>&copy; 2023 Terroir & Aromates. Tous droits réservés.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- Chatbot Widget -->
+    <div id="chatbot-widget" class="fixed bottom-6 right-6 z-50">
+        <div id="chatbot-container" class="hidden w-80 h-96 bg-white rounded-lg shadow-xl flex flex-col">
+            <div class="bg-red-800 text-white p-3 rounded-t-lg flex justify-between items-center">
+                <h3 class="font-bold">Assistant Virtuel</h3>
+                <button id="close-chatbot" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto">
+                <div class="chatbot-message bg-gray-100 rounded-lg p-3 mb-2">
+                    <p>Bonjour! 👋 Je suis l'assistant de Terroir & Aromates. Comment puis-je vous aider aujourd'hui?</p>
+                    <p class="mt-2 text-sm text-gray-600">Voici quelques suggestions rapides:</p>
+                    <div class="mt-2 space-y-1">
+                        <button class="quick-question w-full text-left px-3 py-1 bg-white rounded border text-sm hover:bg-gray-50" data-question="promotions">Quelles sont les promotions en cours?</button>
+                        <button class="quick-question w-full text-left px-3 py-1 bg-white rounded border text-sm hover:bg-gray-50" data-question="recommendations">Pouvez-vous me recommander un produit?</button>
+                        <button class="quick-question w-full text-left px-3 py-1 bg-white rounded border text-sm hover:bg-gray-50" data-question="livraison">Quels sont les délais de livraison?</button>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 border-t">
+                <div class="flex">
+                    <input id="chatbot-input" type="text" placeholder="Tapez votre message..." class="flex-1 px-3 py-2 border rounded-l focus:outline-none focus:ring-1 focus:ring-red-800">
+                    <button id="send-chatbot-message" class="bg-red-800 text-white px-4 py-2 rounded-r hover:bg-red-900">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <button id="open-chatbot" class="w-16 h-16 bg-red-800 text-white rounded-full shadow-lg hover:bg-red-900 transition">
+            <i class="fas fa-comment-dots text-2xl"></i>
+        </button>
+    </div>
+
     <script>
-        // Products
+        // Product data
         const products = [
-            // Café
             {
-                id: 'coffee1',
+                id: 1,
+                category: 'coffee',
                 name: 'Café Éthiopien Yirgacheffe',
+                description: 'Notes florales et fruitées avec une acidité vive et un corps délicat.',
                 price: 12.90,
-                category: 'coffee',
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                description: 'Notes florales et citronnées.'
+                image: 'https://www.ekita-cafe.com/Files/25824/Img/22/cafe-bio-grains-moka-yirgacheffe-250g-600px.jpg',
+                badge: 'Nouveau',
+                sizes: ['250g (12,90€)', '500g (24,90€)', '1kg (45,90€)']
             },
             {
-                id: 'coffee2',
+                id: 2,
+                category: 'coffee',
                 name: 'Café Colombien Supremo',
-                price: 14.50,
-                category: 'coffee',
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                description: 'Arômes de chocolat et noisette.'
+                description: 'Équilibre parfait entre douceur et acidité avec des notes de noix et de caramel.',
+                price: 11.50,
+                image: 'https://www.cafetearte.es/8103-medium_default/cafe-colombia.jpg',
+                badge: '',
+                sizes: ['250g (11,50€)', '500g (22,00€)', '1kg (40,00€)']
             },
             {
-                id: 'coffee3',
-                name: 'Café Kenyan AA',
-                price: 15.20,
+                id: 3,
                 category: 'coffee',
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                description: 'Notes de fruits rouges.'
+                name: 'Café Pacamara',
+                description: 'Café du Salvador avec des notes de fruits rouges et de chocolat noir.',
+                price: 13.90,
+                image: 'https://www.cafesbelleville.com/cdn/shop/products/Pacamara_ElSalvador_1024x1024@2x.jpg?v=1666879939',
+                badge: 'Bio',
+                sizes: ['250g (13,90€)', '500g (26,90€)', '1kg (49,90€)']
             },
-            // Thé
             {
-                id: 'tea1',
-                name: 'Thé Vert Sencha',
-                price: 9.80,
+                id: 4,
                 category: 'tea',
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                description: 'Frais et herbacé.'
+                name: 'Thé Vert Matcha Premium',
+                description: 'Thé vert en poudre du Japon, riche en antioxydants avec une saveur umami unique.',
+                price: 24.90,
+                image: 'https://www.japanesetea.com/images/matcha_premium.jpg',
+                badge: 'Premium',
+                sizes: ['30g (24,90€)', '50g (39,90€)']
             },
             {
-                id: 'tea2',
+                id: 5,
+                category: 'tea',
                 name: 'Thé Noir Darjeeling',
-                price: 11.30,
+                description: 'Thé noir indien aux arômes floraux et légèrement muscatés.',
+                price: 15.90,
+                image: 'https://www.palaisdesthes.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/d/a/darjeeling_1.jpg',
+                badge: '',
+                sizes: ['100g (15,90€)', '200g (29,90€)']
+            },
+            {
+                id: 6,
                 category: 'tea',
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                description: 'Notes muscatées.'
+                name: 'Thé Oolong Tie Guan Yin',
+                description: 'Thé semi-fermenté de Chine avec des notes florales et crémeuses.',
+                price: 18.90,
+                image: 'https://www.teacamp.com/images/oolong_tieguanyin.jpg',
+                badge: 'Nouveau',
+                sizes: ['50g (18,90€)', '100g (34,90€)']
             },
             {
-                id: 'tea3',
-                name: 'Thé Blanc Pai Mu Tan',
-                price: 13.40,
-                category: 'tea',
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                description: 'Doux et floral.'
-            },
-            // Huiles essentielles
-            {
-                id: 'oil1',
-                name: 'Huile Essentielle Lavande',
-                price: 8.90,
+                id: 7,
                 category: 'oil',
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                description: 'Relaxante, pour le sommeil.'
+                name: 'Huile Essentielle de Lavande',
+                description: 'Huile pure de lavande française, idéale pour la relaxation et le soin de la peau.',
+                price: 9.90,
+                image: 'https://www.aromazone.com/images/huile_essentielle_lavande.jpg',
+                badge: 'Bio',
+                sizes: ['10ml (9,90€)', '30ml (24,90€)']
             },
             {
-                id: 'oil2',
-                name: 'Huile Essentielle Menthe Poivrée',
-                price: 7.50,
+                id: 8,
                 category: 'oil',
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                description: 'Rafraîchissante, énergisante.'
+                name: 'Huile Essentielle de Citron',
+                description: 'Huile essentielle de citron sicilien, parfaite pour purifier et stimuler.',
+                price: 7.90,
+                image: 'https://www.mysticmomentsuk.com/images/lemon_essential_oil.jpg',
+                badge: '',
+                sizes: ['10ml (7,90€)', '30ml (19,90€)']
             },
             {
-                id: 'oil3',
-                name: 'Huile Essentielle Eucalyptus',
-                price: 6.80,
+                id: 9,
                 category: 'oil',
-                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-                description: 'Purifiante, pour la respiration.'
+                name: 'Huile Essentielle de Copahu/Copaïba',
+                description: 'Huile essentielle d’Amazonie, reconnue pour ses propriétés anti-inflammatoires.',
+                price: 14.90,
+                image: 'https://www.aromazone.com/images/huile_essentielle_copaiba.jpg',
+                badge: 'Nouveau',
+                sizes: ['10ml (14,90€)', '30ml (34,90€)']
             }
         ];
 
-        // Cart
-        let cart = [];
-
-        // DOM Elements
-        const cartBtn = document.getElementById('cart-btn');
-        const closeCartBtn = document.getElementById('close-cart');
-        const cartModal = document.getElementById('cart-modal');
-        const cartItems = document.getElementById('cart-items');
-        const cartTotal = document.getElementById('cart-total');
-        const cartCount = document.getElementById('cart-count');
-        const confirmBtn = document.getElementById('confirm-btn');
-        const firstNameInput = document.getElementById('first-name');
-        const lastNameInput = document.getElementById('last-name');
-        const emailInput = document.getElementById('email');
-        const addressInput = document.getElementById('address');
-        const cityInput = document.getElementById('city');
-        const postalCodeInput = document.getElementById('postal-code');
-        const paymentSelect = document.getElementById('payment');
-        const blockchainSelect = document.getElementById('blockchain');
-        const usdtBlockchainDiv = document.getElementById('usdt-blockchain');
-        const productGrid = document.getElementById('product-grid');
-        const chatbotToggle = document.getElementById('chatbot-toggle');
+        // Chatbot functionality
         const chatbotContainer = document.getElementById('chatbot-container');
+        const openChatbot = document.getElementById('open-chatbot');
+        const closeChatbot = document.getElementById('close-chatbot');
         const chatbotMessages = document.getElementById('chatbot-messages');
         const chatbotInput = document.getElementById('chatbot-input');
-        const contactForm = document.getElementById('contact-form');
-        const newsletterBanner = document.getElementById('newsletter-banner');
-        const newsletterEmail = document.getElementById('newsletter-email');
-        const newsletterSubmit = document.getElementById('newsletter-submit');
+        const sendChatbotMessage = document.getElementById('send-chatbot-message');
+        const quickQuestions = document.querySelectorAll('.quick-question');
 
-        // Toggle Modal
-        function toggleModal() {
-            console.log('Toggle modal called');
-            cartModal.classList.toggle('open');
-            document.body.classList.toggle('overflow-hidden');
-            updateBlockchainVisibility();
-        }
+        openChatbot.addEventListener('click', () => chatbotContainer.classList.toggle('hidden'));
+        closeChatbot.addEventListener('click', () => chatbotContainer.classList.add('hidden'));
 
-        cartBtn.addEventListener('click', toggleModal);
-        closeCartBtn.addEventListener('click', toggleModal);
-
-        // Update Blockchain Visibility
-        function updateBlockchainVisibility() {
-            console.log('Updating blockchain visibility, payment:', paymentSelect.value);
-            usdtBlockchainDiv.classList.toggle('hidden', paymentSelect.value !== 'usdt');
-        }
-
-        paymentSelect.addEventListener('change', updateBlockchainVisibility);
-
-        // Update Cart
-        function updateCart() {
-            console.log('Cart:', cart);
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-            cartCount.textContent = totalItems;
-            cartTotal.textContent = totalPrice.toFixed(2) + '€';
-
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Votre panier est vide</p>';
-                confirmBtn.disabled = true;
-            } else {
-                cartItems.innerHTML = cart.map(item => `
-                    <div class="flex items-center py-2 border-b">
-                        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
-                        <div class="ml-3 flex-1">
-                            <h4 class="font-medium text-sm">${item.name} (${item.capacity}${item.caffeine ? ', ' + item.caffeine : ''}${item.grind ? ', ' + item.grind : ''}${item.type ? ', ' + item.type : ''}${item.usage ? ', ' + item.usage : ''})</h4>
-                            <p class="text-gray-600 text-xs">${item.price.toFixed(2)}€</p>
-                        </div>
-                        <div class="flex items-center">
-                            <button onclick="changeQuantity('${item.compositeId}', -1)" class="text-gray-500 hover:text-red-800 px-1">
-                                <i class="fas fa-minus text-xs"></i>
-                            </button>
-                            <span class="quantity mx-1 text-sm">${item.quantity}</span>
-                            <button onclick="changeQuantity('${item.compositeId}', 1)" class="text-gray-500 hover:text-red-800 px-1">
-                                <i class="fas fa-plus text-xs"></i>
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-                confirmBtn.disabled = false;
-            }
-        }
-
-        // Change Quantity
-        function changeQuantity(id, delta) {
-            console.log(`Change quantity: id=${id}, delta=${delta}`);
-            const item = cart.find(i => i.compositeId === id);
-            if (item) {
-                item.quantity += delta;
-                if (item.quantity <= 0) {
-                    cart = cart.filter(i => i.compositeId !== id);
-                }
-                updateCart();
-            } else {
-                console.error('Item not found:', id);
-            }
-        }
-
-        // Render Products
-        function renderProducts(category = 'all') {
-            console.log('Rendering products for category:', category);
-            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
-            productGrid.innerHTML = filteredProducts.map(product => `
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">${product.name}</h3>
-                        <p class="text-gray-600 text-sm mb-2">${product.description}</p>
-                        <div class="mb-2">
-                            <label for="capacity-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                ${product.category === 'coffee' ? `
-                                    <option value="250g">250g</option>
-                                    <option value="500g">500g</option>
-                                    <option value="1kg">1kg</option>
-                                ` : product.category === 'tea' ? `
-                                    <option value="100g">100g</option>
-                                    <option value="200g">200g</option>
-                                    <option value="500g">500g</option>
-                                ` : `
-                                    <option value="10ml">10ml</option>
-                                    <option value="30ml">30ml</option>
-                                    <option value="50ml">50ml</option>
-                                `}
-                            </select>
-                        </div>
-                        ${product.category === 'coffee' ? `
-                            <div class="mb-2">
-                                <label for="grind-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
-                                <select id="grind-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                    <option value="entier">Entier</option>
-                                    <option value="moulu">Moulu</option>
-                                    <option value="espresso">Espresso</option>
-                                </select>
-                            </div>
-                            <div class="mb-2 flex items-center space-x-4">
-                                <label class="flex items-center">
-                                    <input type="radio" name="caffeine-${product.id}" value="classique" checked class="mr-2">
-                                    Classique
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="caffeine-${product.id}" value="décaféiné" class="mr-2">
-                                    Décaféiné
-                                </label>
-                            </div>
-                        ` : product.category === 'tea' ? `
-                            <div class="mb-2">
-                                <label for="type-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Type</label>
-                                <select id="type-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                    <option value="${product.name.includes('Sencha') ? 'vert' : product.name.includes('Darjeeling') ? 'noir' : 'blanc'}">${product.name.includes('Sencha') ? 'Vert' : product.name.includes('Darjeeling') ? 'Noir' : 'Blanc'}</option>
-                                </select>
-                            </div>
-                        ` : `
-                            <div class="mb-2">
-                                <label for="usage-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Usage</label>
-                                <select id="usage-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                    <option value="${product.name.includes('Lavande') ? 'relaxant' : product.name.includes('Menthe') ? 'énergisant' : 'purifiant'}">${product.name.includes('Lavande') ? 'Relaxant' : product.name.includes('Menthe') ? 'Énergisant' : 'Purifiant'}</option>
-                                </select>
-                            </div>
-                        `}
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">${product.price.toFixed(2)}€</span>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="${product.id}">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            document.querySelectorAll('.add-to-cart').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    console.log('Add to cart:', e.target.dataset.id);
-                    const productId = e.target.dataset.id;
-                    const product = products.find(p => p.id === productId);
-                    const capacity = document.getElementById(`capacity-${productId}`).value;
-                    let caffeine = '';
-                    let grind = '';
-                    let type = '';
-                    let usage = '';
-                    if (product.category === 'coffee') {
-                        caffeine = document.querySelector(`input[name="caffeine-${productId}"]:checked`).value;
-                        grind = document.getElementById(`grind-${productId}`).value;
-                    } else if (product.category === 'tea') {
-                        type = document.getElementById(`type-${product.id}`).value;
-                    } else {
-                        usage = document.getElementById(`usage-${product.id}`).value;
-                    }
-                    const compositeId = `${productId}-${capacity}-${caffeine || type || usage}-${grind || type || usage}`;
-                    const existingItem = cart.find(item => item.compositeId === compositeId);
-                    if (existingItem) {
-                        existingItem.quantity++;
-                    } else {
-                        cart.push({
-                            ...product,
-                            compositeId,
-                            capacity,
-                            caffeine,
-                            grind,
-                            type,
-                            usage,
-                            quantity: 1
-                        });
-                    }
-                    updateCart();
-                    toggleModal();
-                });
-            });
-        }
-
-        // Category Filter
-        document.querySelectorAll('.category-filter').forEach(btn => {
+        quickQuestions.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                console.log('Category filter clicked:', e.target.dataset.category);
-                renderProducts(e.target.dataset.category);
+                const questionType = e.target.dataset.question;
+                let response = '';
+                switch (questionType) {
+                    case 'promotions':
+                        response = 'Nous avons actuellement plusieurs promotions:<br>- 15% sur tous les cafés éthiopiens<br>- Pack découverte thé à 29€ au lieu de 35€<br>- Livraison offerte à partir de 50€ d\'achat';
+                        break;
+                    case 'recommendations':
+                        response = 'En fonction de vos goûts, je pourrais vous recommander:<br>- Notre café Colombien pour les amateurs de douceur<br>- Le thé Matcha premium pour les antioxydants<br>- L\'huile essentielle de lavande pour la relaxation';
+                        break;
+                    case 'livraison':
+                        response = 'Les délais de livraison sont:<br>- 2-3 jours pour Paris et banlieue<br>- 3-5 jours pour le reste de la France<br>- 5-7 jours pour l\'Europe';
+                        break;
+                }
+                addMessage(response, 'bot');
             });
         });
 
-        // Show Confirmation Message
-        function showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total) {
-            console.log('Showing confirmation message');
+        function addMessage(text, sender) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = 'confirmation-message';
-            messageDiv.innerHTML = `
-                <p class="font-bold">Commande passée !</p>
-                <p>Client: ${firstName} ${lastName}</p>
-                <p>Email: ${email}</p>
-                <p>Adresse: ${address}, ${city}, ${postalCode}</p>
-                <p>Méthode: ${paymentMethod === 'visa' ? 'Visa' : paymentMethod === 'mastercard' ? 'Mastercard' : paymentMethod === 'paypal' ? 'PayPal' : paymentMethod === 'usdt' ? 'USDT' : 'Virement bancaire'}${paymentMethod === 'usdt' ? ` (Blockchain: ${blockchain.charAt(0).toUpperCase() + blockchain.slice(1)})` : ''}</p>
-                <p>Montant: ${total.toFixed(2)}€</p>
-                <p class="font-bold mt-2">Merci pour votre achat !</p>
-            `;
-            document.body.appendChild(messageDiv);
-            setTimeout(() => {
-                messageDiv.remove();
-            }, 5000);
-        }
-
-        // Confirm Order
-        confirmBtn.addEventListener('click', () => {
-            console.log('Confirm button clicked');
-            if (cart.length === 0) {
-                alert('Votre panier est vide');
-                return;
-            }
-            const firstName = firstNameInput.value.trim();
-            const lastName = lastNameInput.value.trim();
-            const email = emailInput.value.trim();
-            const address = addressInput.value.trim();
-            const city = cityInput.value.trim();
-            const postalCode = postalCodeInput.value.trim();
-            const paymentMethod = paymentSelect.value;
-            const blockchain = paymentMethod === 'usdt' ? blockchainSelect.value : '';
-
-            if (!firstName || !lastName || !email || !email.includes('@') || !address || !city || !postalCode) {
-                alert('Veuillez remplir tous les champs correctement');
-                return;
-            }
-            if (paymentMethod === 'usdt' && !blockchain) {
-                alert('Veuillez sélectionner une blockchain pour le paiement USDT');
-                return;
-            }
-
-            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total);
-            console.log('Order confirmed:', { firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total, cart });
-            cart = [];
-            firstNameInput.value = '';
-            lastNameInput.value = '';
-            emailInput.value = '';
-            addressInput.value = '';
-            cityInput.value = '';
-            postalCodeInput.value = '';
-            blockchainSelect.value = 'arbitrum';
-            updateBlockchainVisibility();
-            updateCart();
-            toggleModal();
-        });
-
-        // USDT Price
-        function fetchUsdtPrice() {
-            console.log('Fetching USDT price');
-            const usdtPriceDisplay = document.getElementById('usdtPriceDisplay');
-            if (usdtPriceDisplay) {
-                fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd')
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('USDT price fetched:', data);
-                        usdtPriceDisplay.textContent = `Prix USDT : ${data.tether.usd} USD`;
-                        usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
-                    })
-                    .catch(error => {
-                        console.error('Erreur API:', error);
-                        usdtPriceDisplay.textContent = 'Erreur prix USDT';
-                        usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
-                    });
-            } else {
-                console.error('usdtPriceDisplay not found');
-            }
-        }
-
-        // Contact Form
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('contact-name').value.trim();
-            const email = document.getElementById('contact-email').value.trim();
-            const message = document.getElementById('contact-message').value.trim();
-
-            if (name && email && email.includes('@') && message) {
-                alert('Message envoyé avec succès ! Nous vous contacterons bientôt.');
-                contactForm.reset();
-            } else {
-                alert('Veuillez remplir tous les champs correctement.');
-            }
-        });
-
-        // Newsletter
-        newsletterSubmit.addEventListener('click', () => {
-            const email = newsletterEmail.value.trim();
-            if (email && email.includes('@')) {
-                alert('Inscription à la newsletter réussie !');
-                newsletterEmail.value = '';
-                newsletterBanner.classList.add('hidden');
-            } else {
-                alert('Veuillez entrer un email valide.');
-            }
-        });
-
-        // Toggle Newsletter Banner
-        setTimeout(() => {
-            newsletterBanner.classList.remove('hidden');
-        }, 5000);
-
-        // Chatbot
-        function addChatMessage(message, isUser = false) {
-            console.log('Adding chat message:', message, 'isUser:', isUser);
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
-            messageDiv.textContent = message;
+            messageDiv.className = `chatbot-message mb-2 p-3 rounded-lg ${sender === 'user' ? 'bg-red-100 ml-8' : 'bg-gray-100 mr-8'}`;
+            messageDiv.innerHTML = `<p>${text}</p>`;
             chatbotMessages.appendChild(messageDiv);
             chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
         }
 
-        function getBotResponse(userInput) {
-            console.log('Processing user input:', userInput);
-            userInput = userInput.toLowerCase().trim();
-            if (userInput.includes('café') || userInput.includes('coffee')) {
-                return 'Nos cafés : Yirgacheffe, Colombien Supremo, Kenyan AA. Choisissez 250g/500g/1kg, entier/moulu/espresso, classique/décaféiné.';
-            } else if (userInput.includes('contenance café') || userInput.includes('poids café')) {
-                return 'Cafés disponibles en 250g, 500g, ou 1kg.';
-            } else if (userInput.includes('caféine') || userInput.includes('déca')) {
-                return 'Choisissez classique (avec caféine) ou décaféiné pour chaque café.';
-            } else if (userInput.includes('moulu') || userInput.includes('grain') || userInput.includes('espresso')) {
-                return 'Cafés disponibles en grain entier, moulu, ou espresso.';
-            } else if (userInput.includes('thé') || userInput.includes('tea')) {
-                return 'Nos thés : Sencha (vert), Darjeeling (noir), Pai Mu Tan (blanc). Choisissez 100g/200g/500g.';
-            } else if (userInput.includes('contenance thé') || userInput.includes('poids thé')) {
-                return 'Thés disponibles en 100g, 200g, ou 500g.';
-            } else if (userInput.includes('huile') || userInput.includes('oil')) {
-                return 'Nos huiles essentielles : Lavande (relaxant), Menthe Poivrée (énergisant), Eucalyptus (purifiant). Choisissez 10ml/30ml/50ml.';
-            } else if (userInput.includes('contenance huile') || userInput.includes('volume huile')) {
-                return 'Huiles essentielles en 10ml, 30ml, ou 50ml.';
-            } else if (userInput.includes('livraison') || userInput.includes('délai')) {
-                return 'Livraison en 3-5 jours ouvrables. Contactez-nous pour plus de détails !';
-            } else if (userInput.includes('paiement') || userInput.includes('payer') || userInput.includes('usdt')) {
-                return 'Nous acceptons Visa, Mastercard, PayPal, USDT (via Arbitrum, Optimism, Base, Linea), et Virement bancaire.';
-            } else if (userInput.includes('blockchain') || userInput.includes('chain')) {
-                return 'Pour USDT, choisissez parmi Arbitrum, Optimism, Base, ou Linea dans le formulaire de paiement.';
-            } else if (userInput.includes('panier') || userInput.includes('cart')) {
-                return 'Ajoutez des produits via "Ajouter". Consultez le panier via l’icône en haut à droite.';
-            } else if (userInput.includes('contact') || userInput.includes('email')) {
-                return 'Contactez-nous à contact@terroir-aromates.com ou via le formulaire sur la page Contact.';
-            } else if (userInput.includes('promotion') || userInput.includes('offre')) {
-                return 'Découvrez nos promotions sur la page Promotions !';
-            } else if (userInput.includes('newsletter')) {
-                return 'Inscrivez-vous à notre newsletter en bas de page pour des offres exclusives.';
-            } else {
-                return 'Désolé, je n’ai pas compris. Parlez-moi de café, thé, huiles, paiement, contact, promotions ou newsletter !';
+        sendChatbotMessage.addEventListener('click', () => {
+            const message = chatbotInput.value.trim();
+            if (message) {
+                addMessage(message, 'user');
+                chatbotInput.value = '';
+                setTimeout(() => {
+                    addMessage('Merci pour votre message! Un de nos conseillers vous répondra rapidement. En attendant, voici notre sélection du moment: <a href="#products" class="text-red-800 font-medium">Découvrir nos produits</a>', 'bot');
+                }, 1000);
             }
-        }
-
-        chatbotToggle.addEventListener('click', () => {
-            console.log('Chatbot toggle clicked');
-            chatbotContainer.classList.toggle('open');
         });
 
         chatbotInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && chatbotInput.value.trim()) {
-                console.log('Chatbot input submitted:', chatbotInput.value);
-                const userMessage = chatbotInput.value.trim();
-                addChatMessage(userMessage, true);
-                const botResponse = getBotResponse(userMessage);
-                setTimeout(() => {
-                    addChatMessage(botResponse);
-                }, 500);
-                chatbotInput.value = '';
+            if (e.key === 'Enter') sendChatbotMessage.click();
+        });
+
+        // Translations
+        const translations = {
+            fr: {
+                title: "Terroir & Aromates",
+                tagline: "Cafés, Thés & Huiles Essentielles",
+                menu: ["Nos Produits", "Notre Histoire", "Contact"],
+                heroTitle: "Découvrez des saveurs d'exception",
+                heroText: "Cafés de terroir, thés raffinés et huiles essentielles pures pour éveiller vos sens",
+                cta: "Explorer notre sélection"
+            },
+            en: {
+                title: "Terroir & Aromas",
+                tagline: "Coffees, Teas & Essential Oils",
+                menu: ["Our Products", "Our Story", "Contact"],
+                heroTitle: "Discover exceptional flavors",
+                heroText: "Terroir coffees, refined teas and pure essential oils to awaken your senses",
+                cta: "Explore our selection"
+            },
+            es: {
+                title: "Terruño & Aromas",
+                tagline: "Cafés, Tés & Aceites Esenciales",
+                menu: ["Nuestros Productos", "Nuestra Historia", "Contacto"],
+                heroTitle: "Descubre sabores excepcionales",
+                heroText: "Cafés de terruño, tés refinados y aceites esenciales puros para despertar tus sentidos",
+                cta: "Explorar nuestra selección"
+            }
+        };
+
+        let currentLang = 'fr';
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentLang = btn.dataset.lang;
+                updateLanguage();
+            });
+        });
+
+        function updateLanguage() {
+            const langData = translations[currentLang];
+            document.querySelector('h1').textContent = langData.title;
+            document.querySelector('title').textContent = `${langData.title} - ${langData.tagline}`;
+            document.querySelectorAll('nav a').forEach((link, i) => link.textContent = langData.menu[i]);
+            document.querySelector('.hero h2').textContent = langData.heroTitle;
+            document.querySelector('.hero p').textContent = langData.heroText;
+            document.querySelector('.hero a').textContent = langData.cta;
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+        // Shopping Cart Functionality
+        const cartBtn = document.getElementById('cart-btn');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const checkoutModal = document.getElementById('checkout-modal');
+        const closeCheckout = document.getElementById('close-checkout');
+        const cancelCheckout = document.getElementById('cancel-checkout');
+        const checkoutForm = document.getElementById('checkout-form');
+
+        let cart = [];
+
+        function toggleCart() {
+            cartSidebar.classList.toggle('open');
+            cartOverlay.classList.toggle('hidden');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        cartBtn.addEventListener('click', toggleCart);
+        closeCartBtn.addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
+
+        function updateCart() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center py-8">Votre panier est vide</p>';
+            } else {
+                cartItemsContainer.innerHTML = '';
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'flex items-center py-4 border-b';
+                    cartItem.innerHTML = `
+                        <img src="${item.img}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
+                        <div class="ml-4 flex-1">
+                            <h4 class="font-medium">${item.name}</h4>
+                            <p class="text-gray-600 text-sm">${item.price.toFixed(2)}€</p>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="decrease-quantity text-gray-500 hover:text-red-800 px-2" data-id="${item.id}">
+                                <i class="fas fa-minus text-xs"></i>
+                            </button>
+                            <span class="quantity mx-2">${item.quantity}</span>
+                            <button class="increase-quantity text-gray-500 hover:text-red-800 px-2" data-id="${item.id}">
+                                <i class="fas fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                        <button class="remove-item ml-4 text-gray-500 hover:text-red-800" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>`;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+
+                document.querySelectorAll('.increase-quantity').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').dataset.id;
+                        const item = cart.find(item => item.id === id);
+                        if (item) item.quantity += 1;
+                        updateCart();
+                    });
+                });
+
+                document.querySelectorAll('.decrease-quantity').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').dataset.id;
+                        const item = cart.find(item => item.id === id);
+                        if (item) {
+                            item.quantity -= 1;
+                            if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+                        }
+                        updateCart();
+                    });
+                });
+
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').dataset.id;
+                        cart = cart.filter(item => item.id !== id);
+                        updateCart();
+                    });
+                });
+            }
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartSubtotal.textContent = subtotal.toFixed(2) + '€';
+            cartTotal.textContent = subtotal.toFixed(2) + '€';
+        }
+
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Votre panier est vide');
+                return;
+            }
+            toggleCart();
+            checkoutModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        });
+
+        closeCheckout.addEventListener('click', () => {
+            checkoutModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        });
+
+        cancelCheckout.addEventListener('click', () => {
+            checkoutModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        });
+
+        const exchangeRates = {
+            eur: 1,
+            usd: 1.08,
+            btc: 0.000016,
+            usdt: 1.08
+        };
+
+        checkoutForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const paymentMethod = document.getElementById('payment').value;
+            const currency = document.querySelector('input[name="currency"]:checked').value;
+            const subtotalEUR = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = subtotalEUR * exchangeRates[currency];
+            alert(`Commande passée avec succès!\nMéthode: ${paymentMethod}\nMontant: ${total.toFixed(2)} ${currency.toUpperCase()}\nMerci pour votre achat.`);
+            cart = [];
+            updateCart();
+            checkoutModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        });
+
+        document.getElementById('payment').addEventListener('change', function () {
+            const currencySelector = document.getElementById('currency-selector');
+            const usdtNetworkSelector = document.getElementById('usdt-network-selector');
+            const blockchainContainer = document.getElementById('blockchain-container');
+            if (this.value === 'bitcoin') {
+                document.querySelector('input[value="btc"]').checked = true;
+                currencySelector.style.display = 'none';
+                usdtNetworkSelector.classList.add('hidden');
+                blockchainContainer.style.display = 'block';
+                document.getElementById('blockchain').value = 'Bitcoin SegWit'; // Sélectionne Bitcoin SegWit par défaut pour Bitcoin
+            } else if (this.value === 'usdt') {
+                document.querySelector('input[value="usdt"]').checked = true;
+                currencySelector.style.display = 'none';
+                usdtNetworkSelector.classList.remove('hidden');
+                blockchainContainer.style.display = 'block';
+                document.getElementById('blockchain').value = 'Arbitrum'; // Sélectionne Arbitrum par défaut pour USDT
+            } else {
+                document.querySelector('input[value="eur"]').checked = true;
+                currencySelector.style.display = 'block';
+                usdtNetworkSelector.classList.add('hidden');
+                blockchainContainer.style.display = 'none';
             }
         });
 
-        // Initialize
+        document.getElementById('checkout-form').addEventListener('submit', function (e) {
+            const payment = document.getElementById('payment').value;
+            const blockchain = document.getElementById('blockchain');
+            if (payment === 'bitcoin' || payment === 'usdt') {
+                blockchain.setAttribute('required', 'required');
+            } else {
+                blockchain.removeAttribute('required');
+            }
+        });
+
+        // Product rendering and category tabs
+        function renderProducts() {
+            const coffeeGrid = document.querySelector('.coffee-grid');
+            const teaGrid = document.querySelector('.tea-grid');
+            const oilGrid = document.querySelector('.oil-grid');
+
+            // Clear grids
+            coffeeGrid.innerHTML = '';
+            teaGrid.innerHTML = '';
+            oilGrid.innerHTML = '';
+
+            // Filter and render products by category
+            products.forEach(product => {
+                const productCard = `
+                    <div class="product-card ${product.category} bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                        <div class="relative">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover">
+                            ${product.badge ? `<div class="absolute top-2 right-2 bg-red-800 text-white text-xs px-2 py-1 rounded">${product.badge}</div>` : ''}
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold mb-2">${product.name}</h3>
+                            <p class="text-gray-600 mb-4">${product.description}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-800 font-bold text-lg">${product.price.toFixed(2)}€</span>
+                                <button class="customize-btn bg-beige-200 hover:bg-beige-300 text-gray-800 px-4 py-2 rounded transition" data-product="${product.id}">Personnaliser</button>
+                            </div>
+                        </div>
+                        <div class="customization-panel bg-gray-50 px-4 pb-4">
+                            <div class="pt-2 mb-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Taille</label>
+                                <select class="w-full p-2 border rounded">
+                                    ${product.sizes.map(size => `<option>${size}</option>`).join('')}
+                                </select>
+                            </div>
+                            ${product.category === 'coffee' ? `
+                            <div class="mb-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Niveau de caféine</label>
+                                <div class="flex space-x-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="caffeine-${product.id}" checked class="text-red-800">
+                                        <span class="ml-2">Standard</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="caffeine-${product.id}" class="text-red-800">
+                                        <span class="ml-2">Décaféiné</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Mouture</label>
+                                <select class="w-full p-2 border rounded">
+                                    <option>Grains entiers</option>
+                                    <option>Mouture fine (expresso)</option>
+                                    <option>Mouture moyenne (filtre)</option>
+                                    <option>Mouture grossière (cafetière française)</option>
+                                </select>
+                            </div>
+                            ` : ''}
+                            <button class="add-to-cart w-full bg-red-800 hover:bg-red-900 text-white py-2 rounded transition" data-product-id="${product.id}">Ajouter au panier</button>
+                        </div>
+                    </div>`;
+
+                if (product.category === 'coffee') {
+                    coffeeGrid.insertAdjacentHTML('beforeend', productCard);
+                } else if (product.category === 'tea') {
+                    teaGrid.insertAdjacentHTML('beforeend', productCard);
+                } else if (product.category === 'oil') {
+                    oilGrid.insertAdjacentHTML('beforeend', productCard);
+                }
+            });
+
+            // Re-attach event listeners for customization buttons
+            document.querySelectorAll('.customize-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productCard = e.target.closest('.product-card');
+                    const panel = productCard.querySelector('.customization-panel');
+                    document.querySelectorAll('.customization-panel').forEach(p => {
+                        if (p !== panel) p.classList.remove('open');
+                    });
+                    panel.classList.toggle('open');
+                });
+            });
+
+            // Re-attach event listeners for add-to-cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = e.target.dataset.productId;
+                    const productCard = e.target.closest('.product-card');
+                    const productName = productCard.querySelector('h3').textContent;
+                    const productPrice = productCard.querySelector('span').textContent;
+                    const productImg = productCard.querySelector('img').src;
+
+                    const existingItem = cart.find(item => item.id === productId);
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id: productId,
+                            name: productName,
+                            price: parseFloat(productPrice.replace('€', '').replace(',', '.')),
+                            quantity: 1,
+                            img: productImg
+                        });
+                    }
+
+                    updateCart();
+                    productCard.querySelector('.customization-panel').classList.remove('open');
+
+                    const successMsg = document.createElement('div');
+                    successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50 animate-fade-in-out';
+                    successMsg.textContent = `${productName} ajouté au panier`;
+                    document.body.appendChild(successMsg);
+                    setTimeout(() => successMsg.remove(), 3000);
+                });
+            });
+        }
+
+        // Initialize everything after DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM loaded');
             renderProducts();
-            updateCart();
-            fetchUsdtPrice();
-            addChatMessage('Bonjour ! Posez-moi une question sur nos cafés, thés, huiles essentielles, paiement, contact, promotions ou newsletter !');
+
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const coffeeGrid = document.querySelector('.coffee-grid');
+            const teaGrid = document.querySelector('.tea-grid');
+            const oilGrid = document.querySelector('.oil-grid');
+            const coffeeSection = coffeeGrid?.closest('.mb-12');
+            const teaSection = teaGrid?.closest('.mb-12');
+            const oilSection = oilGrid?.closest('.mb-12');
+
+            if (coffeeSection && teaSection && oilSection) {
+                categoryTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        categoryTabs.forEach(t => {
+                            t.classList.remove('bg-red-800', 'text-white');
+                            t.classList.add('bg-beige-200', 'text-gray-700');
+                        });
+                        tab.classList.remove('bg-beige-200', 'text-gray-700');
+                        tab.classList.add('bg-red-800', 'text-white');
+
+                        const category = tab.dataset.category;
+                        coffeeSection.style.display = category === 'coffee' ? 'block' : 'none';
+                        teaSection.style.display = category === 'tea' ? 'block' : 'none';
+                        oilSection.style.display = category === 'oil' ? 'block' : 'none';
+                    });
+                });
+
+                // Show coffee section by default
+                coffeeSection.style.display = 'block';
+                teaSection.style.display = 'none';
+                oilSection.style.display = 'none';
+            } else {
+                console.error('One or more category sections not found in the DOM.');
+            }
         });
     </script>
+</body>
+</html>
