@@ -43,7 +43,7 @@
         }
         .chatbot {
             position: fixed;
-            bottom: 8rem; /* Ajusté plus haut pour être entièrement visible */
+            bottom: 8rem;
             right: 1rem;
             z-index: 100;
         }
@@ -77,7 +77,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(245, 245, 220, 0.7); /* Fond beige semi-transparent, inchangé */
+            background: rgba(245, 245, 220, 0.7);
             color: #4b5563;
             padding: 1rem;
             text-align: center;
@@ -119,9 +119,6 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             border-radius: 0.25rem;
         }
-        .dropdown-content .dropdown-sub a {
-            padding: 0.5rem 1rem;
-        }
         .dropdown-content .sub-dropdown:hover .dropdown-sub {
             display: block;
         }
@@ -141,6 +138,7 @@
                             <a href="coffee1.html">Café Éthiopien Yirgacheffe</a>
                             <a href="coffee2.html">Café Colombien Supremo</a>
                             <a href="coffee3.html">Café Kenyan AA</a>
+                            <a href="coffee4.html">Café Época</a>
                         </div>
                         <a href="#" class="sub-dropdown">Thé</a>
                         <div class="dropdown-sub">
@@ -221,7 +219,7 @@
                             </label>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">12.90€</span>
+                            <span id="price-coffee1" class="text-red-800 font-bold">12.90€</span>
                             <a href="coffee1.html" class="text-blue-600 hover:underline">Détails</a>
                             <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee1">Ajouter</button>
                         </div>
@@ -259,7 +257,7 @@
                             </label>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">14.50€</span>
+                            <span id="price-coffee2" class="text-red-800 font-bold">14.50€</span>
                             <a href="coffee2.html" class="text-blue-600 hover:underline">Détails</a>
                             <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee2">Ajouter</button>
                         </div>
@@ -297,9 +295,47 @@
                             </label>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">15.20€</span>
+                            <span id="price-coffee3" class="text-red-800 font-bold">15.20€</span>
                             <a href="coffee3.html" class="text-blue-600 hover:underline">Détails</a>
                             <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee3">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card bg-white rounded-lg shadow-md transition">
+                    <img src="images/cafe/coffee-epoca.jpg" alt="Café Época" class="w-full h-48 object-cover rounded-t-lg">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold">Café Época</h3>
+                        <p class="text-gray-600 text-sm mb-2">Notes de saveur des fruits tropicaux, du chocolat et des noix.</p>
+                        <div class="mb-2">
+                            <label for="capacity-coffee4" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
+                            <select id="capacity-coffee4" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                                <option value="250g">250g</option>
+                                <option value="500g">500g</option>
+                                <option value="1kg">1kg</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="grind-coffee4" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
+                            <select id="grind-coffee4" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                                <option value="entier">Entier</option>
+                                <option value="moulu">Moulu</option>
+                                <option value="espresso">Espresso</option>
+                            </select>
+                        </div>
+                        <div class="mb-2 flex items-center space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="caffeine-coffee4" value="classique" checked class="mr-2">
+                                Classique
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="caffeine-coffee4" value="décaféiné" class="mr-2">
+                                Décaféiné
+                            </label>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span id="price-coffee4" class="text-red-800 font-bold">149.71€</span>
+                            <a href="coffee4.html" class="text-blue-600 hover:underline">Détails</a>
+                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee4">Ajouter</button>
                         </div>
                     </div>
                 </div>
@@ -680,6 +716,14 @@
                 description: 'Notes de fruits rouges.'
             },
             {
+                id: 'coffee4',
+                name: 'Café Época',
+                price: 149.71,
+                category: 'coffee',
+                image: 'images/cafe/coffee-epoca.jpg',
+                description: 'Notes de saveur des fruits tropicaux, du chocolat et des noix.'
+            },
+            {
                 id: 'tea1',
                 name: 'Thé Vert Sencha',
                 price: 9.80,
@@ -903,7 +947,7 @@
                             </div>
                         `}
                         <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">${product.price.toFixed(2)}€</span>
+                            <span id="price-${product.id}" class="text-red-800 font-bold">${product.price.toFixed(2)}€</span>
                             <a href="${product.id}.html" class="text-blue-600 hover:underline">Détails</a>
                             <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="${product.id}">Ajouter</button>
                         </div>
@@ -930,6 +974,7 @@
                     }
                     const compositeId = `${productId}-${capacity}-${caffeine || type || usage}-${grind || type || usage}`;
                     const existingItem = cart.find(item => item.compositeId === compositeId);
+                    const price = product.price; // Prix fixe pour l'instant
                     if (existingItem) {
                         existingItem.quantity++;
                     } else {
@@ -941,11 +986,23 @@
                             grind,
                             type,
                             usage,
-                            quantity: 1
+                            quantity: 1,
+                            price: price
                         });
                     }
                     updateCart();
                     toggleModal();
+                });
+            });
+
+            // Update prices dynamically
+            document.querySelectorAll('[id^="capacity-"]').forEach(select => {
+                const productId = select.id.replace('capacity-', '');
+                const product = products.find(p => p.id === productId);
+                select.addEventListener('change', () => {
+                    const capacity = select.value;
+                    const price = product.price; // Prix fixe pour l'instant
+                    document.getElementById(`price-${productId}`).textContent = `${price.toFixed(2)}€`;
                 });
             });
         }
@@ -1086,7 +1143,7 @@
         function getBotResponse(userInput) {
             userInput = userInput.toLowerCase().trim();
             if (userInput.includes('café') || userInput.includes('coffee')) {
-                return 'Nos cafés : Yirgacheffe, Colombien Supremo, Kenyan AA. Choisissez 250g/500g/1kg, entier/moulu/espresso, classique/décaféiné.';
+                return 'Nos cafés : Yirgacheffe, Colombien Supremo, Kenyan AA, Época. Choisissez 250g/500g/1kg, entier/moulu/espresso, classique/décaféiné.';
             } else if (userInput.includes('contenance café') || userInput.includes('poids café')) {
                 return 'Cafés disponibles en 250g, 500g, ou 1kg.';
             } else if (userInput.includes('caféine') || userInput.includes('déca')) {
