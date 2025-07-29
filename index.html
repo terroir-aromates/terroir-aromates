@@ -43,7 +43,7 @@
         }
         .chatbot {
             position: fixed;
-            bottom: 8rem;
+            bottom: 1rem;
             right: 1rem;
             z-index: 100;
         }
@@ -77,50 +77,12 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(245, 245, 220, 0.7);
-            color: #4b5563;
+            background: #f5f5dc;
+            color: #4b5563; /* Changé de white à text-gray-600 */
             padding: 1rem;
             text-align: center;
             z-index: 100;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            min-width: 160px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 0.25rem;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .dropdown-content a {
-            color: #4b5563;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {
-            background-color: #f3f4f6;
-        }
-        .dropdown-content .dropdown-sub {
-            display: none;
-            position: absolute;
-            left: 100%;
-            top: 0;
-            background-color: #fff;
-            min-width: 160px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            border-radius: 0.25rem;
-        }
-        .dropdown-content .sub-dropdown:hover .dropdown-sub {
-            display: block;
         }
     </style>
 </head>
@@ -130,41 +92,15 @@
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-red-800">Terroir & Aromates</h1>
             <nav class="space-x-4">
-                <div class="dropdown">
-                    <a href="#" class="text-gray-700 hover:text-red-800">Produits</a>
-                    <div class="dropdown-content">
-                        <a href="#" class="sub-dropdown">Café</a>
-                        <div class="dropdown-sub">
-                            <a href="coffee1.html">Café Éthiopien Yirgacheffe</a>
-                            <a href="coffee2.html">Café Colombien Supremo</a>
-                            <a href="coffee3.html">Café Kenyan AA</a>
-                            <a href="coffee4.html">Café Época</a>
-                        </div>
-                        <a href="#" class="sub-dropdown">Thé</a>
-                        <div class="dropdown-sub">
-                            <a href="tea1.html">Thé Vert Sencha</a>
-                            <a href="tea2.html">Thé Noir Darjeeling</a>
-                            <a href="tea3.html">Thé Blanc Pai Mu Tan</a>
-                        </div>
-                        <a href="#" class="sub-dropdown">Huiles essentielles</a>
-                        <div class="dropdown-sub">
-                            <a href="oil1.html">Huile Essentielle Lavande</a>
-                            <a href="oil2.html">Huile Essentielle Menthe Poivrée</a>
-                            <a href="oil3.html">Huile Essentielle Eucalyptus</a>
-                        </div>
-                    </div>
-                </div>
+                <a href="#products" class="text-gray-700 hover:text-red-800">Produits</a>
                 <a href="#about" class="text-gray-700 hover:text-red-800">À propos</a>
                 <a href="#contact" class="text-gray-700 hover:text-red-800">Contact</a>
-                <a href="#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
+                <a href="promotions.html" class="text-gray-700 hover:text-red-800">Promotions</a>
             </nav>
-            <div class="flex space-x-4">
-                <a href="login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
-                <button id="cart-btn" class="relative">
-                    <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                </button>
-            </div>
+            <button id="cart-btn" class="relative">
+                <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            </button>
         </div>
     </header>
 
@@ -186,357 +122,12 @@
                 <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="tea">Thé</button>
                 <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="oil">Huiles essentielles</button>
             </div>
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="images/cafe/coffee-yirgacheffe.jpg" alt="Café Éthiopien Yirgacheffe" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Café Éthiopien Yirgacheffe</h3>
-                        <p class="text-gray-600 text-sm mb-2">Notes florales et citronnées.</p>
-                        <div class="mb-2">
-                            <label for="capacity-coffee1" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-coffee1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="250g">250g</option>
-                                <option value="500g">500g</option>
-                                <option value="1kg">1kg</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="grind-coffee1" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
-                            <select id="grind-coffee1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="entier">Entier</option>
-                                <option value="moulu">Moulu</option>
-                                <option value="espresso">Espresso</option>
-                            </select>
-                        </div>
-                        <div class="mb-2 flex items-center space-x-4">
-                            <label class="flex items-center">
-                                <input type="radio" name="caffeine-coffee1" value="classique" checked class="mr-2">
-                                Classique
-                            </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="caffeine-coffee1" value="décaféiné" class="mr-2">
-                                Décaféiné
-                            </label>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span id="price-coffee1" class="text-red-800 font-bold">12.90€</span>
-                            <a href="coffee1.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee1">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="images/cafe/coffee-colombien.jpg" alt="Café Colombien Supremo" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Café Colombien Supremo</h3>
-                        <p class="text-gray-600 text-sm mb-2">Arômes de chocolat et noisette.</p>
-                        <div class="mb-2">
-                            <label for="capacity-coffee2" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-coffee2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="250g">250g</option>
-                                <option value="500g">500g</option>
-                                <option value="1kg">1kg</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="grind-coffee2" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
-                            <select id="grind-coffee2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="entier">Entier</option>
-                                <option value="moulu">Moulu</option>
-                                <option value="espresso">Espresso</option>
-                            </select>
-                        </div>
-                        <div class="mb-2 flex items-center space-x-4">
-                            <label class="flex items-center">
-                                <input type="radio" name="caffeine-coffee2" value="classique" checked class="mr-2">
-                                Classique
-                            </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="caffeine-coffee2" value="décaféiné" class="mr-2">
-                                Décaféiné
-                            </label>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span id="price-coffee2" class="text-red-800 font-bold">14.50€</span>
-                            <a href="coffee2.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee2">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="images/cafe/coffee-kenyan-aa.jpg" alt="Café Kenyan AA" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Café Kenyan AA</h3>
-                        <p class="text-gray-600 text-sm mb-2">Notes de fruits rouges.</p>
-                        <div class="mb-2">
-                            <label for="capacity-coffee3" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-coffee3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="250g">250g</option>
-                                <option value="500g">500g</option>
-                                <option value="1kg">1kg</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="grind-coffee3" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
-                            <select id="grind-coffee3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="entier">Entier</option>
-                                <option value="moulu">Moulu</option>
-                                <option value="espresso">Espresso</option>
-                            </select>
-                        </div>
-                        <div class="mb-2 flex items-center space-x-4">
-                            <label class="flex items-center">
-                                <input type="radio" name="caffeine-coffee3" value="classique" checked class="mr-2">
-                                Classique
-                            </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="caffeine-coffee3" value="décaféiné" class="mr-2">
-                                Décaféiné
-                            </label>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span id="price-coffee3" class="text-red-800 font-bold">15.20€</span>
-                            <a href="coffee3.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee3">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="images/cafe/coffee-epoca.jpg" alt="Café Época" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Café Época</h3>
-                        <p class="text-gray-600 text-sm mb-2">Notes de saveur des fruits tropicaux, du chocolat et des noix.</p>
-                        <div class="mb-2">
-                            <label for="capacity-coffee4" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-coffee4" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="250g">250g</option>
-                                <option value="500g">500g</option>
-                                <option value="1kg">1kg</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="grind-coffee4" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
-                            <select id="grind-coffee4" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="entier">Entier</option>
-                                <option value="moulu">Moulu</option>
-                                <option value="espresso">Espresso</option>
-                            </select>
-                        </div>
-                        <div class="mb-2 flex items-center space-x-4">
-                            <label class="flex items-center">
-                                <input type="radio" name="caffeine-coffee4" value="classique" checked class="mr-2">
-                                Classique
-                            </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="caffeine-coffee4" value="décaféiné" class="mr-2">
-                                Décaféiné
-                            </label>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span id="price-coffee4" class="text-red-800 font-bold">149.71€</span>
-                            <a href="coffee4.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee4">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="images/the/tea-sencha.jpg" alt="Thé Vert Sencha" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Thé Vert Sencha</h3>
-                        <p class="text-gray-600 text-sm mb-2">Frais et herbacé.</p>
-                        <div class="mb-2">
-                            <label for="capacity-tea1" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-tea1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="100g">100g</option>
-                                <option value="200g">200g</option>
-                                <option value="500g">500g</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="type-tea1" class="block text-gray-700 text-sm font-medium mb-1">Type</label>
-                            <select id="type-tea1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="vert">Vert</option>
-                            </select>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">9.80€</span>
-                            <a href="tea1.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="tea1">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="images/the/tea-darjeeling.jpg" alt="Thé Noir Darjeeling" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Thé Noir Darjeeling</h3>
-                        <p class="text-gray-600 text-sm mb-2">Notes muscatées.</p>
-                        <div class="mb-2">
-                            <label for="capacity-tea2" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-tea2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="100g">100g</option>
-                                <option value="200g">200g</option>
-                                <option value="500g">500g</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="type-tea2" class="block text-gray-700 text-sm font-medium mb-1">Type</label>
-                            <select id="type-tea2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="noir">Noir</option>
-                            </select>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">11.30€</span>
-                            <a href="tea2.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="tea2">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="images/the/tea-pai-mu-tan.jpg" alt="Thé Blanc Pai Mu Tan" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Thé Blanc Pai Mu Tan</h3>
-                        <p class="text-gray-600 text-sm mb-2">Doux et floral.</p>
-                        <div class="mb-2">
-                            <label for="capacity-tea3" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-tea3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="100g">100g</option>
-                                <option value="200g">200g</option>
-                                <option value="500g">500g</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="type-tea3" class="block text-gray-700 text-sm font-medium mb-1">Type</label>
-                            <select id="type-tea3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="blanc">Blanc</option>
-                            </select>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">13.40€</span>
-                            <a href="tea3.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="tea3">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="images/huiles-essentielles/oil-lavande.jpg" alt="Huile Essentielle Lavande" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Huile Essentielle Lavande</h3>
-                        <p class="text-gray-600 text-sm mb-2">Relaxante, pour le sommeil.</p>
-                        <div class="mb-2">
-                            <label for="capacity-oil1" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-oil1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="10ml">10ml</option>
-                                <option value="30ml">30ml</option>
-                                <option value="50ml">50ml</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="usage-oil1" class="block text-gray-700 text-sm font-medium mb-1">Usage</label>
-                            <select id="usage-oil1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="relaxant">Relaxant</option>
-                            </select>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">8.90€</span>
-                            <a href="oil1.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="oil1">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="images/huiles-essentielles/oil-menthe.jpg" alt="Huile Essentielle Menthe Poivrée" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Huile Essentielle Menthe Poivrée</h3>
-                        <p class="text-gray-600 text-sm mb-2">Rafraîchissante, énergisante.</p>
-                        <div class="mb-2">
-                            <label for="capacity-oil2" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-oil2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="10ml">10ml</option>
-                                <option value="30ml">30ml</option>
-                                <option value="50ml">50ml</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="usage-oil2" class="block text-gray-700 text-sm font-medium mb-1">Usage</label>
-                            <select id="usage-oil2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="énergisant">Énergisant</option>
-                            </select>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">7.50€</span>
-                            <a href="oil2.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="oil2">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-                    <img src="images/huiles-essentielles/oil-eucalyptus.jpg" alt="Huile Essentielle Eucalyptus" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Huile Essentielle Eucalyptus</h3>
-                        <p class="text-gray-600 text-sm mb-2">Purifiante, pour la respiration.</p>
-                        <div class="mb-2">
-                            <label for="capacity-oil3" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-                            <select id="capacity-oil3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="10ml">10ml</option>
-                                <option value="30ml">30ml</option>
-                                <option value="50ml">50ml</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="usage-oil3" class="block text-gray-700 text-sm font-medium mb-1">Usage</label>
-                            <select id="usage-oil3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                                <option value="purifiant">Purifiant</option>
-                            </select>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-800 font-bold">6.80€</span>
-                            <a href="oil3.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="oil3">Ajouter</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Promotions -->
-    <section id="promotions" class="py-12 bg-beige-100">
-        <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center text-red-800 mb-8">Promotions</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="product-card bg-white rounded-lg shadow-md">
-                    <img src="images/cafe/coffee-kenyan-aa.jpg" alt="Café Kenyan AA" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Café Kenyan AA</h3>
-                        <p class="text-gray-600 text-sm mb-2">Notes de fruits rouges.</p>
-                        <span class="bg-red-800 text-white px-2 py-1 rounded text-sm">20% de réduction</span>
-                        <p class="text-red-800 font-bold mt-2">12.16€ <del>15.20€</del></p>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md">
-                    <img src="images/the/tea-pai-mu-tan.jpg" alt="Thé Blanc Pai Mu Tan" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Thé Blanc Pai Mu Tan</h3>
-                        <p class="text-gray-600 text-sm mb-2">Doux et floral.</p>
-                        <span class="bg-red-800 text-white px-2 py-1 rounded text-sm">15% de réduction</span>
-                        <p class="text-red-800 font-bold mt-2">11.39€ <del>13.40€</del></p>
-                    </div>
-                </div>
-                <div class="product-card bg-white rounded-lg shadow-md">
-                    <img src="images/huiles-essentielles/oil-eucalyptus.jpg" alt="Huile Essentielle Eucalyptus" class="w-full h-48 object-cover rounded-t-lg">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold">Huile Essentielle Eucalyptus</h3>
-                        <p class="text-gray-600 text-sm mb-2">Purifiante, pour la respiration.</p>
-                        <span class="bg-red-800 text-white px-2 py-1 rounded text-sm">10% de réduction</span>
-                        <p class="text-red-800 font-bold mt-2">6.12€ <del>6.80€</del></p>
-                    </div>
-                </div>
-            </div>
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
         </div>
     </section>
 
     <!-- About -->
-    <section id="about" class="py-12 bg-white">
+    <section id="about" class="py-12 bg-beige-100">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-2xl font-bold text-red-800 mb-4">À propos</h2>
             <p class="text-gray-600 mb-4">Terroir & Aromates célèbre les saveurs authentiques du monde entier. Depuis 2025, nous sélectionnons avec soin des cafés, thés et huiles essentielles pour vous offrir une expérience unique. <a href="#" class="text-red-800 underline">Découvrez notre histoire</a>.</p>
@@ -549,7 +140,7 @@
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="py-12 bg-beige-100">
+    <section id="contact" class="py-12 bg-white">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-2xl font-bold text-red-800 mb-4">Contact</h2>
             <p class="text-gray-600 mb-4">123 Rue des Saveurs, 75001 Paris, France | Email : contact@terroir-aromates.com</p>
@@ -615,25 +206,6 @@
                 </div>
             </div>
             <div class="mb-4">
-                <label for="shipping-carrier" class="block text-gray-700 text-sm font-medium mb-1">Transporteur</label>
-                <select id="shipping-carrier" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                    <option value="">Sélectionner un transporteur</option>
-                    <option value="ups">UPS</option>
-                    <option value="dhl">DHL</option>
-                    <option value="chronopost">Chronopost</option>
-                    <option value="mondialrelay">Mondial Relay</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <label for="shipping-method" class="block text-gray-700 text-sm font-medium mb-1">Mode de livraison</label>
-                <select id="shipping-method" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" disabled>
-                    <option value="">Sélectionner un mode</option>
-                </select>
-            </div>
-            <div class="mb-4">
-                <p id="shipping-details" class="text-gray-600 text-sm">Prix : -€ | Délai : - jours</p>
-            </div>
-            <div class="mb-4">
                 <label for="payment" class="block text-gray-700 text-sm font-medium mb-1">Paiement</label>
                 <select id="payment" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
                     <option value="visa">Visa</option>
@@ -674,7 +246,7 @@
 
     <!-- Newsletter Banner -->
     <div id="newsletter-banner" class="newsletter-banner hidden">
-        <p class="mb-2 text-gray-600">Inscrivez-vous à notre newsletter pour des offres exclusives !</p>
+        <p class="mb-2 text-gray-600">Inscrivez-vous à notre newsletter pour des offres exclusives !</p> <!-- Changé de color: white à text-gray-600 -->
         <div class="flex justify-center space-x-2">
             <input type="email" id="newsletter-email" class="px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre email">
             <button id="newsletter-submit" class="px-4 py-1.5 bg-red-800 hover:bg-red-900 text-white rounded transition">S’inscrire</button>
@@ -691,12 +263,13 @@
     <script>
         // Products
         const products = [
+            // Café
             {
                 id: 'coffee1',
                 name: 'Café Éthiopien Yirgacheffe',
                 price: 12.90,
                 category: 'coffee',
-                image: 'images/cafe/coffee-yirgacheffe.jpg',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Notes florales et citronnées.'
             },
             {
@@ -704,7 +277,7 @@
                 name: 'Café Colombien Supremo',
                 price: 14.50,
                 category: 'coffee',
-                image: 'images/cafe/coffee-colombien.jpg',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Arômes de chocolat et noisette.'
             },
             {
@@ -712,23 +285,16 @@
                 name: 'Café Kenyan AA',
                 price: 15.20,
                 category: 'coffee',
-                image: 'images/cafe/coffee-kenyan-aa.jpg',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Notes de fruits rouges.'
             },
-            {
-                id: 'coffee4',
-                name: 'Café Época',
-                price: 149.71,
-                category: 'coffee',
-                image: 'images/cafe/coffee-epoca.jpg',
-                description: 'Notes de saveur des fruits tropicaux, du chocolat et des noix.'
-            },
+            // Thé
             {
                 id: 'tea1',
                 name: 'Thé Vert Sencha',
                 price: 9.80,
                 category: 'tea',
-                image: 'images/the/tea-sencha.jpg',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Frais et herbacé.'
             },
             {
@@ -736,7 +302,7 @@
                 name: 'Thé Noir Darjeeling',
                 price: 11.30,
                 category: 'tea',
-                image: 'images/the/tea-darjeeling.jpg',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Notes muscatées.'
             },
             {
@@ -744,15 +310,16 @@
                 name: 'Thé Blanc Pai Mu Tan',
                 price: 13.40,
                 category: 'tea',
-                image: 'images/the/tea-pai-mu-tan.jpg',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Doux et floral.'
             },
+            // Huiles essentielles
             {
                 id: 'oil1',
                 name: 'Huile Essentielle Lavande',
                 price: 8.90,
                 category: 'oil',
-                image: 'images/huiles-essentielles/oil-lavande.jpg',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Relaxante, pour le sommeil.'
             },
             {
@@ -760,7 +327,7 @@
                 name: 'Huile Essentielle Menthe Poivrée',
                 price: 7.50,
                 category: 'oil',
-                image: 'images/huiles-essentielles/oil-menthe.jpg',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Rafraîchissante, énergisante.'
             },
             {
@@ -768,7 +335,7 @@
                 name: 'Huile Essentielle Eucalyptus',
                 price: 6.80,
                 category: 'oil',
-                image: 'images/huiles-essentielles/oil-eucalyptus.jpg',
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
                 description: 'Purifiante, pour la respiration.'
             }
         ];
@@ -802,24 +369,13 @@
         const newsletterBanner = document.getElementById('newsletter-banner');
         const newsletterEmail = document.getElementById('newsletter-email');
         const newsletterSubmit = document.getElementById('newsletter-submit');
-        const shippingCarrierSelect = document.getElementById('shipping-carrier');
-        const shippingMethodSelect = document.getElementById('shipping-method');
-        const shippingDetails = document.getElementById('shipping-details');
-
-        // Shipping Options
-        const shippingRates = {
-            ups: { standard: { price: 5.99, days: '10-15' }, express: { price: 15.99, days: '2-4' }, relay: { price: 3.99, days: '7-12' } },
-            dhl: { standard: { price: 6.49, days: '10-15' }, express: { price: 16.49, days: '1-3' }, relay: { price: 4.49, days: '7-12' } },
-            chronopost: { standard: { price: 5.49, days: '10-15' }, express: { price: 14.99, days: '2-5' }, relay: { price: 3.49, days: '7-12' } },
-            mondialrelay: { standard: { price: 4.99, days: '10-15' }, express: { price: 13.99, days: '2-5' }, relay: { price: 2.99, days: '7-12' } }
-        };
 
         // Toggle Modal
         function toggleModal() {
+            console.log('Toggle modal called');
             cartModal.classList.toggle('open');
             document.body.classList.toggle('overflow-hidden');
             updateBlockchainVisibility();
-            if (cart.length > 0) updateShippingOptions();
         }
 
         cartBtn.addEventListener('click', toggleModal);
@@ -827,6 +383,7 @@
 
         // Update Blockchain Visibility
         function updateBlockchainVisibility() {
+            console.log('Updating blockchain visibility, payment:', paymentSelect.value);
             usdtBlockchainDiv.classList.toggle('hidden', paymentSelect.value !== 'usdt');
         }
 
@@ -834,10 +391,9 @@
 
         // Update Cart
         function updateCart() {
+            console.log('Cart:', cart);
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            let totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            const shippingCost = parseFloat(shippingDetails.dataset.price) || 0;
-            totalPrice += shippingCost;
+            const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
             cartCount.textContent = totalItems;
             cartTotal.textContent = totalPrice.toFixed(2) + '€';
@@ -845,10 +401,6 @@
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Votre panier est vide</p>';
                 confirmBtn.disabled = true;
-                shippingCarrierSelect.disabled = true;
-                shippingMethodSelect.disabled = true;
-                shippingDetails.textContent = 'Prix : -€ | Délai : - jours';
-                shippingDetails.dataset.price = 0;
             } else {
                 cartItems.innerHTML = cart.map(item => `
                     <div class="flex items-center py-2 border-b">
@@ -869,12 +421,12 @@
                     </div>
                 `).join('');
                 confirmBtn.disabled = false;
-                shippingCarrierSelect.disabled = false;
             }
         }
 
         // Change Quantity
         function changeQuantity(id, delta) {
+            console.log(`Change quantity: id=${id}, delta=${delta}`);
             const item = cart.find(i => i.compositeId === id);
             if (item) {
                 item.quantity += delta;
@@ -882,11 +434,14 @@
                     cart = cart.filter(i => i.compositeId !== id);
                 }
                 updateCart();
+            } else {
+                console.error('Item not found:', id);
             }
         }
 
         // Render Products
         function renderProducts(category = 'all') {
+            console.log('Rendering products for category:', category);
             const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
             productGrid.innerHTML = filteredProducts.map(product => `
                 <div class="product-card bg-white rounded-lg shadow-md transition">
@@ -947,8 +502,7 @@
                             </div>
                         `}
                         <div class="flex justify-between items-center">
-                            <span id="price-${product.id}" class="text-red-800 font-bold">${product.price.toFixed(2)}€</span>
-                            <a href="${product.id}.html" class="text-blue-600 hover:underline">Détails</a>
+                            <span class="text-red-800 font-bold">${product.price.toFixed(2)}€</span>
                             <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="${product.id}">Ajouter</button>
                         </div>
                     </div>
@@ -957,6 +511,7 @@
 
             document.querySelectorAll('.add-to-cart').forEach(btn => {
                 btn.addEventListener('click', (e) => {
+                    console.log('Add to cart:', e.target.dataset.id);
                     const productId = e.target.dataset.id;
                     const product = products.find(p => p.id === productId);
                     const capacity = document.getElementById(`capacity-${productId}`).value;
@@ -974,7 +529,6 @@
                     }
                     const compositeId = `${productId}-${capacity}-${caffeine || type || usage}-${grind || type || usage}`;
                     const existingItem = cart.find(item => item.compositeId === compositeId);
-                    const price = product.price; // Prix fixe pour l'instant
                     if (existingItem) {
                         existingItem.quantity++;
                     } else {
@@ -986,23 +540,11 @@
                             grind,
                             type,
                             usage,
-                            quantity: 1,
-                            price: price
+                            quantity: 1
                         });
                     }
                     updateCart();
                     toggleModal();
-                });
-            });
-
-            // Update prices dynamically
-            document.querySelectorAll('[id^="capacity-"]').forEach(select => {
-                const productId = select.id.replace('capacity-', '');
-                const product = products.find(p => p.id === productId);
-                select.addEventListener('change', () => {
-                    const capacity = select.value;
-                    const price = product.price; // Prix fixe pour l'instant
-                    document.getElementById(`price-${productId}`).textContent = `${price.toFixed(2)}€`;
                 });
             });
         }
@@ -1010,12 +552,14 @@
         // Category Filter
         document.querySelectorAll('.category-filter').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                console.log('Category filter clicked:', e.target.dataset.category);
                 renderProducts(e.target.dataset.category);
             });
         });
 
         // Show Confirmation Message
-        function showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total, shippingDetails) {
+        function showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total) {
+            console.log('Showing confirmation message');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'confirmation-message';
             messageDiv.innerHTML = `
@@ -1024,8 +568,7 @@
                 <p>Email: ${email}</p>
                 <p>Adresse: ${address}, ${city}, ${postalCode}</p>
                 <p>Méthode: ${paymentMethod === 'visa' ? 'Visa' : paymentMethod === 'mastercard' ? 'Mastercard' : paymentMethod === 'paypal' ? 'PayPal' : paymentMethod === 'usdt' ? 'USDT' : 'Virement bancaire'}${paymentMethod === 'usdt' ? ` (Blockchain: ${blockchain.charAt(0).toUpperCase() + blockchain.slice(1)})` : ''}</p>
-                <p>Livraison: ${shippingDetails.carrier} - ${shippingDetails.method} (${shippingDetails.price}€, ${shippingDetails.days} jours)</p>
-                <p>Montant total: ${total.toFixed(2)}€</p>
+                <p>Montant: ${total.toFixed(2)}€</p>
                 <p class="font-bold mt-2">Merci pour votre achat !</p>
             `;
             document.body.appendChild(messageDiv);
@@ -1036,6 +579,7 @@
 
         // Confirm Order
         confirmBtn.addEventListener('click', () => {
+            console.log('Confirm button clicked');
             if (cart.length === 0) {
                 alert('Votre panier est vide');
                 return;
@@ -1048,12 +592,8 @@
             const postalCode = postalCodeInput.value.trim();
             const paymentMethod = paymentSelect.value;
             const blockchain = paymentMethod === 'usdt' ? blockchainSelect.value : '';
-            const carrier = shippingCarrierSelect.value;
-            const method = shippingMethodSelect.value;
-            const shippingCost = parseFloat(shippingDetails.dataset.price) || 0;
-            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + shippingCost;
 
-            if (!firstName || !lastName || !email || !email.includes('@') || !address || !city || !postalCode || !carrier || !method) {
+            if (!firstName || !lastName || !email || !email.includes('@') || !address || !city || !postalCode) {
                 alert('Veuillez remplir tous les champs correctement');
                 return;
             }
@@ -1062,12 +602,9 @@
                 return;
             }
 
-            showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total, {
-                carrier: carrier.charAt(0).toUpperCase() + carrier.slice(1),
-                method: method.charAt(0).toUpperCase() + method.slice(1),
-                price: shippingCost.toFixed(2),
-                days: shippingRates[carrier][method].days
-            });
+            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            showConfirmationMessage(firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total);
+            console.log('Order confirmed:', { firstName, lastName, email, address, city, postalCode, paymentMethod, blockchain, total, cart });
             cart = [];
             firstNameInput.value = '';
             lastNameInput.value = '';
@@ -1075,9 +612,6 @@
             addressInput.value = '';
             cityInput.value = '';
             postalCodeInput.value = '';
-            shippingCarrierSelect.value = '';
-            shippingMethodSelect.innerHTML = '<option value="">Sélectionner un mode</option>';
-            shippingMethodSelect.disabled = true;
             blockchainSelect.value = 'arbitrum';
             updateBlockchainVisibility();
             updateCart();
@@ -1086,17 +620,24 @@
 
         // USDT Price
         function fetchUsdtPrice() {
+            console.log('Fetching USDT price');
             const usdtPriceDisplay = document.getElementById('usdtPriceDisplay');
-            fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd')
-                .then(response => response.json())
-                .then(data => {
-                    usdtPriceDisplay.textContent = `Prix USDT : ${data.tether.usd} USD`;
-                    usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
-                })
-                .catch(error => {
-                    usdtPriceDisplay.textContent = 'Erreur prix USDT';
-                    usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
-                });
+            if (usdtPriceDisplay) {
+                fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('USDT price fetched:', data);
+                        usdtPriceDisplay.textContent = `Prix USDT : ${data.tether.usd} USD`;
+                        usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
+                    })
+                    .catch(error => {
+                        console.error('Erreur API:', error);
+                        usdtPriceDisplay.textContent = 'Erreur prix USDT';
+                        usdtPriceDisplay.classList.toggle('hidden', paymentSelect.value !== 'usdt');
+                    });
+            } else {
+                console.error('usdtPriceDisplay not found');
+            }
         }
 
         // Contact Form
@@ -1133,6 +674,7 @@
 
         // Chatbot
         function addChatMessage(message, isUser = false) {
+            console.log('Adding chat message:', message, 'isUser:', isUser);
             const messageDiv = document.createElement('div');
             messageDiv.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
             messageDiv.textContent = message;
@@ -1141,9 +683,10 @@
         }
 
         function getBotResponse(userInput) {
+            console.log('Processing user input:', userInput);
             userInput = userInput.toLowerCase().trim();
             if (userInput.includes('café') || userInput.includes('coffee')) {
-                return 'Nos cafés : Yirgacheffe, Colombien Supremo, Kenyan AA, Época. Choisissez 250g/500g/1kg, entier/moulu/espresso, classique/décaféiné.';
+                return 'Nos cafés : Yirgacheffe, Colombien Supremo, Kenyan AA. Choisissez 250g/500g/1kg, entier/moulu/espresso, classique/décaféiné.';
             } else if (userInput.includes('contenance café') || userInput.includes('poids café')) {
                 return 'Cafés disponibles en 250g, 500g, ou 1kg.';
             } else if (userInput.includes('caféine') || userInput.includes('déca')) {
@@ -1159,7 +702,7 @@
             } else if (userInput.includes('contenance huile') || userInput.includes('volume huile')) {
                 return 'Huiles essentielles en 10ml, 30ml, ou 50ml.';
             } else if (userInput.includes('livraison') || userInput.includes('délai')) {
-                return 'Choisissez votre transporteur (UPS, DHL, Chronopost, Mondial Relay) et mode (Standard, Express, Relais) dans le panier pour voir les délais.';
+                return 'Livraison en 3-5 jours ouvrables. Contactez-nous pour plus de détails !';
             } else if (userInput.includes('paiement') || userInput.includes('payer') || userInput.includes('usdt')) {
                 return 'Nous acceptons Visa, Mastercard, PayPal, USDT (via Arbitrum, Optimism, Base, Linea), et Virement bancaire.';
             } else if (userInput.includes('blockchain') || userInput.includes('chain')) {
@@ -1172,19 +715,19 @@
                 return 'Découvrez nos promotions sur la page Promotions !';
             } else if (userInput.includes('newsletter')) {
                 return 'Inscrivez-vous à notre newsletter en bas de page pour des offres exclusives.';
-            } else if (userInput.includes('compte') || userInput.includes('register') || userInput.includes('login')) {
-                return 'Connectez-vous ou inscrivez-vous via "Se connecter" en haut à droite !';
             } else {
-                return 'Désolé, je n’ai pas compris. Parlez-moi de café, thé, huiles, livraison, paiement, contact, promotions, newsletter ou compte !';
+                return 'Désolé, je n’ai pas compris. Parlez-moi de café, thé, huiles, paiement, contact, promotions ou newsletter !';
             }
         }
 
         chatbotToggle.addEventListener('click', () => {
+            console.log('Chatbot toggle clicked');
             chatbotContainer.classList.toggle('open');
         });
 
         chatbotInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && chatbotInput.value.trim()) {
+                console.log('Chatbot input submitted:', chatbotInput.value);
                 const userMessage = chatbotInput.value.trim();
                 addChatMessage(userMessage, true);
                 const botResponse = getBotResponse(userMessage);
@@ -1195,46 +738,12 @@
             }
         });
 
-        // Update Shipping Options
-        function updateShippingOptions() {
-            const carrier = shippingCarrierSelect.value;
-            shippingMethodSelect.innerHTML = '<option value="">Sélectionner un mode</option>';
-            shippingMethodSelect.disabled = !carrier;
-            if (carrier && shippingRates[carrier]) {
-                ['standard', 'express', 'relay'].forEach(method => {
-                    const option = document.createElement('option');
-                    option.value = method;
-                    option.textContent = method.charAt(0).toUpperCase() + method.slice(1);
-                    shippingMethodSelect.appendChild(option);
-                });
-                shippingMethodSelect.disabled = false;
-            }
-            updateShippingDetails();
-        }
-
-        shippingCarrierSelect.addEventListener('change', updateShippingOptions);
-
-        // Update Shipping Details
-        function updateShippingDetails() {
-            const carrier = shippingCarrierSelect.value;
-            const method = shippingMethodSelect.value;
-            if (carrier && method && shippingRates[carrier][method]) {
-                const { price, days } = shippingRates[carrier][method];
-                shippingDetails.textContent = `Prix : ${price.toFixed(2)}€ | Délai : ${days} jours`;
-                shippingDetails.dataset.price = price;
-            } else {
-                shippingDetails.textContent = 'Prix : -€ | Délai : - jours';
-                shippingDetails.dataset.price = 0;
-            }
-        }
-
-        shippingMethodSelect.addEventListener('change', updateShippingDetails);
-
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded');
             renderProducts();
             updateCart();
             fetchUsdtPrice();
-            addChatMessage('Bonjour ! Posez-moi une question sur nos cafés, thés, huiles essentielles, paiement, contact, promotions, newsletter ou compte !');
+            addChatMessage('Bonjour ! Posez-moi une question sur nos cafés, thés, huiles essentielles, paiement, contact, promotions ou newsletter !');
         });
     </script>
