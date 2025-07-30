@@ -1195,23 +1195,46 @@
             }
         });
 
-               // Update Shipping Details
-        function updateShippingDetails() {
-            const carrier = shippingCarrierSelect.value;
-            const method = shippingMethodSelect.value;
-            if (carrier &&
-method && shippingRates[carrier][method]) {
-    const { price, days } = shippingRates[carrier][method];
-    shippingDetails.textContent = `Prix : ${price.toFixed(2)}€ | Délai : ${days} jours`;
-    shippingDetails.dataset.price = price;
-} else {
-    shippingDetails.textContent = 'Prix : -€ | Délai : - jours';
-    shippingDetails.dataset.price = 0;
-}
-updateCart();
-}
+                // Update Shipping Options
+    function updateShippingOptions() {
+        const carrier = shippingCarrierSelect.value;
+        shippingMethodSelect.innerHTML = '<option value="">Sélectionner un mode</option>';
+        if (carrier && shippingRates[carrier]) {
+            Object.keys(shippingRates[carrier]).forEach(method => {
+                const option = document.createElement('option');
+                option.value = method;
+                option.textContent = method.charAt(0).toUpperCase() + method.slice(1);
+                shippingMethodSelect.appendChild(option);
+            });
+            shippingMethodSelect.disabled = false;
+        } else {
+            shippingMethodSelect.disabled = true;
+        }
+    }
 
-shippingMethodSelect.addEventListener('change', updateShippingDetails);
+    // Update Shipping Details
+    function updateShippingDetails() {
+        const carrier = shippingCarrierSelect.value;
+        const method = shippingMethodSelect.value;
+        if (carrier && method && shippingRates[carrier][method]) {
+            const { price, days } = shippingRates[carrier][method];
+            shippingDetails.textContent = `Prix : ${price.toFixed(2)}€ | Délai : ${days} jours`;
+            shippingDetails.dataset.price = price;
+        } else {
+            shippingDetails.textContent = 'Prix : -€ | Délai : - jours';
+            shippingDetails.dataset.price = 0;
+        }
+        updateCart();
+    }
+
+    shippingCarrierSelect.addEventListener('change', () => {
+        updateShippingOptions();
+        updateShippingDetails();
+    });
+    shippingMethodSelect.addEventListener('change', updateShippingDetails);
+
+    // ... (reste du script existant)
+
 
 // Initial Render
 renderProducts();
