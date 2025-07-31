@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Illy Cafe Classic - Guaraní Finest Brew</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .hero { background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('https://res.cloudinary.com/dweom4cyp/image/upload/v1753946114/fondcafe-veracruzano-100-arabica-exportacion-premium-coatepec_ytc5qd.webp'); background-size: cover; background-position: center; height: 50vh; }
+        .product-image { max-width: 100%; height: auto; border-radius: 0.5rem; }
+        .product-card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
+        .product-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="font-sans bg-beige-50 text-gray-800">
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-red-800">Guaraní Finest Brew</h1>
+            <nav class="space-x-4">
+                <a href="/" class="text-gray-700 hover:text-red-800">Accueil</a>
+                <a href="/#products" class="text-gray-700 hover:text-red-800">Produits</a>
+                <a href="/#about" class="text-gray-700 hover:text-red-800">À propos</a>
+                <a href="/#contact" class="text-gray-700 hover:text-red-800">Contact</a>
+                <a href="/#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
+            </nav>
+            <div class="flex space-x-4">
+                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
+                <button id="cart-btn" class="relative">
+                    <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <section class="hero flex items-center justify-center">
+        <div class="text-center px-4">
+            <h2 class="text-3xl font-bold text-red-800 mb-4">Illy Cafe Classic</h2>
+            <p class="text-gray-600 mb-4">Vivez une expérience unique avec deux variétés exquises de café.</p>
+        </div>
+    </section>
+    <section id="product-detail" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-1/2">
+                    <div class="product-card">
+                        <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753946114/fondcafe-veracruzano-100-arabica-exportacion-premium-coatepec_ytc5qd.webp" alt="Illy Cafe Classic" class="product-image w-full h-96 object-cover">
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="product-card p-6">
+                        <h3 class="text-xl font-semibold mb-4">Description</h3>
+                        <p class="text-gray-600 mb-4">Illy Cafe Classic Grain 250g + Arabica Brasil 250g</p>
+                        <p class="text-gray-600 mb-4">Vivez une expérience unique avec notre forfait qui comprend deux variétés exquises de café.</p>
+                        <p class="text-gray-600 mb-4">Chaque grain est soigneusement sélectionné pour garantir la qualité et la saveur distinctive qui caractérisent Illy. Ce paquet contient deux sacs de 250 grammes, un d'Illy Cafe Grano Clasico et un autre d'Arabica Brasil, tous deux reconnus pour leur arôme et leur corps équilibré.</p>
+                        <p class="text-gray-600 mb-4">Nos grains sont torréfiés à la perfection pour mettre en valeur les notes aromatiques et garantir une tasse de café pleine de saveur et d'harmonie.</p>
+                        <p class="text-gray-600 mb-4">Avec Illy, chaque gorgée est une œuvre d’art qui ravit les sens et embellit vos moments de pause et de plaisir.</p>
+                        <h4 class="text-lg font-semibold mb-2">Pourquoi choisir Illy Cafe Classic ?</h4>
+                        <ul class="list-disc list-inside text-gray-600 mb-4 space-y-2">
+                            <li>Deux variétés premium : Illy Cafe Grano Clasico et Arabica Brasil</li>
+                            <li>Grains 100 % Arabica soigneusement sélectionnés</li>
+                            <li>Arôme équilibré et corps riche</li>
+                            <li>Torréfaction parfaite pour des notes aromatiques uniques</li>
+                            <li>Idéal pour espresso, presse française ou filtration</li>
+                        </ul>
+                        <h4 class="text-lg font-semibold mb-2">Avantages</h4>
+                        <ul class="list-disc list-inside text-gray-600 space-y-2">
+                            <li>Forfait de 500g (2 x 250g)</li>
+                            <li>Qualité certifiée Illy</li>
+                            <li>Saveur harmonieuse et intense</li>
+                            <li>Parfait pour les amateurs de café gastronomique</li>
+                            <li>Aucun additif, 100 % naturel</li>
+                        </ul>
+                        <div class="mt-6">
+                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition">Retour aux produits</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-red-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
+        </div>
+    </footer>
+    <script>
+        const products = [
+            { id: 'coffee3', name: 'Illy Cafe Classic', price: 354.25, category: 'coffee', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896691/Illy%20Cafe%20Classic.jpg', description: '100% Arabica Brasil' }
+        ];
+        let cart = [];
+        const cartBtn = document.getElementById('cart-btn');
+        const cartCount = document.getElementById('cart-count');
+
+        // Logique d'ajout au panier (à implémenter si nécessaire)
+        // Note : Cette section est laissée vide car le panier semble géré dans index.html
+    </script>
