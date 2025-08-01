@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Palo Santo - Guaraní Finest Brew</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        .hero { background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('https://res.cloudinary.com/dweom4cyp/image/upload/v1754054047/fondle-palo-santo_qlflih.webp'); background-size: cover; background-position: center; height: 50vh; }
+
+        .product-image { max-width: 100%; height: auto; border-radius: 0.5rem; }
+
+        .product-card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
+
+        .product-card:hover { transform: translateY(-5px); }
+
+    </style>
+
+</head>
+
+<body class="font-sans bg-beige-50 text-gray-800">
+
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+
+            <h1 class="text-2xl font-bold text-red-800">Guaraní Finest Brew</h1>
+
+            <nav class="space-x-4">
+
+                <a href="/" class="text-gray-700 hover:text-red-800">Accueil</a>
+
+                <a href="/#products" class="text-gray-700 hover:text-red-800">Produits</a>
+
+                <a href="/#about" class="text-gray-700 hover:text-red-800">À propos</a>
+
+                <a href="/#contact" class="text-gray-700 hover:text-red-800">Contact</a>
+
+                <a href="/#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
+
+            </nav>
+
+            <div class="flex space-x-4">
+
+                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
+
+                <button id="cart-btn" class="relative">
+
+                    <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
+
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <section class="hero flex items-center justify-center">
+
+        <div class="text-center px-4">
+
+            <h2 class="text-3xl font-bold text-red-800 mb-4">Palo Santo</h2>
+
+            <p class="text-gray-600 mb-4">Anti-inflammatoires.</p>
+
+        </div>
+
+    </section>
+
+    <section id="product-detail" class="py-12 bg-white">
+
+        <div class="container mx-auto px-4">
+
+            <div class="flex flex-col md:flex-row gap-6">
+
+                <div class="md:w-1/2">
+
+                    <div class="product-card">
+
+                        <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754054047/fondle-palo-santo_qlflih.webp" alt="Palo Santo" class="product-image w-full h-96 object-cover">
+
+                    </div>
+
+                </div>
+
+                <div class="md:w-1/2">
+
+                    <div class="product-card p-6">
+
+                        <h3 class="text-xl font-semibold mb-4">Description</h3>
+
+                        <p class="text-gray-600 mb-4">Le Palo Santo est un remède naturel traditionnel que vous pouvez appliquer sur votre peau ou brûler comme encens pour réduire la douleur, l'inflammation et le stress.</p>
+
+                        <p class="text-gray-600 mb-4">Originaire d'Amérique centrale et du sud, le palo santo, ou "bois sacré", est utilisé par les chamans et les hommes-médecines dans les rituels de purification. Il possède des propriétés antalgiques et anti-inflammatoires grâce à son haut taux de myrcène. Le Palo Santo (Bursera graveolens) est un arbre originaire du Pérou, d'Équateur et d'autres pays d'Amérique du Sud. Il pousse dans les forêts tropicales sèches et produit une résine très parfumée.</p>
+
+                        <p class="text-gray-600 mb-4">L’Huile essentielle de Palo Santo provient de la récolte du fruit de cette région d’Amérique du Sud. La cueillette se fait à la main et uniquement sur des arbres adultes. Les fruits sont ensuite distillés à la vapeur d’eau pour obtenir une huile essentielle mystique aux accents citriques et mentholés.</p>
+
+                        <h4 class="text-lg font-semibold mb-2">Usage</h4>
+
+                        <p class="text-gray-600 mb-4">Anti-inflammatoires</p>
+
+                        <div class="mt-6">
+
+                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition">Retour aux produits</a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer class="bg-red-800 text-white py-6">
+
+        <div class="container mx-auto px-4 text-center">
+
+            <p>&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
+
+        </div>
+
+    </footer>
+
+    <script>
+
+        const products = [
+
+            { id: 'oil1', name: 'Palo Santo', category: 'oil', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1754054047/fondle-palo-santo_qlflih.webp', description: 'Anti-inflammatoires.' }
+
+        ];
+
+        let cart = [];
+
+        const cartBtn = document.getElementById('cart-btn');
+
+        const cartCount = document.getElementById('cart-count');
+
+        // Logique d'ajout au panier (à implémenter si nécessaire)
+
+        // Note : Cette section est laissée vide car le panier semble géré dans index.html
+
+    </script>
