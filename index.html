@@ -16,7 +16,9 @@
 
     <style>
 
-        .hero { background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80'); background-size: cover; background-position: center; height: 50vh; }
+        .hero { background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('https://res.cloudinary.com/dweom4cyp/image/upload/v1754132674/garani_finest_brew_o9uplf.jpg'); background-size: cover; background-position: center; height: 50vh; position: relative; }
+
+        .hero-content { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); text-align: center; width: 100%; padding: 0 1rem; }
 
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; align-items: center; justify-content: center; }
 
@@ -50,7 +52,7 @@
 
         .dropdown-content a:hover { background-color: #f3f4f6; }
 
-        .dropdown-content .dropdown-sub { display: none; position: absolute; left: 100%; top: 0; background-color: #fff; min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 0.25rem; }
+        .dropdown-content .dropdown-sub { display: none; position: absolute; left: 100%; top: 0; background-color: #fff; min-height: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 0.25rem; }
 
         .dropdown-content .sub-dropdown:hover .dropdown-sub { display: block; }
 
@@ -148,9 +150,9 @@
 
     <section class="hero flex items-center justify-center">
 
-        <div class="text-center px-4">
+        <div class="hero-content">
 
-            <h2 class="text-3xl font-bold text-red-800 mb-4">Saveurs d'exception</h2>
+            <h2 class="text-3xl font-bold mb-4" style="color: #FFD700;">Saveurs d'exception</h2>
 
             <a href="#products" class="bg-red-800 hover:bg-red-900 text-white px-6 py-2 rounded-full transition">Voir les produits</a>
 
