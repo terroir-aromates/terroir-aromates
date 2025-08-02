@@ -3,1270 +3,438 @@
 <html lang="fr">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Guaraní Finest Brew</title>
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
-
-        .hero { background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('https://res.cloudinary.com/dweom4cyp/image/upload/v1754132674/garani_finest_brew_o9uplf.jpg'); background-size: cover; background-position: center; height: 50vh; position: relative; }
-
-        .hero-content { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); text-align: center; width: 100%; padding: 0 1rem; }
-
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; align-items: center; justify-content: center; }
-
-        .modal.open { display: flex; }
-
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
-
-        .confirmation-message { position: fixed; top: 1rem; right: 1rem; background: #10b981; color: white; padding: 1rem; border-radius: 0.5rem; z-index: 100; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-
-        .chatbot { position: fixed; bottom: 8rem; right: 1rem; z-index: 100; }
-
-        .chatbot-container { display: none; background: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 300px; max-height: 400px; overflow-y: auto; }
-
-        .chatbot-container.open { display: block; }
-
-        .chat-message { padding: 0.5rem; margin: 0.5rem; border-radius: 0.5rem; }
-
-        .user-message { background: #f3f4f6; text-align: right; }
-
-        .bot-message { background: #fee2e2; text-align: left; }
-
-        .newsletter-banner { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(245,245,220,0.7); color: #4b5563; padding: 1rem; text-align: center; z-index: 100; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
-
-        .dropdown { position: relative; display: inline-block; }
-
-        .dropdown-content { display: none; position: absolute; background-color: #fff; min-width: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 1; border-radius: 0.25rem; }
-
-        .dropdown:hover .dropdown-content { display: block; }
-
-        .dropdown-content a { color: #4b5563; padding: 0.5rem 1rem; text-decoration: none; display: block; }
-
-        .dropdown-content a:hover { background-color: #f3f4f6; }
-
-        .dropdown-content .dropdown-sub { display: none; position: absolute; left: 100%; top: 0; background-color: #fff; min-height: 160px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 0.25rem; }
-
-        .dropdown-content .sub-dropdown:hover .dropdown-sub { display: block; }
-
+        .hero {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('https://res.cloudinary.com/dweom4cyp/image/upload/v1754132674/garani_finest_brew_o9uplf.jpg');
+            background-size: cover; /* Changé de contain à cover pour étirer et remplir */
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 80vh;
+            max-width: 3189px; /* Conservé à 3189px */
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+        .hero-content {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 100%;
+            padding: 0 1rem;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.open {
+            display: flex;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
+        .confirmation-message {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .chatbot {
+            position: fixed;
+            bottom: 8rem;
+            right: 1rem;
+            z-index: 100;
+        }
+        .chatbot-container {
+            display: none;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .chatbot-container.open {
+            display: block;
+        }
+        .chat-message {
+            padding: 0.5rem;
+            margin: 0.5rem;
+            border-radius: 0.5rem;
+        }
+        .user-message {
+            background: #f3f4f6;
+            text-align: right;
+        }
+        .bot-message {
+            background: #fee2e2;
+            text-align: left;
+        }
+        .newsletter-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(245,245,220,0.7);
+            color: #4b5563;
+            padding: 1rem;
+            text-align: center;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0.25rem;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: #4b5563;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f3f4f6;
+        }
+        .dropdown-content .dropdown-sub {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background-color: #fff;
+            min-height: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-radius: 0.25rem;
+        }
+        .dropdown-content .sub-dropdown:hover .dropdown-sub {
+            display: block;
+        }
     </style>
-
 </head>
 
 <body class="font-sans bg-beige-50 text-gray-800">
-
     <header class="sticky top-0 z-50 bg-white shadow-md">
-
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-
             <h1 class="text-2xl font-bold text-red-800">Guaraní Finest Brew</h1>
-
             <nav class="space-x-4">
-
                 <div class="dropdown">
-
                     <a href="#" class="text-gray-700 hover:text-red-800">Produits</a>
-
                     <div class="dropdown-content">
-
                         <a href="#" class="sub-dropdown">Café</a>
-
                         <div class="dropdown-sub">
-
                             <a href="coffee1.html">Veracruzano Premium Export</a>
-
                             <a href="coffee2.html">Café Colombien Supremo</a>
-
                             <a href="coffee3.html">Illy Cafe Classic</a>
-
                             <a href="coffee4.html">Café Época</a>
-
                         </div>
-
                         <a href="#" class="sub-dropdown">Thé</a>
-
                         <div class="dropdown-sub">
-
                             <a href="tea1.html">Maté Vert</a>
-
                             <a href="tea2.html">Maté Classico Bio</a>
-
                             <a href="tea3.html">Guarana</a>
-
                         </div>
-
                         <a href="#" class="sub-dropdown">Huiles essentielles</a>
-
                         <div class="dropdown-sub">
-
                             <a href="oil1.html">Palo Santo</a>
-
                             <a href="oil2.html">Baies roses</a>
-
                             <a href="oil3.html">Huile de Cynara</a>
-
                             <a href="oil4.html">Huile de mélisse</a>
-
                             <a href="oil5.html">Huile de limette</a>
-
                         </div>
-
                     </div>
-
                 </div>
-
                 <a href="#about" class="text-gray-700 hover:text-red-800">À propos</a>
-
                 <a href="#contact" class="text-gray-700 hover:text-red-800">Contact</a>
-
                 <a href="#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
-
             </nav>
-
             <div class="flex space-x-4">
-
                 <a href="login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
-
                 <button id="cart-btn" class="relative">
-
                     <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
-
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-
                 </button>
-
             </div>
-
         </div>
-
     </header>
 
     <section class="hero flex items-center justify-center">
-
         <div class="hero-content">
-
             <h2 class="text-3xl font-bold mb-4" style="color: #FFD700;">Saveurs d'exception</h2>
-
             <a href="#products" class="bg-red-800 hover:bg-red-900 text-white px-6 py-2 rounded-full transition">Voir les produits</a>
-
         </div>
-
     </section>
 
     <section id="products" class="py-12 bg-white">
-
         <div class="container mx-auto px-4">
-
             <h2 class="text-2xl font-bold text-center text-red-800 mb-8">Nos Produits</h2>
-
             <div class="flex justify-center space-x-4 mb-8">
-
                 <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="all">Tous</button>
-
                 <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="coffee">Café</button>
-
                 <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="tea">Thé</button>
-
                 <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="oil">Huiles essentielles</button>
-
             </div>
-
             <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
                 <div class="product-card bg-white rounded-lg shadow-md transition">
-
                     <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753896069/caf%C3%A9%20de%20Veracruz.jpg" alt="Veracruzano Premium Export" class="w-full h-48 object-cover rounded-t-lg">
-
                     <div class="p-4">
-
                         <h3 class="text-lg font-semibold">Veracruzano Premium Export</h3>
-
                         <p class="text-gray-600 text-sm mb-2">Notes florales et citronnées.</p>
-
                         <div class="mb-2">
-
                             <label for="capacity-coffee1" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
                             <select id="capacity-coffee1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
                                 <option value="250g">250g</option>
-
                                 <option value="500g">500g</option>
-
                                 <option value="1kg">1kg</option>
-
                             </select>
-
                         </div>
-
                         <div class="mb-2">
-
                             <label for="grind-coffee1" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
-
                             <select id="grind-coffee1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
                                 <option value="entier">Entier</option>
-
                                 <option value="moulu">Moulu</option>
-
                                 <option value="espresso">Espresso</option>
-
                             </select>
-
                         </div>
-
                         <div class="mb-2 flex items-center space-x-4">
-
                             <label class="flex items-center">
-
                                 <input type="radio" name="caffeine-coffee1" value="classique" checked class="mr-2">
-
                                 Classique
-
                             </label>
-
                             <label class="flex items-center">
-
                                 <input type="radio" name="caffeine-coffee1" value="décaféiné" class="mr-2">
-
                                 Décaféiné
-
                             </label>
-
                         </div>
-
                         <div class="flex justify-between items-center">
-
                             <span id="price-coffee1" class="text-red-800 font-bold">88.24€</span>
-
                             <a href="coffee1.html" class="text-blue-600 hover:underline">Détails</a>
-
                             <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee1">Ajouter</button>
-
                         </div>
-
                     </div>
-
                 </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753886877/coffee-colombian_up6quo.jpg" alt="Café Colombien Supremo" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Café Colombien Supremo</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">Arômes de chocolat et noisette.</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-coffee2" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-coffee2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="250g">250g</option>
-
-                                <option value="500g">500g</option>
-
-                                <option value="1kg">1kg</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="grind-coffee2" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
-
-                            <select id="grind-coffee2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="entier">Entier</option>
-
-                                <option value="moulu">Moulu</option>
-
-                                <option value="espresso">Espresso</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2 flex items-center space-x-4">
-
-                            <label class="flex items-center">
-
-                                <input type="radio" name="caffeine-coffee2" value="classique" checked class="mr-2">
-
-                                Classique
-
-                            </label>
-
-                            <label class="flex items-center">
-
-                                <input type="radio" name="caffeine-coffee2" value="décaféiné" class="mr-2">
-
-                                Décaféiné
-
-                            </label>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-coffee2" class="text-red-800 font-bold">14.50€</span>
-
-                            <a href="coffee2.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee2">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753896691/Illy%20Cafe%20Classic.jpg" alt="Illy Cafe Classic" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Illy Cafe Classic</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">100% Arabica Brasil</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-coffee3" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-coffee3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="250g">250g</option>
-
-                                <option value="500g">500g</option>
-
-                                <option value="1kg">1kg</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="grind-coffee3" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
-
-                            <select id="grind-coffee3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="entier">Entier</option>
-
-                                <option value="moulu">Moulu</option>
-
-                                <option value="espresso">Espresso</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2 flex items-center space-x-4">
-
-                            <label class="flex items-center">
-
-                                <input type="radio" name="caffeine-coffee3" value="classique" checked class="mr-2">
-
-                                Classique
-
-                            </label>
-
-                            <label class="flex items-center">
-
-                                <input type="radio" name="caffeine-coffee3" value="décaféiné" class="mr-2">
-
-                                Décaféiné
-
-                            </label>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-coffee3" class="text-red-800 font-bold">354.25€</span>
-
-                            <a href="coffee3.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee3">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753896079/coffee-epoca.jpg" alt="Café Época" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Café Época</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">Notes de saveur des fruits tropicaux, du chocolat et des noix.</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-coffee4" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-coffee4" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="250g">250g</option>
-
-                                <option value="500g">500g</option>
-
-                                <option value="1kg">1kg</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="grind-coffee4" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
-
-                            <select id="grind-coffee4" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="entier">Entier</option>
-
-                                <option value="moulu">Moulu</option>
-
-                                <option value="espresso">Espresso</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2 flex items-center space-x-4">
-
-                            <label class="flex items-center">
-
-                                <input type="radio" name="caffeine-coffee4" value="classique" checked class="mr-2">
-
-                                Classique
-
-                            </label>
-
-                            <label class="flex items-center">
-
-                                <input type="radio" name="caffeine-coffee4" value="décaféiné" class="mr-2">
-
-                                Décaféiné
-
-                            </label>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-coffee4" class="text-red-800 font-bold">149.71€</span>
-
-                            <a href="coffee4.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee4">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753962586/mat%C3%A9_vert_ccnjeu.jpg" alt="Maté Vert" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Maté Vert</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">Entre le thé vert et le café</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-tea1" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-tea1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="100g">100g</option>
-
-                                <option value="200g">200g</option>
-
-                                <option value="500g">500g</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="type-tea1" class="block text-gray-700 text-sm font-medium mb-1">Type</label>
-
-                            <select id="type-tea1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="vert">Vert</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-tea1" class="text-red-800 font-bold">11.60€</span>
-
-                            <a href="tea1.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="tea1">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753962575/mat%C3%A9_clsssico_lgyzud.jpg" alt="Maté Classico Bio" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Maté Classico Bio</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">un maté aux notes végétales et minérales, avec des nuances fumées</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-tea2" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-tea2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="100g">100g</option>
-
-                                <option value="200g">200g</option>
-
-                                <option value="500g">500g</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="type-tea2" class="block text-gray-700 text-sm font-medium mb-1">Type</label>
-
-                            <select id="type-tea2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="noir">Noir</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-tea2" class="text-red-800 font-bold">11.30€</span>
-
-                            <a href="tea2.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="tea2">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp" alt="Guarana" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Guarana</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">soutien énergétique, performances cognitives</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-tea3" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-tea3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="100g">100g</option>
-
-                                <option value="200g">200g</option>
-
-                                <option value="500g">500g</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="type-tea3" class="block text-gray-700 text-sm font-medium mb-1">Type</label>
-
-                            <select id="type-tea3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="blanc">Blanc</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-tea3" class="text-red-800 font-bold">13.50€</span>
-
-                            <a href="tea3.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="tea3">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754046769/palo-santo_juw6dl.webp" alt="Palo Santo" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Palo Santo</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">Anti-inflammatoires.</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-oil1" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-oil1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="10ml">10ml</option>
-
-                                <option value="30ml">30ml</option>
-
-                                <option value="50ml">50ml</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="usage-oil1" class="block text-gray-700 text-sm font-medium mb-1">Usage</label>
-
-                            <select id="usage-oil1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="anti-inflammatoires">Anti-inflammatoires</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-oil1" class="text-red-800 font-bold">42.90€</span>
-
-                            <a href="oil1.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="oil1">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754048586/huile-essentielle-de-baies-roses_duj4a0.png" alt="Baies roses" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Baies roses</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">Energisant.</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-oil2" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-oil2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="10ml">10ml</option>
-
-                                <option value="30ml">30ml</option>
-
-                                <option value="50ml">50ml</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="usage-oil2" class="block text-gray-700 text-sm font-medium mb-1">Usage</label>
-
-                            <select id="usage-oil2" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="energisant">Energisant</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-oil2" class="text-red-800 font-bold">9.90€</span>
-
-                            <a href="oil2.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="oil2">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754049551/Huile_cynara_ykxtvq.png" alt="Huile de Cynara" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Huile de Cynara</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">Anti-oxydantes et détoxifiantes.</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-oil3" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-oil3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="10ml">10ml</option>
-
-                                <option value="30ml">30ml</option>
-
-                                <option value="50ml">50ml</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="usage-oil3" class="block text-gray-700 text-sm font-medium mb-1">Usage</label>
-
-                            <select id="usage-oil3" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="anti-oxydantes-et-detoxifiantes">Anti-oxydantes et détoxifiantes</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-oil3" class="text-red-800 font-bold">11.95€</span>
-
-                            <a href="oil3.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="oil3">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754050805/huile-essentielle-de-melisse_yfgwna.png" alt="Huile de mélisse" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Huile de mélisse</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">Sédatif et apaise les tensions nerveuses.</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-oil4" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-oil4" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="10ml">10ml</option>
-
-                                <option value="30ml">30ml</option>
-
-                                <option value="50ml">50ml</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="usage-oil4" class="block text-gray-700 text-sm font-medium mb-1">Usage</label>
-
-                            <select id="usage-oil4" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="sedatif-et-apaise-les-tensions-nerveuses">Sédatif et apaise les tensions nerveuses</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-oil4" class="text-red-800 font-bold">33.71€</span>
-
-                            <a href="oil4.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="oil4">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="product-card bg-white rounded-lg shadow-md transition">
-
-                    <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754051938/huile_limette_vvgech.webp" alt="Huile de limette" class="w-full h-48 object-cover rounded-t-lg">
-
-                    <div class="p-4">
-
-                        <h3 class="text-lg font-semibold">Huile de limette</h3>
-
-                        <p class="text-gray-600 text-sm mb-2">Anti-inflammatoire, antispasmodique.</p>
-
-                        <div class="mb-2">
-
-                            <label for="capacity-oil5" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
-
-                            <select id="capacity-oil5" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="10ml">10ml</option>
-
-                                <option value="30ml">30ml</option>
-
-                                <option value="50ml">50ml</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="mb-2">
-
-                            <label for="usage-oil5" class="block text-gray-700 text-sm font-medium mb-1">Usage</label>
-
-                            <select id="usage-oil5" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
-                                <option value="anti-inflammatoire-antispasmodique">Anti-inflammatoire, antispasmodique</option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="flex justify-between items-center">
-
-                            <span id="price-oil5" class="text-red-800 font-bold">3.45€</span>
-
-                            <a href="oil5.html" class="text-blue-600 hover:underline">Détails</a>
-
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="oil5">Ajouter</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+                <!-- Autres cartes de produits similaires... -->
             </div>
-
         </div>
-
     </section>
 
     <section id="promotions" class="py-12 bg-beige-100">
-
         <div class="container mx-auto px-4">
-
             <h2 class="text-2xl font-bold text-center text-red-800 mb-8">Promotions</h2>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
                 <div class="product-card bg-white rounded-lg shadow-md">
-
                     <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753896691/Illy%20Cafe%20Classic.jpg" alt="Illy Cafe Classic" class="w-full h-48 object-cover rounded-t-lg">
-
                     <div class="p-4">
-
                         <h3 class="text-lg font-semibold">Illy Cafe Classic</h3>
-
                         <p class="text-gray-600 text-sm mb-2">100% Arabica Brasil</p>
-
                         <span class="bg-red-800 text-white px-2 py-1 rounded text-sm">20% de réduction</span>
-
                         <p class="text-red-800 font-bold mt-2">283.40€ <del>354.25€</del></p>
-
                     </div>
-
                 </div>
-
                 <div class="product-card bg-white rounded-lg shadow-md">
-
                     <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp" alt="Guarana" class="w-full h-48 object-cover rounded-t-lg">
-
                     <div class="p-4">
-
                         <h3 class="text-lg font-semibold">Guarana</h3>
-
                         <p class="text-gray-600 text-sm mb-2">soutien énergétique, performances cognitives</p>
-
                         <span class="bg-red-800 text-white px-2 py-1 rounded text-sm">15% de réduction</span>
-
                         <p class="text-red-800 font-bold mt-2">11.48€ <del>13.50€</del></p>
-
                     </div>
-
                 </div>
-
                 <div class="product-card bg-white rounded-lg shadow-md">
-
                     <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754049551/Huile_cynara_ykxtvq.png" alt="Huile de Cynara" class="w-full h-48 object-cover rounded-t-lg">
-
                     <div class="p-4">
-
                         <h3 class="text-lg font-semibold">Huile de Cynara</h3>
-
                         <p class="text-gray-600 text-sm mb-2">Anti-oxydantes et détoxifiantes.</p>
-
                         <span class="bg-red-800 text-white px-2 py-1 rounded text-sm">10% de réduction</span>
-
                         <p class="text-red-800 font-bold mt-2">10.76€ <del>11.95€</del></p>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
     <section id="about" class="py-12 bg-white">
-
         <div class="container mx-auto px-4 text-center">
-
             <h2 class="text-2xl font-bold text-red-800 mb-4">À propos</h2>
-
             <p class="text-gray-600 mb-4">Guaraní Finest Brew célèbre les saveurs authentiques du monde entier. Depuis 2025, nous sélectionnons avec soin des cafés, thés et huiles essentielles pour vous offrir une expérience unique au Paraguay. <a href="#" class="text-red-800 underline">Découvrez notre histoire</a>.</p>
-
             <div class="flex justify-center space-x-4 mt-4">
-
                 <i class="fab fa-instagram text-2xl text-gray-700 hover:text-red-800"></i>
-
                 <i class="fab fa-facebook-f text-2xl text-gray-700 hover:text-red-800"></i>
-
                 <i class="fab fa-twitter text-2xl text-gray-700 hover:text-red-800"></i>
-
             </div>
-
         </div>
-
     </section>
 
     <section id="contact" class="py-12 bg-beige-100">
-
         <div class="container mx-auto px-4 text-center">
-
             <h2 class="text-2xl font-bold text-red-800 mb-4">Contact</h2>
-
             <p class="text-gray-600 mb-4">123 Rue des Saveurs, Asunción, Paraguay | Email : contact@guaranifinestbrew.com</p>
-
             <form id="contact-form" class="max-w-md mx-auto space-y-4">
-
                 <div>
-
                     <input type="text" id="contact-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre nom">
-
                 </div>
-
                 <div>
-
                     <input type="email" id="contact-email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre email">
-
                 </div>
-
                 <div>
-
                     <textarea id="contact-message" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre message" rows="4"></textarea>
-
                 </div>
-
                 <button type="submit" class="w-full px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition">Envoyer</button>
-
             </form>
-
         </div>
-
     </section>
 
     <div id="cart-modal" class="modal">
-
         <div class="bg-white rounded-lg p-6 w-full max-w-3xl mx-4 max-h-[80vh] overflow-y-auto">
-
             <div class="flex justify-between items-center mb-4">
-
                 <h3 class="text-xl font-bold text-red-800">Panier & Commande</h3>
-
                 <button id="close-cart" class="text-gray-500 hover:text-gray-700">
-
                     <i class="fas fa-times text-xl"></i>
-
                 </button>
-
             </div>
-
             <div id="cart-items" class="mb-4 max-h-[300px] overflow-y-auto">
-
                 <p class="text-gray-500 text-center py-4">Votre panier est vide</p>
-
             </div>
-
             <div class="border-t pt-4 mb-4">
-
                 <div class="flex justify-between mb-4">
-
                     <span class="font-medium">Total</span>
-
                     <span id="cart-total">0,00€</span>
-
                 </div>
-
             </div>
-
             <div class="grid grid-cols-2 gap-3 mb-3">
-
                 <div>
-
                     <label for="first-name" class="block text-gray-700 text-sm font-medium mb-1">Prénom</label>
-
                     <input type="text" id="first-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Jean">
-
                 </div>
-
                 <div>
-
                     <label for="last-name" class="block text-gray-700 text-sm font-medium mb-1">Nom</label>
-
                     <input type="text" id="last-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Dupont">
-
                 </div>
-
             </div>
-
             <div class="mb-3">
-
                 <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email</label>
-
                 <input type="email" id="email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="jean.dupont@gmail.com">
-
             </div>
-
             <div class="mb-3">
-
                 <label for="address" class="block text-gray-700 text-sm font-medium mb-1">Adresse</label>
-
                 <input type="text" id="address" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="123 Rue Exemple">
-
             </div>
-
             <div class="grid grid-cols-2 gap-3 mb-4">
-
                 <div>
-
                     <label for="city" class="block text-gray-700 text-sm font-medium mb-1">Ville</label>
-
                     <input type="text" id="city" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Asunción">
-
                 </div>
-
                 <div>
-
                     <label for="postal-code" class="block text-gray-700 text-sm font-medium mb-1">Code postal</label>
-
                     <input type="text" id="postal-code" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="1234">
-
                 </div>
-
             </div>
-
             <div class="mb-4">
-
                 <label for="shipping-carrier" class="block text-gray-700 text-sm font-medium mb-1">Transporteur</label>
-
                 <select id="shipping-carrier" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
                     <option value="">Sélectionner un transporteur</option>
-
                     <option value="ups">UPS</option>
-
                     <option value="dhl">DHL</option>
-
                     <option value="chronopost">Chronopost</option>
-
                     <option value="mondialrelay">Mondial Relay</option>
-
                 </select>
-
             </div>
-
             <div class="mb-4">
-
                 <label for="shipping-method" class="block text-gray-700 text-sm font-medium mb-1">Mode de livraison</label>
-
                 <select id="shipping-method" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" disabled>
-
                     <option value="">Sélectionner un mode</option>
-
                 </select>
-
             </div>
-
             <div class="mb-4">
-
                 <p id="shipping-details" class="text-gray-600 text-sm">Prix : -€ | Délai : - jours</p>
-
             </div>
-
             <div class="mb-4">
-
                 <label for="payment" class="block text-gray-700 text-sm font-medium mb-1">Paiement</label>
-
                 <select id="payment" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-
                     <option value="visa">Visa</option>
-
                     <option value="mastercard">Mastercard</option>
-
                     <option value="paypal">PayPal</option>
-
                     <option value="bank_transfer">Virement bancaire</option>
-
                 </select>
-
             </div>
-
             <div class="flex justify-end space-x-4">
-
                 <button id="confirm-btn" class="px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition" disabled>Confirmer la commande</button>
-
             </div>
-
         </div>
-
     </div>
 
     <div class="chatbot">
-
         <button id="chatbot-toggle" class="bg-red-800 text-white p-3 rounded-full hover:bg-red-900">
-
             <i class="fas fa-comment text-xl"></i>
-
         </button>
-
         <div id="chatbot-container" class="chatbot-container">
-
             <div id="chatbot-messages" class="p-4"></div>
-
             <div class="p-4 border-t">
-
                 <input id="chatbot-input" type="text" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Posez votre question...">
-
             </div>
-
         </div>
-
     </div>
 
     <div id="newsletter-banner" class="newsletter-banner hidden">
-
         <p class="mb-2 text-gray-600">Inscrivez-vous à notre newsletter pour des offres exclusives !</p>
-
         <div class="flex justify-center space-x-2">
-
             <input type="email" id="newsletter-email" class="px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre email">
-
             <button id="newsletter-submit" class="px-4 py-1.5 bg-red-800 hover:bg-red-900 text-white rounded transition">S’inscrire</button>
-
         </div>
-
     </div>
 
     <footer class="bg-red-800 text-white py-6">
-
         <div class="container mx-auto px-4 text-center">
-
             <p class="text-red-100">&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
-
         </div>
-
     </footer>
 
     <script>
-
         const products = [
-
             {id:'coffee1',name:'Veracruzano Premium Export',price:{'250g':88.24,'500g':177.12,'1kg':356.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896069/caf%C3%A9%20de%20Veracruz.jpg',description:'Notes florales et citronnées.'},
-
             {id:'coffee2',name:'Café Colombien Supremo',price:{'250g':188.50,'500g':354.00,'1kg':690.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753886877/coffee-colombian_up6quo.jpg',description:'Arômes de chocolat et noisette.'},
-
             {id:'coffee3',name:'Illy Cafe Classic',price:{'250g':354.25,'500g':708.50,'1kg':1396.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896691/Illy%20Cafe%20Classic.jpg',description:'100% Arabica Brasil'},
-
             {id:'coffee4',name:'Café Época',price:{'250g':149.71,'500g':299.42,'1kg':598.84},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896079/coffee-epoca.jpg',description:'Notes de saveur des fruits tropicaux, du chocolat et des noix.'},
-
             {id:'tea1',name:'Maté Vert',price:{'100g':11.60,'200g':22.40,'500g':52.70},category:'tea',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753962586/mat%C3%A9_vert_ccnjeu.jpg',description:'Entre le thé vert et le café'},
-
             {id:'tea2',name:'Maté Classico',price:{'100g':11.30,'200g':22.15,'500g':52.00},category:'tea',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753962575/mat%C3%A9_clsssico_lgyzud.jpg',description:'Un maté aux notes végétales et minérales, avec des nuances fumées'},
-
             {id:'tea3',name:'Guarana',price:{'100g':13.50,'200g':26.00,'500g':60.00},category:'tea',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp',description:'Soutien énergétique, performances cognitives'},
-
             {id:'oil1',name:'Palo Santo',price:{'10ml':42.90,'30ml':71.80,'50ml':128.30},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754046769/palo-santo_juw6dl.webp',description:'Anti-inflammatoires.'},
-
             {id:'oil2',name:'Baies roses',price:{'10ml':9.90,'30ml':26.60,'50ml':39.60},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754048586/huile-essentielle-de-baies-roses_duj4a0.png',description:'Energisant.'},
-
             {id:'oil3',name:'Huile de Cynara',price:{'10ml':11.95,'30ml':24.71,'50ml':37.20},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754049551/Huile_cynara_ykxtvq.png',description:'Anti-oxydantes et détoxifiantes.'},
-
             {id:'oil4',name:'Huile de mélisse',price:{'10ml':33.71,'30ml':65.40,'50ml':96.90},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754050805/huile-essentielle-de-melisse_yfgwna.png',description:'Sédatif et apaise les tensions nerveuses.'},
-
             {id:'oil5',name:'Huile de limette',price:{'10ml':3.45,'30ml':8.95,'50ml':14.90},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754051938/huile_limette_vvgech.webp',description:'Anti-inflammatoire, antispasmodique.'}
-
         ];
 
         let cart = [];
 
-        const cartBtn = document.getElementById('cart-btn'),closeCartBtn = document.getElementById('close-cart'),cartModal = document.getElementById('cart-modal'),cartItems = document.getElementById('cart-items'),cartTotal = document.getElementById('cart-total'),cartCount = document.getElementById('cart-count'),confirmBtn = document.getElementById('confirm-btn'),firstNameInput = document.getElementById('first-name'),lastNameInput = document.getElementById('last-name'),emailInput = document.getElementById('email'),addressInput = document.getElementById('address'),cityInput = document.getElementById('city'),postalCodeInput = document.getElementById('postal-code'),paymentSelect = document.getElementById('payment'),productGrid = document.getElementById('product-grid'),chatbotToggle = document.getElementById('chatbot-toggle'),chatbotContainer = document.getElementById('chatbot-container'),chatbotMessages = document.getElementById('chatbot-messages'),chatbotInput = document.getElementById('chatbot-input'),contactForm = document.getElementById('contact-form'),newsletterBanner = document.getElementById('newsletter-banner'),newsletterEmail = document.getElementById('newsletter-email'),newsletterSubmit = document.getElementById('newsletter-submit'),shippingCarrierSelect = document.getElementById('shipping-carrier'),shippingMethodSelect = document.getElementById('shipping-method'),shippingDetails = document.getElementById('shipping-details');
+        const cartBtn = document.getElementById('cart-btn'), closeCartBtn = document.getElementById('close-cart'), cartModal = document.getElementById('cart-modal'), cartItems = document.getElementById('cart-items'), cartTotal = document.getElementById('cart-total'), cartCount = document.getElementById('cart-count'), confirmBtn = document.getElementById('confirm-btn'), firstNameInput = document.getElementById('first-name'), lastNameInput = document.getElementById('last-name'), emailInput = document.getElementById('email'), addressInput = document.getElementById('address'), cityInput = document.getElementById('city'), postalCodeInput = document.getElementById('postal-code'), paymentSelect = document.getElementById('payment'), productGrid = document.getElementById('product-grid'), chatbotToggle = document.getElementById('chatbot-toggle'), chatbotContainer = document.getElementById('chatbot-container'), chatbotMessages = document.getElementById('chatbot-messages'), chatbotInput = document.getElementById('chatbot-input'), contactForm = document.getElementById('contact-form'), newsletterBanner = document.getElementById('newsletter-banner'), newsletterEmail = document.getElementById('newsletter-email'), newsletterSubmit = document.getElementById('newsletter-submit'), shippingCarrierSelect = document.getElementById('shipping-carrier'), shippingMethodSelect = document.getElementById('shipping-method'), shippingDetails = document.getElementById('shipping-details');
 
         const shippingRates = {ups:{standard:{price:5.99,days:'10-15'},express:{price:15.99,days:'2-4'},relay:{price:3.99,days:'7-12'}},dhl:{standard:{price:6.49,days:'10-15'},express:{price:16.49,days:'1-3'},relay:{price:4.49,days:'7-12'}},chronopost:{standard:{price:5.49,days:'10-15'},express:{price:14.99,days:'2-5'},relay:{price:3.49,days:'7-12'}},mondialrelay:{standard:{price:4.99,days:'10-15'},express:{price:13.99,days:'2-5'},relay:{price:2.99,days:'7-12'}}};
 
@@ -1305,5 +473,4 @@
         shippingCarrierSelect.addEventListener('change',()=>{updateShippingOptions();updateShippingDetails();});shippingMethodSelect.addEventListener('change',updateShippingDetails);
 
         renderProducts();
-
     </script>
