@@ -135,6 +135,34 @@
         .dropdown-content .sub-dropdown:hover .dropdown-sub {
             display: block;
         }
+        .language-select, .currency-select {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        header nav a {
+            font-size: 0.9rem;
+        }
+        header .flex {
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            header nav {
+                display: none;
+            }
+            header .flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .language-select, .currency-select {
+                margin: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 
@@ -173,7 +201,17 @@
                 <a href="#contact" class="text-gray-700 hover:text-red-800">Contact</a>
                 <a href="#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
             </nav>
-            <div class="flex space-x-4">
+            <div class="flex space-x-4 items-center">
+                <select id="language-select" class="language-select">
+                    <option value="fr">Français</option>
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                </select>
+                <select id="currency-select" class="currency-select">
+                    <option value="EUR">€ (EUR)</option>
+                    <option value="USD">$ (USD)</option>
+                    <option value="CHF">CHF (CHF)</option>
+                </select>
                 <a href="login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
                 <button id="cart-btn" class="relative">
                     <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
@@ -203,10 +241,10 @@
                 <div class="product-card bg-white rounded-lg shadow-md transition">
                     <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753896069/caf%C3%A9%20de%20Veracruz.jpg" alt="Veracruzano Premium Export" class="w-full h-48 object-cover rounded-t-lg">
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold">Veracruzano Premium Export</h3>
-                        <p class="text-gray-600 text-sm mb-2">Notes florales et citronnées.</p>
+                        <h3 class="text-lg font-semibold" data-translate="veracruzano-name">Veracruzano Premium Export</h3>
+                        <p class="text-gray-600 text-sm mb-2" data-translate="veracruzano-desc">Notes florales et citronnées.</p>
                         <div class="mb-2">
-                            <label for="capacity-coffee1" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label>
+                            <label for="capacity-coffee1" class="block text-gray-700 text-sm font-medium mb-1" data-translate="capacity-label">Contenance</label>
                             <select id="capacity-coffee1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
                                 <option value="250g">250g</option>
                                 <option value="500g">500g</option>
@@ -214,7 +252,7 @@
                             </select>
                         </div>
                         <div class="mb-2">
-                            <label for="grind-coffee1" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label>
+                            <label for="grind-coffee1" class="block text-gray-700 text-sm font-medium mb-1" data-translate="grind-label">Type de grain</label>
                             <select id="grind-coffee1" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
                                 <option value="entier">Entier</option>
                                 <option value="moulu">Moulu</option>
@@ -222,19 +260,19 @@
                             </select>
                         </div>
                         <div class="mb-2 flex items-center space-x-4">
-                            <label class="flex items-center">
+                            <label class="flex items-center" data-translate="classic-label">
                                 <input type="radio" name="caffeine-coffee1" value="classique" checked class="mr-2">
                                 Classique
                             </label>
-                            <label class="flex items-center">
+                            <label class="flex items-center" data-translate="decaf-label">
                                 <input type="radio" name="caffeine-coffee1" value="décaféiné" class="mr-2">
                                 Décaféiné
                             </label>
                         </div>
                         <div class="flex justify-between items-center">
                             <span id="price-coffee1" class="text-red-800 font-bold">88.24€</span>
-                            <a href="coffee1.html" class="text-blue-600 hover:underline">Détails</a>
-                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee1">Ajouter</button>
+                            <a href="coffee1.html" class="text-blue-600 hover:underline" data-translate="details-link">Détails</a>
+                            <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="coffee1" data-translate="add-to-cart">Ajouter</button>
                         </div>
                     </div>
                 </div>
@@ -245,32 +283,32 @@
 
     <section id="promotions" class="py-12 bg-beige-100">
         <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold text-center text-red-800 mb-8">Promotions</h2>
+            <h2 class="text-2xl font-bold text-center text-red-800 mb-8" data-translate="promotions-title">Promotions</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="product-card bg-white rounded-lg shadow-md">
                     <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753896691/Illy%20Cafe%20Classic.jpg" alt="Illy Cafe Classic" class="w-full h-48 object-cover rounded-t-lg">
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold">Illy Cafe Classic</h3>
-                        <p class="text-gray-600 text-sm mb-2">100% Arabica Brasil</p>
-                        <span class="bg-red-800 text-white px-2 py-1 rounded text-sm">20% de réduction</span>
+                        <h3 class="text-lg font-semibold" data-translate="illy-name">Illy Cafe Classic</h3>
+                        <p class="text-gray-600 text-sm mb-2" data-translate="illy-desc">100% Arabica Brasil</p>
+                        <span class="bg-red-800 text-white px-2 py-1 rounded text-sm" data-translate="discount-label">20% de réduction</span>
                         <p class="text-red-800 font-bold mt-2">283.40€ <del>354.25€</del></p>
                     </div>
                 </div>
                 <div class="product-card bg-white rounded-lg shadow-md">
                     <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp" alt="Guarana" class="w-full h-48 object-cover rounded-t-lg">
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold">Guarana</h3>
-                        <p class="text-gray-600 text-sm mb-2">soutien énergétique, performances cognitives</p>
-                        <span class="bg-red-800 text-white px-2 py-1 rounded text-sm">15% de réduction</span>
+                        <h3 class="text-lg font-semibold" data-translate="guarana-name">Guarana</h3>
+                        <p class="text-gray-600 text-sm mb-2" data-translate="guarana-desc">soutien énergétique, performances cognitives</p>
+                        <span class="bg-red-800 text-white px-2 py-1 rounded text-sm" data-translate="discount-label">15% de réduction</span>
                         <p class="text-red-800 font-bold mt-2">11.48€ <del>13.50€</del></p>
                     </div>
                 </div>
                 <div class="product-card bg-white rounded-lg shadow-md">
                     <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754049551/Huile_cynara_ykxtvq.png" alt="Huile de Cynara" class="w-full h-48 object-cover rounded-t-lg">
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold">Huile de Cynara</h3>
-                        <p class="text-gray-600 text-sm mb-2">Anti-oxydantes et détoxifiantes.</p>
-                        <span class="bg-red-800 text-white px-2 py-1 rounded text-sm">10% de réduction</span>
+                        <h3 class="text-lg font-semibold" data-translate="cynara-name">Huile de Cynara</h3>
+                        <p class="text-gray-600 text-sm mb-2" data-translate="cynara-desc">Anti-oxydantes et détoxifiantes.</p>
+                        <span class="bg-red-800 text-white px-2 py-1 rounded text-sm" data-translate="discount-label">10% de réduction</span>
                         <p class="text-red-800 font-bold mt-2">10.76€ <del>11.95€</del></p>
                     </div>
                 </div>
@@ -280,8 +318,8 @@
 
     <section id="about" class="py-12 bg-white">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold text-red-800 mb-4">À propos</h2>
-            <p class="text-gray-600 mb-4">Guaraní Finest Brew célèbre les saveurs authentiques du monde entier. Depuis 2025, nous sélectionnons avec soin des cafés, thés et huiles essentielles pour vous offrir une expérience unique au Paraguay. <a href="about.html" class="text-red-800 underline">Découvrez notre histoire</a>.</p>
+            <h2 class="text-2xl font-bold text-red-800 mb-4" data-translate="about-title">À propos</h2>
+            <p class="text-gray-600 mb-4" data-translate="about-text">Guaraní Finest Brew célèbre les saveurs authentiques du monde entier. Depuis 2025, nous sélectionnons avec soin des cafés, thés et huiles essentielles pour vous offrir une expérience unique au Paraguay. <a href="about.html" class="text-red-800 underline" data-translate="discover-link">Découvrez notre histoire</a>.</p>
             <div class="flex justify-center space-x-4 mt-4">
                 <i class="fab fa-instagram text-2xl text-gray-700 hover:text-red-800"></i>
                 <i class="fab fa-facebook-f text-2xl text-gray-700 hover:text-red-800"></i>
@@ -292,19 +330,19 @@
 
     <section id="contact" class="py-12 bg-beige-100">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold text-red-800 mb-4">Contact</h2>
-            <p class="text-gray-600 mb-4">123 Rue des Saveurs, Asunción, Paraguay | Email : contact@guaranifinestbrew.com</p>
+            <h2 class="text-2xl font-bold text-red-800 mb-4" data-translate="contact-title">Contact</h2>
+            <p class="text-gray-600 mb-4" data-translate="contact-text">123 Rue des Saveurs, Asunción, Paraguay | Email : contact@guaranifinestbrew.com</p>
             <form id="contact-form" class="max-w-md mx-auto space-y-4">
                 <div>
-                    <input type="text" id="contact-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre nom">
+                    <input type="text" id="contact-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre nom" data-translate="name-placeholder">
                 </div>
                 <div>
-                    <input type="email" id="contact-email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre email">
+                    <input type="email" id="contact-email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre email" data-translate="email-placeholder">
                 </div>
                 <div>
-                    <textarea id="contact-message" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre message" rows="4"></textarea>
+                    <textarea id="contact-message" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre message" rows="4" data-translate="message-placeholder"></textarea>
                 </div>
-                <button type="submit" class="w-full px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition">Envoyer</button>
+                <button type="submit" class="w-full px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition" data-translate="send-button">Envoyer</button>
             </form>
         </div>
     </section>
@@ -312,52 +350,69 @@
     <div id="cart-modal" class="modal">
         <div class="bg-white rounded-lg p-6 w-full max-w-3xl mx-4 max-h-[80vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-red-800">Panier & Commande</h3>
+                <h3 class="text-xl font-bold text-red-800" data-translate="cart-title">Panier & Commande</h3>
                 <button id="close-cart" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             <div id="cart-items" class="mb-4 max-h-[300px] overflow-y-auto">
-                <p class="text-gray-500 text-center py-4">Votre panier est vide</p>
+                <p class="text-gray-500 text-center py-4" data-translate="cart-empty">Votre panier est vide</p>
             </div>
             <div class="border-t pt-4 mb-4">
                 <div class="flex justify-between mb-4">
-                    <span class="font-medium">Total</span>
+                    <span class="font-medium" data-translate="total-label">Total</span>
                     <span id="cart-total">0,00€</span>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-3 mb-3">
                 <div>
-                    <label for="first-name" class="block text-gray-700 text-sm font-medium mb-1">Prénom</label>
-                    <input type="text" id="first-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Jean">
+                    <label for="first-name" class="block text-gray-700 text-sm font-medium mb-1" data-translate="first-name-label">Prénom</label>
+                    <input type="text" id="first-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Jean" data-translate="first-name-placeholder">
                 </div>
                 <div>
-                    <label for="last-name" class="block text-gray-700 text-sm font-medium mb-1">Nom</label>
-                    <input type="text" id="last-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Dupont">
+                    <label for="last-name" class="block text-gray-700 text-sm font-medium mb-1" data-translate="last-name-label">Nom</label>
+                    <input type="text" id="last-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Dupont" data-translate="last-name-placeholder">
                 </div>
             </div>
             <div class="mb-3">
-                <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email</label>
-                <input type="email" id="email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="jean.dupont@gmail.com">
+                <label for="email" class="block text-gray-700 text-sm font-medium mb-1" data-translate="email-label">Email</label>
+                <input type="email" id="email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="jean.dupont@gmail.com" data-translate="email-placeholder">
             </div>
             <div class="mb-3">
-                <label for="address" class="block text-gray-700 text-sm font-medium mb-1">Adresse</label>
-                <input type="text" id="address" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="123 Rue Exemple">
+                <label for="address" class="block text-gray-700 text-sm font-medium mb-1" data-translate="address-label">Adresse</label>
+                <input type="text" id="address" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="123 Rue Exemple" data-translate="address-placeholder">
             </div>
             <div class="grid grid-cols-2 gap-3 mb-4">
                 <div>
-                    <label for="city" class="block text-gray-700 text-sm font-medium mb-1">Ville</label>
-                    <input type="text" id="city" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Asunción">
+                    <label for="city" class="block text-gray-700 text-sm font-medium mb-1" data-translate="city-label">Ville</label>
+                    <input type="text" id="city" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Asunción" data-translate="city-placeholder">
                 </div>
                 <div>
-                    <label for="postal-code" class="block text-gray-700 text-sm font-medium mb-1">Code postal</label>
-                    <input type="text" id="postal-code" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="1234">
+                    <label for="postal-code" class="block text-gray-700 text-sm font-medium mb-1" data-translate="postal-code-label">Code postal</label>
+                    <input type="text" id="postal-code" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="1234" data-translate="postal-code-placeholder">
                 </div>
             </div>
             <div class="mb-4">
-                <label for="shipping-carrier" class="block text-gray-700 text-sm font-medium mb-1">Transporteur</label>
+                <label for="country" class="block text-gray-700 text-sm font-medium mb-1" data-translate="country-label">Pays</label>
+                <select id="country" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                    <option value="" data-translate="country-placeholder">Sélectionner un pays</option>
+                    <option value="FR">France</option>
+                    <option value="US">États-Unis</option>
+                    <option value="PY">Paraguay</option>
+                    <option value="ES">Espagne</option>
+                    <option value="DE">Allemagne</option>
+                    <option value="IT">Italie</option>
+                    <option value="GB">Royaume-Uni</option>
+                    <option value="CA">Canada</option>
+                    <option value="AU">Australie</option>
+                    <option value="JP">Japon</option>
+                    <!-- Ajouter plus de pays si nécessaire -->
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="shipping-carrier" class="block text-gray-700 text-sm font-medium mb-1" data-translate="carrier-label">Transporteur</label>
                 <select id="shipping-carrier" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-                    <option value="">Sélectionner un transporteur</option>
+                    <option value="" data-translate="carrier-placeholder">Sélectionner un transporteur</option>
                     <option value="ups">UPS</option>
                     <option value="dhl">DHL</option>
                     <option value="chronopost">Chronopost</option>
@@ -365,25 +420,25 @@
                 </select>
             </div>
             <div class="mb-4">
-                <label for="shipping-method" class="block text-gray-700 text-sm font-medium mb-1">Mode de livraison</label>
+                <label for="shipping-method" class="block text-gray-700 text-sm font-medium mb-1" data-translate="method-label">Mode de livraison</label>
                 <select id="shipping-method" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" disabled>
-                    <option value="">Sélectionner un mode</option>
+                    <option value="" data-translate="method-placeholder">Sélectionner un mode</option>
                 </select>
             </div>
             <div class="mb-4">
-                <p id="shipping-details" class="text-gray-600 text-sm">Prix : -€ | Délai : - jours</p>
+                <p id="shipping-details" class="text-gray-600 text-sm" data-translate="shipping-details">Prix : -€ | Délai : - jours</p>
             </div>
             <div class="mb-4">
-                <label for="payment" class="block text-gray-700 text-sm font-medium mb-1">Paiement</label>
+                <label for="payment" class="block text-gray-700 text-sm font-medium mb-1" data-translate="payment-label">Paiement</label>
                 <select id="payment" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
                     <option value="visa">Visa</option>
                     <option value="mastercard">Mastercard</option>
                     <option value="paypal">PayPal</option>
-                    <option value="bank_transfer">Virement bancaire</option>
+                    <option value="bank_transfer" data-translate="bank-transfer">Virement bancaire</option>
                 </select>
             </div>
             <div class="flex justify-end space-x-4">
-                <button id="confirm-btn" class="px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition" disabled>Confirmer la commande</button>
+                <button id="confirm-btn" class="px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition" disabled data-translate="confirm-button">Confirmer la commande</button>
             </div>
         </div>
     </div>
@@ -395,26 +450,272 @@
         <div id="chatbot-container" class="chatbot-container">
             <div id="chatbot-messages" class="p-4"></div>
             <div class="p-4 border-t">
-                <input id="chatbot-input" type="text" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Posez votre question...">
+                <input id="chatbot-input" type="text" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Posez votre question..." data-translate="chat-placeholder">
             </div>
         </div>
     </div>
 
     <div id="newsletter-banner" class="newsletter-banner hidden">
-        <p class="mb-2 text-gray-600">Inscrivez-vous à notre newsletter pour des offres exclusives !</p>
+        <p class="mb-2 text-gray-600" data-translate="newsletter-text">Inscrivez-vous à notre newsletter pour des offres exclusives !</p>
         <div class="flex justify-center space-x-2">
-            <input type="email" id="newsletter-email" class="px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre email">
-            <button id="newsletter-submit" class="px-4 py-1.5 bg-red-800 hover:bg-red-900 text-white rounded transition">S’inscrire</button>
+            <input type="email" id="newsletter-email" class="px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Votre email" data-translate="newsletter-email-placeholder">
+            <button id="newsletter-submit" class="px-4 py-1.5 bg-red-800 hover:bg-red-900 text-white rounded transition" data-translate="newsletter-button">S’inscrire</button>
         </div>
     </div>
 
     <footer class="bg-red-800 text-white py-6">
         <div class="container mx-auto px-4 text-center">
-            <p class="text-red-100">&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
+            <p class="text-red-100" data-translate="footer-text">&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
         </div>
     </footer>
 
     <script>
+        const translations = {
+            fr: {
+                "title": "Guaraní Finest Brew",
+                "veracruzano-name": "Veracruzano Premium Export",
+                "veracruzano-desc": "Notes florales et citronnées.",
+                "capacity-label": "Contenance",
+                "grind-label": "Type de grain",
+                "classic-label": "Classique",
+                "decaf-label": "Décaféiné",
+                "details-link": "Détails",
+                "add-to-cart": "Ajouter",
+                "promotions-title": "Promotions",
+                "illy-name": "Illy Cafe Classic",
+                "illy-desc": "100% Arabica Brasil",
+                "discount-label": "20% de réduction",
+                "guarana-name": "Guarana",
+                "guarana-desc": "soutien énergétique, performances cognitives",
+                "cynara-name": "Huile de Cynara",
+                "cynara-desc": "Anti-oxydantes et détoxifiantes.",
+                "about-title": "À propos",
+                "about-text": "Guaraní Finest Brew célèbre les saveurs authentiques du monde entier. Depuis 2025, nous sélectionnons avec soin des cafés, thés et huiles essentielles pour vous offrir une expérience unique au Paraguay. <a href='about.html' class='text-red-800 underline'>Découvrez notre histoire</a>.",
+                "discover-link": "Découvrez notre histoire",
+                "contact-title": "Contact",
+                "contact-text": "123 Rue des Saveurs, Asunción, Paraguay | Email : contact@guaranifinestbrew.com",
+                "name-placeholder": "Votre nom",
+                "email-placeholder": "Votre email",
+                "message-placeholder": "Votre message",
+                "send-button": "Envoyer",
+                "cart-title": "Panier & Commande",
+                "cart-empty": "Votre panier est vide",
+                "total-label": "Total",
+                "first-name-label": "Prénom",
+                "first-name-placeholder": "Jean",
+                "last-name-label": "Nom",
+                "last-name-placeholder": "Dupont",
+                "email-label": "Email",
+                "address-label": "Adresse",
+                "address-placeholder": "123 Rue Exemple",
+                "city-label": "Ville",
+                "city-placeholder": "Asunción",
+                "postal-code-label": "Code postal",
+                "postal-code-placeholder": "1234",
+                "country-label": "Pays",
+                "country-placeholder": "Sélectionner un pays",
+                "carrier-label": "Transporteur",
+                "carrier-placeholder": "Sélectionner un transporteur",
+                "method-label": "Mode de livraison",
+                "method-placeholder": "Sélectionner un mode",
+                "shipping-details": "Prix : -€ | Délai : - jours",
+                "payment-label": "Paiement",
+                "bank-transfer": "Virement bancaire",
+                "confirm-button": "Confirmer la commande",
+                "chat-placeholder": "Posez votre question...",
+                "newsletter-text": "Inscrivez-vous à notre newsletter pour des offres exclusives !",
+                "newsletter-email-placeholder": "Votre email",
+                "newsletter-button": "S’inscrire",
+                "footer-text": "&copy; 2025 Guaraní Finest Brew. Tous droits réservés.",
+                "order-confirmed": "Commande passée !",
+                "client-label": "Client: ",
+                "payment-method-label": "Méthode: ",
+                "shipping-label": "Livraison: ",
+                "thank-you": "Merci pour votre achat !"
+            },
+            en: {
+                "title": "Guaraní Finest Brew",
+                "veracruzano-name": "Veracruzano Premium Export",
+                "veracruzano-desc": "Floral and citrus notes.",
+                "capacity-label": "Quantity",
+                "grind-label": "Bean Type",
+                "classic-label": "Classic",
+                "decaf-label": "Decaf",
+                "details-link": "Details",
+                "add-to-cart": "Add",
+                "promotions-title": "Promotions",
+                "illy-name": "Illy Cafe Classic",
+                "illy-desc": "100% Arabica Brazil",
+                "discount-label": "20% off",
+                "guarana-name": "Guarana",
+                "guarana-desc": "Energy support, cognitive performance",
+                "cynara-name": "Cynara Oil",
+                "cynara-desc": "Antioxidant and detoxifying.",
+                "about-title": "About",
+                "about-text": "Guaraní Finest Brew celebrates authentic flavors from around the world. Since 2025, we carefully select coffees, teas, and essential oils to offer you a unique experience in Paraguay. <a href='about.html' class='text-red-800 underline'>Discover our story</a>.",
+                "discover-link": "Discover our story",
+                "contact-title": "Contact",
+                "contact-text": "123 Flavor Street, Asunción, Paraguay | Email: contact@guaranifinestbrew.com",
+                "name-placeholder": "Your name",
+                "email-placeholder": "Your email",
+                "message-placeholder": "Your message",
+                "send-button": "Send",
+                "cart-title": "Cart & Order",
+                "cart-empty": "Your cart is empty",
+                "total-label": "Total",
+                "first-name-label": "First Name",
+                "first-name-placeholder": "John",
+                "last-name-label": "Last Name",
+                "last-name-placeholder": "Doe",
+                "email-label": "Email",
+                "address-label": "Address",
+                "address-placeholder": "123 Example Street",
+                "city-label": "City",
+                "city-placeholder": "Asunción",
+                "postal-code-label": "Postal Code",
+                "postal-code-placeholder": "1234",
+                "country-label": "Country",
+                "country-placeholder": "Select a country",
+                "carrier-label": "Carrier",
+                "carrier-placeholder": "Select a carrier",
+                "method-label": "Shipping Method",
+                "method-placeholder": "Select a method",
+                "shipping-details": "Price: -€ | Delivery: - days",
+                "payment-label": "Payment",
+                "bank-transfer": "Bank Transfer",
+                "confirm-button": "Confirm Order",
+                "chat-placeholder": "Ask your question...",
+                "newsletter-text": "Subscribe to our newsletter for exclusive offers!",
+                "newsletter-email-placeholder": "Your email",
+                "newsletter-button": "Subscribe",
+                "footer-text": "&copy; 2025 Guaraní Finest Brew. All rights reserved.",
+                "order-confirmed": "Order placed!",
+                "client-label": "Client: ",
+                "payment-method-label": "Method: ",
+                "shipping-label": "Shipping: ",
+                "thank-you": "Thank you for your purchase!"
+            },
+            es: {
+                "title": "Guaraní Finest Brew",
+                "veracruzano-name": "Veracruzano Premium Export",
+                "veracruzano-desc": "Notas florales y cítricas.",
+                "capacity-label": "Cantidad",
+                "grind-label": "Tipo de grano",
+                "classic-label": "Clásico",
+                "decaf-label": "Descafeinado",
+                "details-link": "Detalles",
+                "add-to-cart": "Añadir",
+                "promotions-title": "Promociones",
+                "illy-name": "Illy Cafe Clásico",
+                "illy-desc": "100% Arabica Brasil",
+                "discount-label": "20% de descuento",
+                "guarana-name": "Guaraná",
+                "guarana-desc": "Soporte energético, rendimiento cognitivo",
+                "cynara-name": "Aceite de Cynara",
+                "cynara-desc": "Antioxidante y desintoxicante.",
+                "about-title": "Acerca de",
+                "about-text": "Guaraní Finest Brew celebra los sabores auténticos de todo el mundo. Desde 2025, seleccionamos cuidadosamente cafés, tés y aceites esenciales para ofrecerte una experiencia única en Paraguay. <a href='about.html' class='text-red-800 underline'>Descubre nuestra historia</a>.",
+                "discover-link": "Descubre nuestra historia",
+                "contact-title": "Contacto",
+                "contact-text": "123 Calle de los Sabores, Asunción, Paraguay | Email: contact@guaranifinestbrew.com",
+                "name-placeholder": "Tu nombre",
+                "email-placeholder": "Tu email",
+                "message-placeholder": "Tu mensaje",
+                "send-button": "Enviar",
+                "cart-title": "Carrito & Pedido",
+                "cart-empty": "Tu carrito está vacío",
+                "total-label": "Total",
+                "first-name-label": "Nombre",
+                "first-name-placeholder": "Juan",
+                "last-name-label": "Apellido",
+                "last-name-placeholder": "Pérez",
+                "email-label": "Email",
+                "address-label": "Dirección",
+                "address-placeholder": "123 Calle Ejemplo",
+                "city-label": "Ciudad",
+                "city-placeholder": "Asunción",
+                "postal-code-label": "Código postal",
+                "postal-code-placeholder": "1234",
+                "country-label": "País",
+                "country-placeholder": "Seleccionar un país",
+                "carrier-label": "Transportista",
+                "carrier-placeholder": "Seleccionar transportista",
+                "method-label": "Método de envío",
+                "method-placeholder": "Seleccionar método",
+                "shipping-details": "Precio: -€ | Entrega: - días",
+                "payment-label": "Pago",
+                "bank-transfer": "Transferencia bancaria",
+                "confirm-button": "Confirmar pedido",
+                "chat-placeholder": "Haz tu pregunta...",
+                "newsletter-text": "¡Suscríbete a nuestro boletín para ofertas exclusivas!",
+                "newsletter-email-placeholder": "Tu email",
+                "newsletter-button": "Suscribirse",
+                "footer-text": "&copy; 2025 Guaraní Finest Brew. Todos los derechos reservados.",
+                "order-confirmed": "¡Pedido realizado!",
+                "client-label": "Cliente: ",
+                "payment-method-label": "Método: ",
+                "shipping-label": "Envío: ",
+                "thank-you": "¡Gracias por tu compra!"
+            }
+        };
+
+        const currencyRates = {
+            EUR: 1,
+            USD: 1.1,
+            CHF: 0.95
+        };
+
+        let currentLanguage = 'fr';
+        let currentCurrency = 'EUR';
+
+        function translatePage(lang) {
+            currentLanguage = lang;
+            document.querySelector('html').setAttribute('lang', lang);
+            document.title = translations[lang]["title"];
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else if (element.tagName === 'SELECT' && element.options) {
+                        Array.from(element.options).forEach((option, index) => {
+                            if (option.getAttribute('data-translate')) {
+                                option.text = translations[lang][option.getAttribute('data-translate')] || option.text;
+                            }
+                        });
+                    } else {
+                        element.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+            updatePrices();
+            updateCart();
+        }
+
+        function updatePrices() {
+            const rate = currencyRates[currentCurrency];
+            document.querySelectorAll('[id^="price-"]').forEach(priceElement => {
+                let originalPrice = parseFloat(priceElement.textContent.replace('€', '').replace('$', '').replace('CHF', '').replace(',', '.'));
+                let newPrice = (originalPrice * rate).toFixed(2);
+                priceElement.textContent = `${newPrice}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}`;
+            });
+            const shippingDetails = document.getElementById('shipping-details');
+            if (shippingDetails.dataset.price) {
+                let shippingPrice = parseFloat(shippingDetails.dataset.price) * rate;
+                shippingDetails.textContent = `Prix : ${shippingPrice.toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'} | Délai : - jours`;
+            }
+        }
+
+        document.getElementById('language-select').addEventListener('change', (e) => {
+            translatePage(e.target.value);
+        });
+
+        document.getElementById('currency-select').addEventListener('change', (e) => {
+            currentCurrency = e.target.value;
+            updatePrices();
+            updateCart();
+        });
+
         const products = [
             {id:'coffee1',name:'Veracruzano Premium Export',price:{'250g':88.24,'500g':177.12,'1kg':356.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896069/caf%C3%A9%20de%20Veracruz.jpg',description:'Notes florales et citronnées.'},
             {id:'coffee2',name:'Café Colombien Supremo',price:{'250g':188.50,'500g':354.00,'1kg':690.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753886877/coffee-colombian_up6quo.jpg',description:'Arômes de chocolat et noisette.'},
@@ -432,45 +733,235 @@
 
         let cart = [];
 
-        const cartBtn = document.getElementById('cart-btn'), closeCartBtn = document.getElementById('close-cart'), cartModal = document.getElementById('cart-modal'), cartItems = document.getElementById('cart-items'), cartTotal = document.getElementById('cart-total'), cartCount = document.getElementById('cart-count'), confirmBtn = document.getElementById('confirm-btn'), firstNameInput = document.getElementById('first-name'), lastNameInput = document.getElementById('last-name'), emailInput = document.getElementById('email'), addressInput = document.getElementById('address'), cityInput = document.getElementById('city'), postalCodeInput = document.getElementById('postal-code'), paymentSelect = document.getElementById('payment'), productGrid = document.getElementById('product-grid'), chatbotToggle = document.getElementById('chatbot-toggle'), chatbotContainer = document.getElementById('chatbot-container'), chatbotMessages = document.getElementById('chatbot-messages'), chatbotInput = document.getElementById('chatbot-input'), contactForm = document.getElementById('contact-form'), newsletterBanner = document.getElementById('newsletter-banner'), newsletterEmail = document.getElementById('newsletter-email'), newsletterSubmit = document.getElementById('newsletter-submit'), shippingCarrierSelect = document.getElementById('shipping-carrier'), shippingMethodSelect = document.getElementById('shipping-method'), shippingDetails = document.getElementById('shipping-details');
+        const cartBtn = document.getElementById('cart-btn'), closeCartBtn = document.getElementById('close-cart'), cartModal = document.getElementById('cart-modal'), cartItems = document.getElementById('cart-items'), cartTotal = document.getElementById('cart-total'), cartCount = document.getElementById('cart-count'), confirmBtn = document.getElementById('confirm-btn'), firstNameInput = document.getElementById('first-name'), lastNameInput = document.getElementById('last-name'), emailInput = document.getElementById('email'), addressInput = document.getElementById('address'), cityInput = document.getElementById('city'), postalCodeInput = document.getElementById('postal-code'), countrySelect = document.getElementById('country'), paymentSelect = document.getElementById('payment'), productGrid = document.getElementById('product-grid'), chatbotToggle = document.getElementById('chatbot-toggle'), chatbotContainer = document.getElementById('chatbot-container'), chatbotMessages = document.getElementById('chatbot-messages'), chatbotInput = document.getElementById('chatbot-input'), contactForm = document.getElementById('contact-form'), newsletterBanner = document.getElementById('newsletter-banner'), newsletterEmail = document.getElementById('newsletter-email'), newsletterSubmit = document.getElementById('newsletter-submit'), shippingCarrierSelect = document.getElementById('shipping-carrier'), shippingMethodSelect = document.getElementById('shipping-method'), shippingDetails = document.getElementById('shipping-details');
 
-        const shippingRates = {ups:{standard:{price:5.99,days:'10-15'},express:{price:15.99,days:'2-4'},relay:{price:3.99,days:'7-12'}},dhl:{standard:{price:6.49,days:'10-15'},express:{price:16.49,days:'1-3'},relay:{price:4.49,days:'7-12'}},chronopost:{standard:{price:5.49,days:'10-15'},express:{price:14.99,days:'2-5'},relay:{price:3.49,days:'7-12'}},mondialrelay:{standard:{price:4.99,days:'10-15'},express:{price:13.99,days:'2-5'},relay:{price:2.99,days:'7-12'}}};
+        const shippingRates = {
+            ups: {standard: {price: 5.99, days: '10-15'}, express: {price: 15.99, days: '2-4'}, relay: {price: 3.99, days: '7-12'}},
+            dhl: {standard: {price: 6.49, days: '10-15'}, express: {price: 16.49, days: '1-3'}, relay: {price: 4.49, days: '7-12'}},
+            chronopost: {standard: {price: 5.49, days: '10-15'}, express: {price: 14.99, days: '2-5'}, relay: {price: 3.49, days: '7-12'}},
+            mondialrelay: {standard: {price: 4.99, days: '10-15'}, express: {price: 13.99, days: '2-5'}, relay: {price: 2.99, days: '7-12'}}
+        };
 
-        function toggleModal(){cartModal.classList.toggle('open');document.body.classList.toggle('overflow-hidden');if(cart.length>0)updateShippingOptions();}
+        function toggleModal() {
+            cartModal.classList.toggle('open');
+            document.body.classList.toggle('overflow-hidden');
+            if (cart.length > 0) updateShippingOptions();
+        }
 
-        cartBtn.addEventListener('click',toggleModal);closeCartBtn.addEventListener('click',toggleModal);
+        cartBtn.addEventListener('click', toggleModal);
+        closeCartBtn.addEventListener('click', toggleModal);
 
-        function updateCart(){const totalItems=cart.reduce((sum,item)=>sum+item.quantity,0);let totalPrice=cart.reduce((sum,item)=>sum+item.price*item.quantity,0);const shippingCost=parseFloat(shippingDetails.dataset.price)||0;totalPrice+=shippingCost;cartCount.textContent=totalItems;cartTotal.textContent=totalPrice.toFixed(2)+'€';if(cart.length===0){cartItems.innerHTML='<p class="text-gray-500 text-center py-4">Votre panier est vide</p>';confirmBtn.disabled=true;shippingCarrierSelect.disabled=true;shippingMethodSelect.disabled=true;shippingDetails.textContent='Prix : -€ | Délai : - jours';shippingDetails.dataset.price=0;}else{cartItems.innerHTML=cart.map(item=>`<div class="flex items-center py-2 border-b"><img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded"><div class="ml-3 flex-1"><h4 class="font-medium text-sm">${item.name} (${item.capacity}${item.caffeine?','+item.caffeine:''}${item.grind?','+item.grind:''}${item.type?','+item.type:''}${item.usage?','+item.usage:''})</h4><p class="text-gray-600 text-xs">${item.price.toFixed(2)}€</p></div><div class="flex items-center"><button onclick="changeQuantity('${item.compositeId}',-1)" class="text-gray-500 hover:text-red-800 px-1"><i class="fas fa-minus text-xs"></i></button><span class="quantity mx-1 text-sm">${item.quantity}</span><button onclick="changeQuantity('${item.compositeId}',1)" class="text-gray-500 hover:text-red-800 px-1"><i class="fas fa-plus text-xs"></i></button></div></div>`).join('');confirmBtn.disabled=false;shippingCarrierSelect.disabled=false;}}
+        function updateCart() {
+            const rate = currencyRates[currentCurrency];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            let totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const shippingCost = parseFloat(shippingDetails.dataset.price) || 0;
+            totalPrice += shippingCost;
+            cartCount.textContent = totalItems;
+            cartTotal.textContent = `${(totalPrice * rate).toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}`;
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-500 text-center py-4" data-translate="cart-empty">Votre panier est vide</p>';
+                confirmBtn.disabled = true;
+                shippingCarrierSelect.disabled = true;
+                shippingMethodSelect.disabled = true;
+                shippingDetails.textContent = `Prix : -${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'} | Délai : - jours`;
+                shippingDetails.dataset.price = 0;
+            } else {
+                cartItems.innerHTML = cart.map(item => `<div class="flex items-center py-2 border-b"><img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded"><div class="ml-3 flex-1"><h4 class="font-medium text-sm">${item.name} (${item.capacity}${item.caffeine ? ',' + item.caffeine : ''}${item.grind ? ',' + item.grind : ''}${item.type ? ',' + item.type : ''}${item.usage ? ',' + item.usage : ''})</h4><p class="text-gray-600 text-xs">${(item.price * rate).toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}</p></div><div class="flex items-center"><button onclick="changeQuantity('${item.compositeId}',-1)" class="text-gray-500 hover:text-red-800 px-1"><i class="fas fa-minus text-xs"></i></button><span class="quantity mx-1 text-sm">${item.quantity}</span><button onclick="changeQuantity('${item.compositeId}',1)" class="text-gray-500 hover:text-red-800 px-1"><i class="fas fa-plus text-xs"></i></button></div></div>`).join('');
+                confirmBtn.disabled = false;
+                shippingCarrierSelect.disabled = false;
+            }
+        }
 
-        function changeQuantity(id,delta){const item=cart.find(i=>i.compositeId===id);if(item){item.quantity+=delta;if(item.quantity<=0)cart=cart.filter(i=>i.compositeId!==id);updateCart();}}
+        function changeQuantity(id, delta) {
+            const item = cart.find(i => i.compositeId === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) cart = cart.filter(i => i.compositeId !== id);
+                updateCart();
+            }
+        }
 
-        function renderProducts(category='all'){const filteredProducts=category==='all'?products:products.filter(p=>p.category===category);productGrid.innerHTML=filteredProducts.map(product=>`<div class="product-card bg-white rounded-lg shadow-md transition"><img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded-t-lg"><div class="p-4"><h3 class="text-lg font-semibold">${product.name}</h3><p class="text-gray-600 text-sm mb-2">${product.description}</p><div class="mb-2"><label for="capacity-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Contenance</label><select id="capacity-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">${product.category==='coffee'?`<option value="250g">250g</option><option value="500g">500g</option><option value="1kg">1kg</option>`:product.category==='tea'?`<option value="100g">100g</option><option value="200g">200g</option><option value="500g">500g</option>`:`<option value="10ml">10ml</option><option value="30ml">30ml</option><option value="50ml">50ml</option>`}</select></div>${product.category==='coffee'?`<div class="mb-2"><label for="grind-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Type de grain</label><select id="grind-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800"><option value="entier">Entier</option><option value="moulu">Moulu</option><option value="espresso">Espresso</option></select></div><div class="mb-2 flex items-center space-x-4"><label class="flex items-center"><input type="radio" name="caffeine-${product.id}" value="classique" checked class="mr-2">Classique</label><label class="flex items-center"><input type="radio" name="caffeine-${product.id}" value="décaféiné" class="mr-2">Décaféiné</label></div>`:product.category==='tea'?`<div class="mb-2"><label for="type-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Type</label><select id="type-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800"><option value="${product.name.includes('Vert')?'vert':product.name.includes('Classico')?'noir':'blanc'}">${product.name.includes('Vert')?'Vert':product.name.includes('Classico')?'Noir':'Blanc'}</option></select></div>`:`<div class="mb-2"><label for="usage-${product.id}" class="block text-gray-700 text-sm font-medium mb-1">Usage</label><select id="usage-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800"><option value="${product.name.includes('Lavande')?'relaxant':product.name.includes('Menthe')?'énergisant':product.name.includes('Palo Santo')?'anti-inflammatoires':product.name.includes('Baies roses')?'energisant':product.name.includes('Cynara')?'anti-oxydantes-et-detoxifiantes':product.name.includes('mélisse')?'sedatif-et-apaise-les-tensions-nerveuses':product.name.includes('limette')?'anti-inflammatoire-antispasmodique':'purifiant'}">${product.name.includes('Lavande')?'Relaxant':product.name.includes('Menthe')?'Énergisant':product.name.includes('Palo Santo')?'Anti-inflammatoires':product.name.includes('Baies roses')?'Energisant':product.name.includes('Cynara')?'Anti-oxydantes et détoxifiantes':product.name.includes('mélisse')?'Sédatif et apaise les tensions nerveuses':product.name.includes('limette')?'Anti-inflammatoire, antispasmodique':'Purifiant'}</option></select></div>`}<div class="flex justify-between items-center"><span id="price-${product.id}" class="text-red-800 font-bold">${Object.values(product.price)[0].toFixed(2)}€</span><a href="${product.id}.html" class="text-blue-600 hover:underline">Détails</a><button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="${product.id}">Ajouter</button></div></div></div>`).join('');document.querySelectorAll('.add-to-cart').forEach(btn=>{btn.addEventListener('click',e=>{const productId=e.target.dataset.id;const product=products.find(p=>p.id===productId);const capacity=document.getElementById(`capacity-${productId}`).value;let caffeine='',grind='',type='',usage='';if(product.category==='coffee'){caffeine=document.querySelector(`input[name="caffeine-${productId}"]:checked`).value;grind=document.getElementById(`grind-${productId}`).value;}else if(product.category==='tea')type=document.getElementById(`type-${product.id}`).value;else usage=document.getElementById(`usage-${product.id}`).value;const compositeId=`${productId}-${capacity}-${caffeine||type||usage}-${grind||type||usage}`;const price=product.price[capacity];const existingItem=cart.find(item=>item.compositeId===compositeId);if(existingItem)existingItem.quantity++;else cart.push({...product,compositeId,capacity,caffeine,grind,type,usage,quantity:1,price:price});updateCart();toggleModal();});});document.querySelectorAll('[id^="capacity-"]').forEach(select=>{const productId=select.id.replace('capacity-','');const product=products.find(p=>p.id===productId);select.addEventListener('change',()=>{const capacity=select.value;const price=product.price[capacity];document.getElementById(`price-${productId}`).textContent=`${price.toFixed(2)}€`;});});}
+        function renderProducts(category = 'all') {
+            const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+            productGrid.innerHTML = filteredProducts.map(product => `<div class="product-card bg-white rounded-lg shadow-md transition"><img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded-t-lg"><div class="p-4"><h3 class="text-lg font-semibold" data-translate="${product.id}-name">${product.name}</h3><p class="text-gray-600 text-sm mb-2" data-translate="${product.id}-desc">${product.description}</p><div class="mb-2"><label for="capacity-${product.id}" class="block text-gray-700 text-sm font-medium mb-1" data-translate="capacity-label">Contenance</label><select id="capacity-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">${Object.keys(product.price).map(cap => `<option value="${cap}">${cap}</option>`).join('')}</select></div>${product.category === 'coffee' ? `<div class="mb-2"><label for="grind-${product.id}" class="block text-gray-700 text-sm font-medium mb-1" data-translate="grind-label">Type de grain</label><select id="grind-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800"><option value="entier">Entier</option><option value="moulu">Moulu</option><option value="espresso">Espresso</option></select></div><div class="mb-2 flex items-center space-x-4"><label class="flex items-center" data-translate="classic-label"><input type="radio" name="caffeine-${product.id}" value="classique" checked class="mr-2">Classique</label><label class="flex items-center" data-translate="decaf-label"><input type="radio" name="caffeine-${product.id}" value="décaféiné" class="mr-2">Décaféiné</label></div>` : product.category === 'tea' ? `<div class="mb-2"><label for="type-${product.id}" class="block text-gray-700 text-sm font-medium mb-1" data-translate="type-label">Type</label><select id="type-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800"><option value="${product.name.includes('Vert')?'vert':product.name.includes('Classico')?'noir':'blanc'}">${product.name.includes('Vert')?'Vert':product.name.includes('Classico')?'Noir':'Blanc'}</option></select></div>` : `<div class="mb-2"><label for="usage-${product.id}" class="block text-gray-700 text-sm font-medium mb-1" data-translate="usage-label">Usage</label><select id="usage-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800"><option value="${product.name.includes('Lavande')?'relaxant':product.name.includes('Menthe')?'énergisant':product.name.includes('Palo Santo')?'anti-inflammatoires':product.name.includes('Baies roses')?'energisant':product.name.includes('Cynara')?'anti-oxydantes-et-detoxifiantes':product.name.includes('mélisse')?'sedatif-et-apaise-les-tensions-nerveuses':product.name.includes('limette')?'anti-inflammatoire-antispasmodique':'purifiant'}">${product.name.includes('Lavande')?'Relaxant':product.name.includes('Menthe')?'Énergisant':product.name.includes('Palo Santo')?'Anti-inflammatoires':product.name.includes('Baies roses')?'Energisant':product.name.includes('Cynara')?'Anti-oxydantes et détoxifiantes':product.name.includes('mélisse')?'Sédatif et apaise les tensions nerveuses':product.name.includes('limette')?'Anti-inflammatoire, antispasmodique':'Purifiant'}</option></select></div>`}<div class="flex justify-between items-center"><span id="price-${product.id}" class="text-red-800 font-bold">${(Object.values(product.price)[0] * currencyRates[currentCurrency]).toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}</span><a href="${product.id}.html" class="text-blue-600 hover:underline" data-translate="details-link">Détails</a><button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="${product.id}" data-translate="add-to-cart">Ajouter</button></div></div></div>`).join('');
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const productId = e.target.dataset.id;
+            const product = products.find(p => p.id === productId);
+            if (!product) return; // Sécurité si produit non trouvé
+            const capacity = document.getElementById(`capacity-${productId}`).value;
+            if (product.category === 'coffee') {
+                const caffeine = document.querySelector(`input[name="caffeine-${productId}"]:checked`)?.value || 'classique';
+                const grind = document.getElementById(`grind-${productId}`).value || 'entier';
+                const compositeId = `${productId}-${capacity}-${caffeine}-${grind}`;
+                const price = product.price[capacity] || Object.values(product.price)[0];
+                let existingItem = cart.find(item => item.compositeId === compositeId);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ ...product, compositeId, capacity, caffeine, grind, quantity: 1, price: price });
+                }
+            } else {
+                let caffeine = '', grind = '', type = '', usage = '';
+                if (product.category === 'tea') type = document.getElementById(`type-${productId}`).value || '';
+                else usage = document.getElementById(`usage-${productId}`).value || '';
+                const compositeId = `${productId}-${capacity}-${caffeine || ''}-${grind || ''}-${type || ''}-${usage || ''}`;
+                const price = product.price[capacity] || Object.values(product.price)[0];
+                let existingItem = cart.find(item => item.compositeId === compositeId);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ ...product, compositeId, capacity, caffeine, grind, type, usage, quantity: 1, price: price });
+                }
+            }
+            updateCart();
+            toggleModal();
+            const priceElement = document.getElementById(`price-${productId}`);
+            if (priceElement) {
+                priceElement.textContent = `${(product.price[capacity] * currencyRates[currentCurrency]).toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}`;
+            }
+        });
+    });
+    document.querySelectorAll('[id^="capacity-"]').forEach(select => {
+        const productId = select.id.replace('capacity-', '');
+        const product = products.find(p => p.id === productId);
+        select.addEventListener('change', () => {
+            const capacity = select.value;
+            const price = product.price[capacity] * currencyRates[currentCurrency];
+            document.getElementById(`price-${productId}`).textContent = `${price.toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}`;
+        });
+    });
+}
 
-        document.querySelectorAll('.category-filter').forEach(btn=>{btn.addEventListener('click',e=>{renderProducts(e.target.dataset.category);});});
+        document.querySelectorAll('.category-filter').forEach(btn => {
+            btn.addEventListener('click', e => {
+                renderProducts(e.target.dataset.category);
+            });
+        });
 
-        function showConfirmationMessage(firstName,lastName,email,address,city,postalCode,paymentMethod,total,shippingDetails){const messageDiv=document.createElement('div');messageDiv.className='confirmation-message';messageDiv.innerHTML=`<p class="font-bold">Commande passée !</p><p>Client: ${firstName} ${lastName}</p><p>Email: ${email}</p><p>Adresse: ${address}, ${city}, ${postalCode}</p><p>Méthode: ${paymentMethod==='visa'?'Visa':paymentMethod==='mastercard'?'Mastercard':paymentMethod==='paypal'?'PayPal':'Virement bancaire'}</p><p>Livraison: ${shippingDetails.carrier} - ${shippingDetails.method} (${shippingDetails.price}€, ${shippingDetails.days} jours)</p><p>Montant total: ${total.toFixed(2)}€</p><p class="font-bold mt-2">Merci pour votre achat !</p>`;document.body.appendChild(messageDiv);setTimeout(()=>{messageDiv.remove();},5000);}
+        function showConfirmationMessage(firstName, lastName, email, address, city, postalCode, country, paymentMethod, total, shippingDetails) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'confirmation-message';
+            messageDiv.innerHTML = `<p class="font-bold" data-translate="order-confirmed">Commande passée !</p><p data-translate="client-label">Client: ${firstName} ${lastName}</p><p data-translate="email-label">Email: ${email}</p><p data-translate="address-label">Adresse: ${address}, ${city}, ${postalCode}, ${country}</p><p data-translate="payment-method-label">Méthode: ${paymentMethod === 'visa' ? 'Visa' : paymentMethod === 'mastercard' ? 'Mastercard' : paymentMethod === 'paypal' ? 'PayPal' : 'Virement bancaire'}</p><p data-translate="shipping-label">Livraison: ${shippingDetails.carrier} - ${shippingDetails.method} (${shippingDetails.price}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}, ${shippingDetails.days} jours)</p><p data-translate="total-label">Montant total: ${total.toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}</p><p class="font-bold mt-2" data-translate="thank-you">Merci pour votre achat !</p>`;
+            document.body.appendChild(messageDiv);
+            setTimeout(() => { messageDiv.remove(); }, 5000);
+        }
 
-        confirmBtn.addEventListener('click',()=>{if(cart.length===0){alert('Votre panier est vide');return;}const firstName=firstNameInput.value.trim(),lastName=lastNameInput.value.trim(),email=emailInput.value.trim(),address=addressInput.value.trim(),city=cityInput.value.trim(),postalCode=postalCodeInput.value.trim(),paymentMethod=paymentSelect.value,carrier=shippingCarrierSelect.value,method=shippingMethodSelect.value,shippingCost=parseFloat(shippingDetails.dataset.price)||0,total=cart.reduce((sum,item)=>sum+item.price*item.quantity,0)+shippingCost;if(!firstName||!lastName||!email||!email.includes('@')||!address||!city||!postalCode||!carrier||!method){alert('Veuillez remplir tous les champs correctement');return;}showConfirmationMessage(firstName,lastName,email,address,city,postalCode,paymentMethod,total,{carrier:carrier.charAt(0).toUpperCase()+carrier.slice(1),method:method.charAt(0).toUpperCase()+method.slice(1),price:shippingCost.toFixed(2),days:shippingRates[carrier][method].days});cart=[];firstNameInput.value='';lastNameInput.value='';emailInput.value='';addressInput.value='';cityInput.value='';postalCodeInput.value='';shippingCarrierSelect.value='';shippingMethodSelect.innerHTML='<option value="">Sélectionner un mode</option>';shippingMethodSelect.disabled=true;updateCart();toggleModal();});
+        confirmBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert(translations[currentLanguage]["cart-empty"]);
+                return;
+            }
+            const firstName = firstNameInput.value.trim(), lastName = lastNameInput.value.trim(), email = emailInput.value.trim(), address = addressInput.value.trim(), city = cityInput.value.trim(), postalCode = postalCodeInput.value.trim(), country = countrySelect.value.trim(), paymentMethod = paymentSelect.value, carrier = shippingCarrierSelect.value, method = shippingMethodSelect.value, shippingCost = parseFloat(shippingDetails.dataset.price) || 0, total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + shippingCost;
+            if (!firstName || !lastName || !email || !email.includes('@') || !address || !city || !postalCode || !country || !carrier || !method) {
+                alert(translations[currentLanguage]["cart-empty"]);
+                return;
+            }
+            showConfirmationMessage(firstName, lastName, email, address, city, postalCode, country, paymentMethod, total * currencyRates[currentCurrency], {carrier: carrier.charAt(0).toUpperCase() + carrier.slice(1), method: method.charAt(0).toUpperCase() + method.slice(1), price: (shippingCost * currencyRates[currentCurrency]).toFixed(2), days: shippingRates[carrier][method].days});
+            cart = [];
+            firstNameInput.value = ''; lastNameInput.value = ''; emailInput.value = ''; addressInput.value = ''; cityInput.value = ''; postalCodeInput.value = ''; countrySelect.value = '';
+            shippingCarrierSelect.value = ''; shippingMethodSelect.innerHTML = '<option value="" data-translate="method-placeholder">Sélectionner un mode</option>'; shippingMethodSelect.disabled = true;
+            updateCart();
+            toggleModal();
+        });
 
-        contactForm.addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('contact-name').value.trim(),email=document.getElementById('contact-email').value.trim(),message=document.getElementById('contact-message').value.trim();if(name&&email&&email.includes('@')&&message){alert('Message envoyé avec succès ! Nous vous contacterons bientôt.');contactForm.reset();}else{alert('Veuillez remplir tous les champs correctement.');}});
+        contactForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const name = document.getElementById('contact-name').value.trim(), email = document.getElementById('contact-email').value.trim(), message = document.getElementById('contact-message').value.trim();
+            if (name && email && email.includes('@') && message) {
+                alert(translations[currentLanguage]["send-button"] + ' ' + translations[currentLanguage]["thank-you"]);
+                contactForm.reset();
+            } else {
+                alert(translations[currentLanguage]["cart-empty"]);
+            }
+        });
 
-        newsletterSubmit.addEventListener('click',()=>{const email=newsletterEmail.value.trim();if(email&&email.includes('@')){alert('Inscription à la newsletter réussie !');newsletterEmail.value='';newsletterBanner.classList.add('hidden');}else{alert('Veuillez entrer un email valide.');}});
+        newsletterSubmit.addEventListener('click', () => {
+            const email = newsletterEmail.value.trim();
+            if (email && email.includes('@')) {
+                alert(translations[currentLanguage]["newsletter-button"] + ' ' + translations[currentLanguage]["thank-you"]);
+                newsletterEmail.value = '';
+                newsletterBanner.classList.add('hidden');
+            } else {
+                alert(translations[currentLanguage]["cart-empty"]);
+            }
+        });
 
-        setTimeout(()=>{newsletterBanner.classList.remove('hidden');},5000);
+        setTimeout(() => { newsletterBanner.classList.remove('hidden'); }, 5000);
 
-        function addChatMessage(message,isUser=false){const messageDiv=document.createElement('div');messageDiv.className=`chat-message ${isUser?'user-message':'bot-message'}`;messageDiv.textContent=message;chatbotMessages.appendChild(messageDiv);chatbotMessages.scrollTop=chatbotMessages.scrollHeight;}
+        function addChatMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            chatbotMessages.appendChild(messageDiv);
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
 
-        function getBotResponse(userInput){userInput=userInput.toLowerCase().trim();if(userInput.includes('café')||userInput.includes('coffee'))return'Nos cafés : Veracruzano Premium Export, Colombien Supremo, Illy Cafe Classic, Época. Choisissez 250g/500g/1kg, entier/moulu/espresso, classique/décaféiné.';else if(userInput.includes('contenance café')||userInput.includes('poids café'))return'Cafés disponibles en 250g, 500g, ou 1kg avec prix ajustés.';else if(userInput.includes('caféine')||userInput.includes('déca'))return'Choisissez classique (avec caféine) ou décaféiné pour chaque café.';else if(userInput.includes('moulu')||userInput.includes('grain')||userInput.includes('espresso'))return'Cafés disponibles en grain entier, moulu, ou espresso.';else if(userInput.includes('thé')||userInput.includes('tea')||userInput.includes('maté'))return'Nos thés : Maté Vert, Maté Classico Bio, Guarana. Choisissez 100g/200g/500g.';else if(userInput.includes('contenance thé')||userInput.includes('poids thé'))return'Thés disponibles en 100g, 200g, ou 500g avec prix ajustés.';else if(userInput.includes('huile')||userInput.includes('oil'))return'Nos huiles essentielles : Palo Santo (anti-inflammatoires), Baies roses (energisant), Huile de Cynara (anti-oxydantes et détoxifiantes), Huile de mélisse (sédatif et apaise les tensions nerveuses), Huile de limette (anti-inflammatoire, antispasmodique). Choisissez 10ml/30ml/50ml.';else if(userInput.includes('contenance huile')||userInput.includes('volume huile'))return'Huiles essentielles en 10ml, 30ml, ou 50ml avec prix ajustés.';else if(userInput.includes('livraison')||userInput.includes('délai'))return'Choisissez votre transporteur (UPS, DHL, Chronopost, Mondial Relay) et mode (Standard, Express, Relais) dans le panier pour voir les délais.';else if(userInput.includes('paiement')||userInput.includes('payer'))return'Nous acceptons Visa, Mastercard, PayPal et Virement bancaire.';else if(userInput.includes('panier')||userInput.includes('cart'))return'Ajoutez des produits via "Ajouter". Consultez le panier via l’icône en haut à droite.';else if(userInput.includes('contact')||userInput.includes('email'))return'Contactez-nous à contact@guaranifinestbrew.com ou via le formulaire sur la page Contact.';else if(userInput.includes('promotion')||userInput.includes('offre'))return'Découvrez nos promotions sur la page Promotions !';else if(userInput.includes('newsletter'))return'Inscrivez-vous à notre newsletter en bas de page pour des offres exclusives.';else if(userInput.includes('compte')||userInput.includes('register')||userInput.includes('login'))return'Connectez-vous ou inscrivez-vous via "Se connecter" en haut à droite !';else return'Désolé, je n’ai pas compris. Parlez-moi de café, thé, huiles, livraison, paiement, contact, promotions, newsletter ou compte !';}
+        function getBotResponse(userInput) {
+            userInput = userInput.toLowerCase().trim();
+            if (userInput.includes('café') || userInput.includes('coffee')) return translations[currentLanguage]["veracruzano-name"] + ', ' + translations[currentLanguage]["illy-name"] + '. ' + translations[currentLanguage]["capacity-label"] + ': 250g/500g/1kg, ' + translations[currentLanguage]["grind-label"] + ': entier/moulu/espresso, ' + translations[currentLanguage]["classic-label"] + '/' + translations[currentLanguage]["decaf-label"] + '.';
+            else if (userInput.includes('contenance café') || userInput.includes('poids café')) return translations[currentLanguage]["capacity-label"] + ': 250g, 500g, ou 1kg avec prix ajustés.';
+            else if (userInput.includes('caféine') || userInput.includes('déca')) return translations[currentLanguage]["classic-label"] + ' (avec caféine) ou ' + translations[currentLanguage]["decaf-label"] + ' pour chaque café.';
+            else if (userInput.includes('moulu') || userInput.includes('grain') || userInput.includes('espresso')) return translations[currentLanguage]["grind-label"] + ': grain entier, moulu, ou espresso.';
+            else if (userInput.includes('thé') || userInput.includes('tea') || userInput.includes('maté')) return translations[currentLanguage]["guarana-name"] + ', ' + translations[currentLanguage]["cynara-name"] + '. ' + translations[currentLanguage]["capacity-label"] + ': 100g/200g/500g.';
+            else if (userInput.includes('contenance thé') || userInput.includes('poids thé')) return translations[currentLanguage]["capacity-label"] + ': 100g, 200g, ou 500g avec prix ajustés.';
+            else if (userInput.includes('huile') || userInput.includes('oil')) return translations[currentLanguage]["cynara-name"] + ' (anti-oxydantes), ' + translations[currentLanguage]["guarana-name"] + ' (énergisant). ' + translations[currentLanguage]["capacity-label"] + ': 10ml/30ml/50ml.';
+            else if (userInput.includes('contenance huile') || userInput.includes('volume huile')) return translations[currentLanguage]["capacity-label"] + ': 10ml, 30ml, ou 50ml avec prix ajustés.';
+            else if (userInput.includes('livraison') || userInput.includes('délai')) return translations[currentLanguage]["carrier-label"] + ' (UPS, DHL, Chronopost, Mondial Relay) et ' + translations[currentLanguage]["method-label"] + ' (Standard, Express, Relais) dans le panier.';
+            else if (userInput.includes('paiement') || userInput.includes('payer')) return translations[currentLanguage]["payment-label"] + ': Visa, Mastercard, PayPal, ' + translations[currentLanguage]["bank-transfer"] + '.';
+            else if (userInput.includes('panier') || userInput.includes('cart')) return translations[currentLanguage]["add-to-cart"] + ' via "Ajouter". ' + translations[currentLanguage]["cart-title"] + ' via l’icône en haut à droite.';
+            else if (userInput.includes('contact') || userInput.includes('email')) return translations[currentLanguage]["contact-text"];
+            else if (userInput.includes('promotion') || userInput.includes('offre')) return translations[currentLanguage]["promotions-title"] + ' sur la page Promotions !';
+            else if (userInput.includes('newsletter')) return translations[currentLanguage]["newsletter-text"];
+            else if (userInput.includes('compte') || userInput.includes('register') || userInput.includes('login')) return translations[currentLanguage]["send-button"] + ' via "Se connecter" en haut à droite !';
+            else return 'Désolé, je n’ai pas compris. Parlez-moi de café, thé, huiles, livraison, paiement, contact, promotions, newsletter ou compte !';
+        }
 
-        chatbotToggle.addEventListener('click',()=>{chatbotContainer.classList.toggle('open');});chatbotInput.addEventListener('keypress',e=>{if(e.key==='Enter'&&chatbotInput.value.trim()){const userMessage=chatbotInput.value.trim();addChatMessage(userMessage,true);const botResponse=getBotResponse(userMessage);setTimeout(()=>{addChatMessage(botResponse);},500);chatbotInput.value='';}});
+        chatbotToggle.addEventListener('click', () => { chatbotContainer.classList.toggle('open'); });
+        chatbotInput.addEventListener('keypress', e => {
+            if (e.key === 'Enter' && chatbotInput.value.trim()) {
+                const userMessage = chatbotInput.value.trim();
+                addChatMessage(userMessage, true);
+                const botResponse = getBotResponse(userMessage);
+                setTimeout(() => { addChatMessage(botResponse); }, 500);
+                chatbotInput.value = '';
+            }
+        });
 
-        function updateShippingOptions(){const carrier=shippingCarrierSelect.value;shippingMethodSelect.innerHTML='<option value="">Sélectionner un mode</option>';if(carrier&&shippingRates[carrier]){Object.keys(shippingRates[carrier]).forEach(method=>{const option=document.createElement('option');option.value=method;option.textContent=method.charAt(0).toUpperCase()+method.slice(1);shippingMethodSelect.appendChild(option);});shippingMethodSelect.disabled=false;}else shippingMethodSelect.disabled=true;}
+        function updateShippingOptions() {
+            const carrier = shippingCarrierSelect.value;
+            shippingMethodSelect.innerHTML = '<option value="" data-translate="method-placeholder">Sélectionner un mode</option>';
+            if (carrier && shippingRates[carrier]) {
+                Object.keys(shippingRates[carrier]).forEach(method => {
+                    const option = document.createElement('option');
+                    option.value = method;
+                    option.textContent = method.charAt(0).toUpperCase() + method.slice(1);
+                    shippingMethodSelect.appendChild(option);
+                });
+                shippingMethodSelect.disabled = false;
+            } else shippingMethodSelect.disabled = true;
+        }
 
-        function updateShippingDetails(){const carrier=shippingCarrierSelect.value,method=shippingMethodSelect.value;if(carrier&&method&&shippingRates[carrier][method]){const{price,days}=shippingRates[carrier][method];shippingDetails.textContent=`Prix : ${price.toFixed(2)}€ | Délai : ${days} jours`;shippingDetails.dataset.price=price;}else{shippingDetails.textContent='Prix : -€ | Délai : - jours';shippingDetails.dataset.price=0;}updateCart();}
+        function updateShippingDetails() {
+            const carrier = shippingCarrierSelect.value, method = shippingMethodSelect.value;
+            const rate = currencyRates[currentCurrency];
+            if (carrier && method && shippingRates[carrier][method]) {
+                const { price, days } = shippingRates[carrier][method];
+                shippingDetails.textContent = `Prix : ${(price * rate).toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'} | Délai : ${days} jours`;
+                shippingDetails.dataset.price = price;
+            } else {
+                shippingDetails.textContent = `Prix : -${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'} | Délai : - jours`;
+                shippingDetails.dataset.price = 0;
+            }
+            updateCart();
+        }
 
-        shippingCarrierSelect.addEventListener('change',()=>{updateShippingOptions();updateShippingDetails();});shippingMethodSelect.addEventListener('change',updateShippingDetails);
+        shippingCarrierSelect.addEventListener('change', () => { updateShippingOptions(); updateShippingDetails(); });
+        shippingMethodSelect.addEventListener('change', updateShippingDetails);
 
         renderProducts();
+        translatePage(currentLanguage);
     </script>
 </body>
 </html>
