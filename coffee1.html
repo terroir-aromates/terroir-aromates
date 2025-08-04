@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,31 @@
         .product-image { max-width: 100%; height: auto; border-radius: 0.5rem; }
         .product-card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
         .product-card:hover { transform: translateY(-5px); }
+        .language-select, .currency-select {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        header nav a {
+            font-size: 0.9rem;
+        }
+        header .flex {
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            header .flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .language-select, .currency-select {
+                margin: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 <body class="font-sans bg-beige-50 text-gray-800">
@@ -18,14 +43,19 @@
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-red-800">Guaraní Finest Brew</h1>
             <nav class="space-x-4">
-                <a href="/" class="text-gray-700 hover:text-red-800">Accueil</a>
-                <a href="/#products" class="text-gray-700 hover:text-red-800">Produits</a>
-                <a href="/#about" class="text-gray-700 hover:text-red-800">À propos</a>
-                <a href="/#contact" class="text-gray-700 hover:text-red-800">Contact</a>
-                <a href="/#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
+                <a href="/" class="text-gray-700 hover:text-red-800" data-translate="home">Home</a>
+                <a href="/#products" class="text-gray-700 hover:text-red-800" data-translate="products">Products</a>
+                <a href="/#about" class="text-gray-700 hover:text-red-800" data-translate="about">About</a>
+                <a href="/#contact" class="text-gray-700 hover:text-red-800" data-translate="contact">Contact</a>
+                <a href="/#promotions" class="text-gray-700 hover:text-red-800" data-translate="promotions">Promotions</a>
             </nav>
-            <div class="flex space-x-4">
-                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
+            <div class="flex space-x-4 items-center">
+                <select id="language-select" class="language-select">
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                </select>
+                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition" data-translate="login">Log In</a>
                 <button id="cart-btn" class="relative">
                     <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
@@ -35,8 +65,8 @@
     </header>
     <section class="hero flex items-center justify-center">
         <div class="text-center px-4">
-            <h2 class="text-3xl font-bold text-red-800 mb-4">Veracruzano Premium Export</h2>
-            <p class="text-gray-600 mb-4">Café de haute altitude avec une saveur et un arôme incomparables.</p>
+            <h2 class="text-3xl font-bold text-red-800 mb-4" data-translate="product-title">Veracruzano Premium Export</h2>
+            <p class="text-gray-600 mb-4" data-translate="product-desc">High-altitude coffee with an unmatched flavor and aroma.</p>
         </div>
     </section>
     <section id="product-detail" class="py-12 bg-white">
@@ -49,31 +79,31 @@
                 </div>
                 <div class="md:w-1/2">
                     <div class="product-card p-6">
-                        <h3 class="text-xl font-semibold mb-4">Description</h3>
-                        <p class="text-gray-600 mb-4">Bienvenue !</p>
-                        <p class="text-gray-600 mb-4">Nous sommes fournisseurs de café Coatepec de haute altitude, idéal pour les cafés, restaurants, hôtels ou simplement pour ceux qui aiment le bon café n'importe où.</p>
-                        <p class="text-gray-600 mb-4">Nos grains sont soigneusement sélectionnés dans les meilleures régions productrices de café de Veracruz, garantissant une saveur et un arôme incomparables.</p>
-                        <p class="text-gray-600 mb-4">Nos cafés sont torréfiés quotidiennement pour préserver toute fraîcheur. Ce ne sont pas des cafés torréfiés par lots et conservés pendant des mois ou des années. Nous souhaitons reproduire l'expérience de venir à Coatepec pour sélectionner votre café dans une authentique cafétéria traditionnelle.</p>
-                        <p class="text-gray-600 mb-4">Notre café provient de fermes situées à plus de 1300 mètres d'altitude, dans la forêt nuageuse de Veracruz. Ce n’est pas un café cultivé industriellement, ce qui signifie que nos tasses sont sucrées et au corps exquis.</p>
-                        <p class="text-gray-600 mb-4">Commencez à savourer une tasse de café parfaite !</p>
-                        <h4 class="text-lg font-semibold mb-2">Pourquoi choisir Veracruzano Premium Export ?</h4>
+                        <h3 class="text-xl font-semibold mb-4" data-translate="description-title">Description</h3>
+                        <p class="text-gray-600 mb-4" data-translate="welcome">Welcome!</p>
+                        <p class="text-gray-600 mb-4" data-translate="supplier-desc">We are suppliers of high-altitude Coatepec coffee, ideal for cafes, restaurants, hotels, or simply for those who love good coffee anywhere.</p>
+                        <p class="text-gray-600 mb-4" data-translate="selection-desc">Our beans are carefully selected from the best coffee-growing regions of Veracruz, ensuring an unmatched flavor and aroma.</p>
+                        <p class="text-gray-600 mb-4" data-translate="roasting-desc">Our coffees are roasted daily to preserve maximum freshness. These are not batch-roasted coffees stored for months or years. We aim to replicate the experience of coming to Coatepec to select your coffee in an authentic traditional café.</p>
+                        <p class="text-gray-600 mb-4" data-translate="altitude-desc">Our coffee comes from farms located over 1300 meters above sea level, in the cloud forest of Veracruz. This is not industrially grown coffee, meaning our cups are sweet and have an exquisite body.</p>
+                        <p class="text-gray-600 mb-4" data-translate="enjoy-desc">Start enjoying a perfect cup of coffee!</p>
+                        <h4 class="text-lg font-semibold mb-2" data-translate="why-title">Why Choose Veracruzano Premium Export?</h4>
                         <ul class="list-disc list-inside text-gray-600 mb-4 space-y-2">
-                            <li>Café de haute altitude (plus de 1300 mètres)</li>
-                            <li>Grains 100 % Arabica sélectionnés à la main</li>
-                            <li>Torréfaction quotidienne pour une fraîcheur maximale</li>
-                            <li>Saveur sucrée et corps exquis</li>
-                            <li>Idéal pour les amateurs de café artisanal</li>
+                            <li data-translate="high-altitude">High-altitude coffee (over 1300 meters)</li>
+                            <li data-translate="arabica-beans">100% hand-selected Arabica beans</li>
+                            <li data-translate="daily-roast">Daily roasting for maximum freshness</li>
+                            <li data-translate="sweet-flavor">Sweet flavor and exquisite body</li>
+                            <li data-translate="artisan">Ideal for artisanal coffee lovers</li>
                         </ul>
-                        <h4 class="text-lg font-semibold mb-2">Avantages</h4>
+                        <h4 class="text-lg font-semibold mb-2" data-translate="benefits-title">Benefits</h4>
                         <ul class="list-disc list-inside text-gray-600 space-y-2">
-                            <li>Origine authentique de Veracruz, Mexique</li>
-                            <li>Cultivé dans la forêt nuageuse, non industriel</li>
-                            <li>Arôme riche et notes sucrées naturelles</li>
-                            <li>Parfait pour espresso ou filtration</li>
-                            <li>Aucun conservateur, 100 % naturel</li>
+                            <li data-translate="origin">Authentic origin from Veracruz, Mexico</li>
+                            <li data-translate="cloud-forest">Grown in the cloud forest, non-industrial</li>
+                            <li data-translate="rich-aroma">Rich aroma and natural sweet notes</li>
+                            <li data-translate="versatile">Perfect for espresso or filter</li>
+                            <li data-translate="natural">No preservatives, 100% natural</li>
                         </ul>
                         <div class="mt-6">
-                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition">Retour aux produits</a>
+                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition" data-translate="back-to-products">Back to Products</a>
                         </div>
                     </div>
                 </div>
@@ -82,7 +112,7 @@
     </section>
     <footer class="bg-red-800 text-white py-6">
         <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
+            <p data-translate="footer-text">&copy; 2025 Guaraní Finest Brew. All rights reserved.</p>
         </div>
     </footer>
     <script>
@@ -93,6 +123,128 @@
         const cartBtn = document.getElementById('cart-btn');
         const cartCount = document.getElementById('cart-count');
 
+        const translations = {
+            en: {
+                "home": "Home",
+                "products": "Products",
+                "about": "About",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Log In",
+                "product-title": "Veracruzano Premium Export",
+                "product-desc": "High-altitude coffee with an unmatched flavor and aroma.",
+                "description-title": "Description",
+                "welcome": "Welcome!",
+                "supplier-desc": "We are suppliers of high-altitude Coatepec coffee, ideal for cafes, restaurants, hotels, or simply for those who love good coffee anywhere.",
+                "selection-desc": "Our beans are carefully selected from the best coffee-growing regions of Veracruz, ensuring an unmatched flavor and aroma.",
+                "roasting-desc": "Our coffees are roasted daily to preserve maximum freshness. These are not batch-roasted coffees stored for months or years. We aim to replicate the experience of coming to Coatepec to select your coffee in an authentic traditional café.",
+                "altitude-desc": "Our coffee comes from farms located over 1300 meters above sea level, in the cloud forest of Veracruz. This is not industrially grown coffee, meaning our cups are sweet and have an exquisite body.",
+                "enjoy-desc": "Start enjoying a perfect cup of coffee!",
+                "why-title": "Why Choose Veracruzano Premium Export?",
+                "high-altitude": "High-altitude coffee (over 1300 meters)",
+                "arabica-beans": "100% hand-selected Arabica beans",
+                "daily-roast": "Daily roasting for maximum freshness",
+                "sweet-flavor": "Sweet flavor and exquisite body",
+                "artisan": "Ideal for artisanal coffee lovers",
+                "benefits-title": "Benefits",
+                "origin": "Authentic origin from Veracruz, Mexico",
+                "cloud-forest": "Grown in the cloud forest, non-industrial",
+                "rich-aroma": "Rich aroma and natural sweet notes",
+                "versatile": "Perfect for espresso or filter",
+                "natural": "No preservatives, 100% natural",
+                "back-to-products": "Back to Products",
+                "footer-text": "© 2025 Guaraní Finest Brew. All rights reserved."
+            },
+            fr: {
+                "home": "Accueil",
+                "products": "Produits",
+                "about": "À propos",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Se connecter",
+                "product-title": "Veracruzano Premium Export",
+                "product-desc": "Café de haute altitude avec une saveur et un arôme incomparables.",
+                "description-title": "Description",
+                "welcome": "Bienvenue !",
+                "supplier-desc": "Nous sommes fournisseurs de café Coatepec de haute altitude, idéal pour les cafés, restaurants, hôtels ou simplement pour ceux qui aiment le bon café n'importe où.",
+                "selection-desc": "Nos grains sont soigneusement sélectionnés dans les meilleures régions productrices de café de Veracruz, garantissant une saveur et un arôme incomparables.",
+                "roasting-desc": "Nos cafés sont torréfiés quotidiennement pour préserver toute fraîcheur. Ce ne sont pas des cafés torréfiés par lots et conservés pendant des mois ou des années. Nous souhaitons reproduire l'expérience de venir à Coatepec pour sélectionner votre café dans une authentique cafétéria traditionnelle.",
+                "altitude-desc": "Notre café provient de fermes situées à plus de 1300 mètres d'altitude, dans la forêt nuageuse de Veracruz. Ce n’est pas un café cultivé industriellement, ce qui signifie que nos tasses sont sucrées et au corps exquis.",
+                "enjoy-desc": "Commencez à savourer une tasse de café parfaite !",
+                "why-title": "Pourquoi choisir Veracruzano Premium Export ?",
+                "high-altitude": "Café de haute altitude (plus de 1300 mètres)",
+                "arabica-beans": "Grains 100 % Arabica sélectionnés à la main",
+                "daily-roast": "Torréfaction quotidienne pour une fraîcheur maximale",
+                "sweet-flavor": "Saveur sucrée et corps exquis",
+                "artisan": "Idéal pour les amateurs de café artisanal",
+                "benefits-title": "Avantages",
+                "origin": "Origine authentique de Veracruz, Mexique",
+                "cloud-forest": "Cultivé dans la forêt nuageuse, non industriel",
+                "rich-aroma": "Arôme riche et notes sucrées naturelles",
+                "versatile": "Parfait pour espresso ou filtration",
+                "natural": "Aucun conservateur, 100 % naturel",
+                "back-to-products": "Retour aux produits",
+                "footer-text": "© 2025 Guaraní Finest Brew. Tous droits réservés."
+            },
+            es: {
+                "home": "Inicio",
+                "products": "Productos",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "promotions": "Promociones",
+                "login": "Iniciar sesión",
+                "product-title": "Veracruzano Premium Export",
+                "product-desc": "Café de alta altitud con un sabor y aroma incomparables.",
+                "description-title": "Descripción",
+                "welcome": "¡Bienvenido!",
+                "supplier-desc": "Somos proveedores de café Coatepec de alta altitud, ideal para cafeterías, restaurantes, hoteles o simplemente para quienes aman el buen café en cualquier lugar.",
+                "selection-desc": "Nuestros granos son cuidadosamente seleccionados de las mejores regiones productoras de café de Veracruz, garantizando un sabor y aroma incomparables.",
+                "roasting-desc": "Nuestros cafés se tuestan diariamente para preservar la máxima frescura. No son cafés tostados en lotes y almacenados durante meses o años. Queremos replicar la experiencia de venir a Coatepec para seleccionar tu café en una cafetería tradicional auténtica.",
+                "altitude-desc": "Nuestro café proviene de fincas ubicadas a más de 1300 metros sobre el nivel del mar, en el bosque nuboso de Veracruz. No es un café cultivado industrialmente, lo que significa que nuestras tazas son dulces y tienen un cuerpo exquisito.",
+                "enjoy-desc": "¡Comienza a disfrutar de una taza de café perfecta!",
+                "why-title": "¿Por qué elegir Veracruzano Premium Export?",
+                "high-altitude": "Café de alta altitud (más de 1300 metros)",
+                "arabica-beans": "Granos 100% Arabica seleccionados a mano",
+                "daily-roast": "Tostado diario para máxima frescura",
+                "sweet-flavor": "Sabor dulce y cuerpo exquisito",
+                "artisan": "Ideal para amantes del café artesanal",
+                "benefits-title": "Beneficios",
+                "origin": "Origen auténtico de Veracruz, México",
+                "cloud-forest": "Cultivado en el bosque nuboso, no industrial",
+                "rich-aroma": "Aroma rico y notas dulces naturales",
+                "versatile": "Perfecto para espresso o filtro",
+                "natural": "Sin conservantes, 100% natural",
+                "back-to-products": "Volver a productos",
+                "footer-text": "© 2025 Guaraní Finest Brew. Todos los derechos reservados."
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function translatePage(lang) {
+            currentLanguage = lang;
+            document.documentElement.lang = lang;
+            document.title = `Veracruzano Premium Export - ${translations[lang]["product-title"]} - Guaraní Finest Brew`;
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        document.getElementById('language-select').addEventListener('change', (e) => {
+            translatePage(e.target.value);
+        });
+
+        window.onload = () => translatePage('en');
+
         // Logique d'ajout au panier (à implémenter si nécessaire)
         // Note : Cette section est laissée vide car le panier semble géré dans index.html
     </script>
+</body>
+</html>
