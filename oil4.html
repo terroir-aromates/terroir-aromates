@@ -1,161 +1,198 @@
 <!DOCTYPE html>
-
-<html lang="fr">
-
+<html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Huile de mélisse - Guaraní Finest Brew</title>
-
+    <title>Lemon Balm Oil - Guaraní Finest Brew</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
-
         .hero { background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('https://res.cloudinary.com/dweom4cyp/image/upload/v1754050788/fondmelisse_rvnan5.webp'); background-size: cover; background-position: center; height: 50vh; }
-
         .product-image { max-width: 100%; height: auto; border-radius: 0.5rem; }
-
         .product-card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
-
         .product-card:hover { transform: translateY(-5px); }
-
+        .language-select, .currency-select {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        header nav a {
+            font-size: 0.9rem;
+        }
+        header .flex {
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            header .flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .language-select, .currency-select {
+                margin: 0.5rem 0;
+            }
+        }
     </style>
-
 </head>
-
 <body class="font-sans bg-beige-50 text-gray-800">
-
     <header class="sticky top-0 z-50 bg-white shadow-md">
-
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-
             <h1 class="text-2xl font-bold text-red-800">Guaraní Finest Brew</h1>
-
             <nav class="space-x-4">
-
-                <a href="/" class="text-gray-700 hover:text-red-800">Accueil</a>
-
-                <a href="/#products" class="text-gray-700 hover:text-red-800">Produits</a>
-
-                <a href="/#about" class="text-gray-700 hover:text-red-800">À propos</a>
-
-                <a href="/#contact" class="text-gray-700 hover:text-red-800">Contact</a>
-
-                <a href="/#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
-
+                <a href="/" class="text-gray-700 hover:text-red-800" data-translate="home">Home</a>
+                <a href="/#products" class="text-gray-700 hover:text-red-800" data-translate="products">Products</a>
+                <a href="/#about" class="text-gray-700 hover:text-red-800" data-translate="about">About</a>
+                <a href="/#contact" class="text-gray-700 hover:text-red-800" data-translate="contact">Contact</a>
+                <a href="/#promotions" class="text-gray-700 hover:text-red-800" data-translate="promotions">Promotions</a>
             </nav>
-
-            <div class="flex space-x-4">
-
-                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
-
+            <div class="flex space-x-4 items-center">
+                <select id="language-select" class="language-select">
+                    <option value="en" selected>English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                </select>
+                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition" data-translate="login">Log In</a>
                 <button id="cart-btn" class="relative">
-
                     <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
-
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-
                 </button>
-
             </div>
-
         </div>
-
     </header>
-
     <section class="hero flex items-center justify-center">
-
         <div class="text-center px-4">
-
-            <h2 class="text-3xl font-bold text-red-800 mb-4">Huile de mélisse</h2>
-
-            <p class="text-gray-600 mb-4">Sédatif et apaise les tensions nerveuses.</p>
-
+            <h2 class="text-3xl font-bold text-red-800 mb-4" data-translate="product-title">Lemon Balm Oil</h2>
+            <p class="text-gray-600 mb-4" data-translate="product-desc">Sedative and relieves nervous tension.</p>
         </div>
-
     </section>
-
     <section id="product-detail" class="py-12 bg-white">
-
         <div class="container mx-auto px-4">
-
             <div class="flex flex-col md:flex-row gap-6">
-
                 <div class="md:w-1/2">
-
                     <div class="product-card">
-
-                        <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754050788/fondmelisse_rvnan5.webp" alt="Huile de mélisse" class="product-image w-full h-96 object-cover">
-
+                        <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754050788/fondmelisse_rvnan5.webp" alt="Lemon Balm Oil" class="product-image w-full h-96 object-cover">
                     </div>
-
                 </div>
-
                 <div class="md:w-1/2">
-
                     <div class="product-card p-6">
-
-                        <h3 class="text-xl font-semibold mb-4">Description</h3>
-
-                        <p class="text-gray-600 mb-4">Cette huile est considérée comme un sédatif ultra-puissant et est produite en Amérique du Sud. L'huile essentielle de mélisse est obtenue par distillation à la vapeur des feuilles de la plante Melissa officinalis, connue pour ses propriétés calmantes et sédatives.</p>
-
-                        <p class="text-gray-600 mb-4">Elle est utilisée pour diverses applications, notamment pour aider à la digestion, réduire l'hypertension, et apaiser les tensions nerveuses.</p>
-
-                        <p class="text-gray-600 mb-4">L'huile essentielle de mélisse peut être utilisée de différentes manières, comme l'application cutanée après dilution avec une huile végétale, l'inhalation, ou la diffusion.</p>
-
-                        <p class="text-gray-600 mb-4">Elle est également utilisée dans des préparations culinaires, mais il est important de respecter les dosages et les méthodes de préparation.</p>
-
-                        <h4 class="text-lg font-semibold mb-2">Usage</h4>
-
-                        <p class="text-gray-600 mb-4">Sédatif et apaise les tensions nerveuses</p>
-
+                        <h3 class="text-xl font-semibold mb-4" data-translate="description-title">Description</h3>
+                        <p class="text-gray-600 mb-4" data-translate="description-text1">This oil is considered an ultra-powerful sedative and is produced in South America. Lemon balm essential oil is obtained by steam distillation of the leaves of the Melissa officinalis plant, known for its calming and sedative properties.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text2">It is used for various applications, including aiding digestion, reducing hypertension, and relieving nervous tension.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text3">Lemon balm essential oil can be used in different ways, such as topical application after dilution with a carrier oil, inhalation, or diffusion.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text4">It is also used in culinary preparations, but it is important to respect dosages and preparation methods.</p>
+                        <h4 class="text-lg font-semibold mb-2" data-translate="usage-title">Usage</h4>
+                        <p class="text-gray-600 mb-4" data-translate="usage-text">Sedative and relieves nervous tension</p>
                         <div class="mt-6">
-
-                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition">Retour aux produits</a>
-
+                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition" data-translate="back-to-products">Back to Products</a>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
-
     <footer class="bg-red-800 text-white py-6">
-
         <div class="container mx-auto px-4 text-center">
-
-            <p>&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
-
+            <p data-translate="footer-text">© 2025 Guaraní Finest Brew. All rights reserved.</p>
         </div>
-
     </footer>
-
     <script>
-
         const products = [
-
-            { id: 'oil4', name: 'Huile de mélisse', category: 'oil', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1754050788/fondmelisse_rvnan5.webp', description: 'Sédatif et apaise les tensions nerveuses.' }
-
+            { id: 'oil4', name: 'Lemon Balm Oil', category: 'oil', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1754050788/fondmelisse_rvnan5.webp', description: 'Sedative and relieves nervous tension.' }
         ];
-
         let cart = [];
-
         const cartBtn = document.getElementById('cart-btn');
-
         const cartCount = document.getElementById('cart-count');
 
+        const translations = {
+            en: {
+                "home": "Home",
+                "products": "Products",
+                "about": "About",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Log In",
+                "product-title": "Lemon Balm Oil",
+                "product-desc": "Sedative and relieves nervous tension.",
+                "description-title": "Description",
+                "description-text1": "This oil is considered an ultra-powerful sedative and is produced in South America. Lemon balm essential oil is obtained by steam distillation of the leaves of the Melissa officinalis plant, known for its calming and sedative properties.",
+                "description-text2": "It is used for various applications, including aiding digestion, reducing hypertension, and relieving nervous tension.",
+                "description-text3": "Lemon balm essential oil can be used in different ways, such as topical application after dilution with a carrier oil, inhalation, or diffusion.",
+                "description-text4": "It is also used in culinary preparations, but it is important to respect dosages and preparation methods.",
+                "usage-title": "Usage",
+                "usage-text": "Sedative and relieves nervous tension",
+                "back-to-products": "Back to Products",
+                "footer-text": "© 2025 Guaraní Finest Brew. All rights reserved."
+            },
+            fr: {
+                "home": "Accueil",
+                "products": "Produits",
+                "about": "À propos",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Se connecter",
+                "product-title": "Huile de mélisse",
+                "product-desc": "Sédatif et apaise les tensions nerveuses.",
+                "description-title": "Description",
+                "description-text1": "Cette huile est considérée comme un sédatif ultra-puissant et est produite en Amérique du Sud. L'huile essentielle de mélisse est obtenue par distillation à la vapeur des feuilles de la plante Melissa officinalis, connue pour ses propriétés calmantes et sédatives.",
+                "description-text2": "Elle est utilisée pour diverses applications, notamment pour aider à la digestion, réduire l'hypertension, et apaiser les tensions nerveuses.",
+                "description-text3": "L'huile essentielle de mélisse peut être utilisée de différentes manières, comme l'application cutanée après dilution avec une huile végétale, l'inhalation, ou la diffusion.",
+                "description-text4": "Elle est également utilisée dans des préparations culinaires, mais il est important de respecter les dosages et les méthodes de préparation.",
+                "usage-title": "Usage",
+                "usage-text": "Sédatif et apaise les tensions nerveuses",
+                "back-to-products": "Retour aux produits",
+                "footer-text": "© 2025 Guaraní Finest Brew. Tous droits réservés."
+            },
+            es: {
+                "home": "Inicio",
+                "products": "Productos",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "promotions": "Promociones",
+                "login": "Iniciar sesión",
+                "product-title": "Aceite de Melisa",
+                "product-desc": "Sedante y alivia la tensión nerviosa.",
+                "description-title": "Descripción",
+                "description-text1": "Este aceite se considera un sedante ultrapotente y se produce en América del Sur. El aceite esencial de melisa se obtiene por destilación al vapor de las hojas de la planta Melissa officinalis, conocida por sus propiedades calmantes y sedantes.",
+                "description-text2": "Se utiliza para diversas aplicaciones, incluyendo ayudar a la digestión, reducir la hipertensión y aliviar la tensión nerviosa.",
+                "description-text3": "El aceite esencial de melisa puede usarse de diferentes maneras, como la aplicación tópica después de diluirlo con un aceite base, inhalación o difusión.",
+                "description-text4": "También se usa en preparaciones culinarias, pero es importante respetar las dosis y los métodos de preparación.",
+                "usage-title": "Uso",
+                "usage-text": "Sedante y alivia la tensión nerviosa",
+                "back-to-products": "Volver a productos",
+                "footer-text": "© 2025 Guaraní Finest Brew. Todos los derechos reservados."
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function translatePage(lang) {
+            currentLanguage = lang;
+            document.documentElement.lang = lang;
+            document.title = `${translations[lang]["product-title"]} - Guaraní Finest Brew`;
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        document.getElementById('language-select').addEventListener('change', (e) => {
+            translatePage(e.target.value);
+        });
+
+        window.onload = () => translatePage('en');
+
         // Logique d'ajout au panier (à implémenter si nécessaire)
-
         // Note : Cette section est laissée vide car le panier semble géré dans index.html
-
     </script>
+</body>
+</html>
