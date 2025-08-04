@@ -1,167 +1,210 @@
 <!DOCTYPE html>
-
-<html lang="fr">
-
+<html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Guarana - Guaraní Finest Brew</title>
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
-
         .hero { background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp'); background-size: cover; background-position: center; height: 50vh; }
-
         .product-image { max-width: 100%; height: auto; border-radius: 0.5rem; }
-
         .product-card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
-
         .product-card:hover { transform: translateY(-5px); }
-
+        .language-select, .currency-select {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        header nav a {
+            font-size: 0.9rem;
+        }
+        header .flex {
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            header .flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .language-select, .currency-select {
+                margin: 0.5rem 0;
+            }
+        }
     </style>
-
 </head>
-
 <body class="font-sans bg-beige-50 text-gray-800">
-
     <header class="sticky top-0 z-50 bg-white shadow-md">
-
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-
             <h1 class="text-2xl font-bold text-red-800">Guaraní Finest Brew</h1>
-
             <nav class="space-x-4">
-
-                <a href="/" class="text-gray-700 hover:text-red-800">Accueil</a>
-
-                <a href="/#products" class="text-gray-700 hover:text-red-800">Produits</a>
-
-                <a href="/#about" class="text-gray-700 hover:text-red-800">À propos</a>
-
-                <a href="/#contact" class="text-gray-700 hover:text-red-800">Contact</a>
-
-                <a href="/#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
-
+                <a href="/" class="text-gray-700 hover:text-red-800" data-translate="home">Home</a>
+                <a href="/#products" class="text-gray-700 hover:text-red-800" data-translate="products">Products</a>
+                <a href="/#about" class="text-gray-700 hover:text-red-800" data-translate="about">About</a>
+                <a href="/#contact" class="text-gray-700 hover:text-red-800" data-translate="contact">Contact</a>
+                <a href="/#promotions" class="text-gray-700 hover:text-red-800" data-translate="promotions">Promotions</a>
             </nav>
-
-            <div class="flex space-x-4">
-
-                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
-
+            <div class="flex space-x-4 items-center">
+                <select id="language-select" class="language-select">
+                    <option value="en" selected>English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                </select>
+                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition" data-translate="login">Log In</a>
                 <button id="cart-btn" class="relative">
-
                     <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
-
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-
                 </button>
-
             </div>
-
         </div>
-
     </header>
-
     <section class="hero flex items-center justify-center">
-
         <div class="text-center px-4">
-
-            <h2 class="text-3xl font-bold text-red-800 mb-4">Guarana</h2>
-
-            <p class="text-gray-600 mb-4">Soutien énergétique, performances cognitives.</p>
-
+            <h2 class="text-3xl font-bold text-red-800 mb-4" data-translate="product-title">Guarana</h2>
+            <p class="text-gray-600 mb-4" data-translate="product-desc">Energy support, cognitive performance.</p>
         </div>
-
     </section>
-
     <section id="product-detail" class="py-12 bg-white">
-
         <div class="container mx-auto px-4">
-
             <div class="flex flex-col md:flex-row gap-6">
-
                 <div class="md:w-1/2">
-
                     <div class="product-card">
-
                         <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp" alt="Guarana" class="product-image w-full h-96 object-cover">
-
                     </div>
-
                 </div>
-
                 <div class="md:w-1/2">
-
                     <div class="product-card p-6">
-
-                        <h3 class="text-xl font-semibold mb-4">Description</h3>
-
-                        <p class="text-gray-600 mb-4">Originaire de l’Amazonie brésilienne, le guarana est un arbuste dont les graines sont prisées pour leurs propriétés stimulantes. Dans cet article, nous vous invitons à découvrir les multiples bienfaits du guarana sur la santé.</p>
-
-                        <p class="text-gray-600 mb-4">Nous aborderons les différentes façons dont la consommation de guarana peut améliorer les performances cognitives et offrir un soutien énergétique grâce à ses propriétés uniques.</p>
-
-                        <p class="text-gray-600 mb-4">Restez avec nous pour explorer toutes les facettes de cette plante emblématique utilisée traditionnellement pour lutter contre la fatigue.</p>
-
-                        <p class="text-gray-600 mb-4">Le guarana est originaire du Brésil, plus précisément de l’Amazonie brésilienne, un écosystème recélant une biodiversité exceptionnelle. La plante, tire son appellation de la tribu des Guarani (Indiens d’Amérique).</p>
-
-                        <p class="text-gray-600 mb-4">Les Amérindiens d’Amazonie récoltaient les graines qu’ils torréfiaient ou séchaient au soleil. Une fois les écorces retirées, ils obtenaient une pâte après avoir décortiqué les graines, laquelle était malaxée puis roulée en bâton prévu pour être conservé au-dessus d’un feu pendant plusieurs mois.</p>
-
-                        <p class="text-gray-600 mb-4">Pour consommer le guarana, il suffisait de râper ce bâton au-dessus d’un récipient et d’en faire une boisson. Cette pratique était particulièrement valorisée dans les périodes de disette, car la boisson était réputée pour atténuer la sensation de faim et fournir de l’énergie.</p>
-
-                        <p class="text-gray-600 mb-4">Les peuples amérindiens ont été les pionniers dans la découverte des propriétés exceptionnelles du guarana. Leurs usages remontent à l’époque précolombienne, où cette plante était vénérée non seulement pour ses vertus énergisantes, mais aussi pour son effet aphrodisiaque. Enracinée profondément dans leur culture, elle symbolisait un don de la terre, capable de revigorer le corps et l’esprit.</p>
-
-                        <h4 class="text-lg font-semibold mb-2">Type</h4>
-
-                        <p class="text-gray-600 mb-4">Énergisant</p>
-
+                        <h3 class="text-xl font-semibold mb-4" data-translate="description-title">Description</h3>
+                        <p class="text-gray-600 mb-4" data-translate="description-text1">Originating from the Brazilian Amazon, guarana is a shrub whose seeds are prized for their stimulating properties. In this article, we invite you to discover the multiple health benefits of guarana.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text2">We will explore the various ways in which guarana consumption can improve cognitive performance and provide energy support thanks to its unique properties.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text3">Stay with us to explore all aspects of this iconic plant, traditionally used to combat fatigue.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text4">Guarana originates from Brazil, specifically the Brazilian Amazon, an ecosystem boasting exceptional biodiversity. The plant derives its name from the Guarani tribe (Indigenous Americans).</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text5">Amazonian Indigenous peoples harvested the seeds, roasting or drying them in the sun. After removing the husks, they obtained a paste by peeling the seeds, which was kneaded and rolled into sticks intended to be stored above a fire for several months.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text6">To consume guarana, it was enough to grate this stick over a container and make a drink. This practice was particularly valued during times of scarcity, as the drink was known to reduce hunger and provide energy.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text7">Indigenous peoples were pioneers in discovering the exceptional properties of guarana. Their uses date back to pre-Columbian times, where this plant was revered not only for its energizing virtues but also for its aphrodisiac effects. Deeply rooted in their culture, it symbolized a gift from the earth, capable of revitalizing both body and mind.</p>
+                        <h4 class="text-lg font-semibold mb-2" data-translate="type-title">Type</h4>
+                        <p class="text-gray-600 mb-4" data-translate="type-text">Energizing</p>
                         <div class="mt-6">
-
-                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition">Retour aux produits</a>
-
+                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition" data-translate="back-to-products">Back to Products</a>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
-
     <footer class="bg-red-800 text-white py-6">
-
         <div class="container mx-auto px-4 text-center">
-
-            <p>&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
-
+            <p data-translate="footer-text">© 2025 Guaraní Finest Brew. All rights reserved.</p>
         </div>
-
     </footer>
-
     <script>
-
         const products = [
-
-            { id: 'tea3', name: 'Guarana', category: 'tea', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp', description: 'Soutien énergétique, performances cognitives.' }
-
+            { id: 'tea3', name: 'Guarana', category: 'tea', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp', description: 'Energy support, cognitive performance.' }
         ];
-
         let cart = [];
-
         const cartBtn = document.getElementById('cart-btn');
-
         const cartCount = document.getElementById('cart-count');
 
+        const translations = {
+            en: {
+                "home": "Home",
+                "products": "Products",
+                "about": "About",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Log In",
+                "product-title": "Guarana",
+                "product-desc": "Energy support, cognitive performance.",
+                "description-title": "Description",
+                "description-text1": "Originating from the Brazilian Amazon, guarana is a shrub whose seeds are prized for their stimulating properties. In this article, we invite you to discover the multiple health benefits of guarana.",
+                "description-text2": "We will explore the various ways in which guarana consumption can improve cognitive performance and provide energy support thanks to its unique properties.",
+                "description-text3": "Stay with us to explore all aspects of this iconic plant, traditionally used to combat fatigue.",
+                "description-text4": "Guarana originates from Brazil, specifically the Brazilian Amazon, an ecosystem boasting exceptional biodiversity. The plant derives its name from the Guarani tribe (Indigenous Americans).",
+                "description-text5": "Amazonian Indigenous peoples harvested the seeds, roasting or drying them in the sun. After removing the husks, they obtained a paste by peeling the seeds, which was kneaded and rolled into sticks intended to be stored above a fire for several months.",
+                "description-text6": "To consume guarana, it was enough to grate this stick over a container and make a drink. This practice was particularly valued during times of scarcity, as the drink was known to reduce hunger and provide energy.",
+                "description-text7": "Indigenous peoples were pioneers in discovering the exceptional properties of guarana. Their uses date back to pre-Columbian times, where this plant was revered not only for its energizing virtues but also for its aphrodisiac effects. Deeply rooted in their culture, it symbolized a gift from the earth, capable of revitalizing both body and mind.",
+                "type-title": "Type",
+                "type-text": "Energizing",
+                "back-to-products": "Back to Products",
+                "footer-text": "© 2025 Guaraní Finest Brew. All rights reserved."
+            },
+            fr: {
+                "home": "Accueil",
+                "products": "Produits",
+                "about": "À propos",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Se connecter",
+                "product-title": "Guarana",
+                "product-desc": "Soutien énergétique, performances cognitives.",
+                "description-title": "Description",
+                "description-text1": "Originaire de l’Amazonie brésilienne, le guarana est un arbuste dont les graines sont prisées pour leurs propriétés stimulantes. Dans cet article, nous vous invitons à découvrir les multiples bienfaits du guarana sur la santé.",
+                "description-text2": "Nous aborderons les différentes façons dont la consommation de guarana peut améliorer les performances cognitives et offrir un soutien énergétique grâce à ses propriétés uniques.",
+                "description-text3": "Restez avec nous pour explorer toutes les facettes de cette plante emblématique utilisée traditionnellement pour lutter contre la fatigue.",
+                "description-text4": "Le guarana est originaire du Brésil, plus précisément de l’Amazonie brésilienne, un écosystème recélant une biodiversité exceptionnelle. La plante, tire son appellation de la tribu des Guarani (Indiens d’Amérique).",
+                "description-text5": "Les Amérindiens d’Amazonie récoltaient les graines qu’ils torréfiaient ou séchaient au soleil. Une fois les écorces retirées, ils obtenaient une pâte après avoir décortiqué les graines, laquelle était malaxée puis roulée en bâton prévu pour être conservé au-dessus d’un feu pendant plusieurs mois.",
+                "description-text6": "Pour consommer le guarana, il suffisait de râper ce bâton au-dessus d’un récipient et d’en faire une boisson. Cette pratique était particulièrement valorisée dans les périodes de disette, car la boisson était réputée pour atténuer la sensation de faim et fournir de l’énergie.",
+                "description-text7": "Les peuples amérindiens ont été les pionniers dans la découverte des propriétés exceptionnelles du guarana. Leurs usages remontent à l’époque précolombienne, où cette plante était vénérée non seulement pour ses vertus énergisantes, mais aussi pour son effet aphrodisiaque. Enracinée profondément dans leur culture, elle symbolisait un don de la terre, capable de revigorer le corps et l’esprit.",
+                "type-title": "Type",
+                "type-text": "Énergisant",
+                "back-to-products": "Retour aux produits",
+                "footer-text": "© 2025 Guaraní Finest Brew. Tous droits réservés."
+            },
+            es: {
+                "home": "Inicio",
+                "products": "Productos",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "promotions": "Promociones",
+                "login": "Iniciar sesión",
+                "product-title": "Guaraná",
+                "product-desc": "Apoyo energético, rendimiento cognitivo.",
+                "description-title": "Descripción",
+                "description-text1": "Originario de la Amazonía brasileña, el guaraná es un arbusto cuyas semillas son valoradas por sus propiedades estimulantes. En este artículo, te invitamos a descubrir los múltiples beneficios del guaraná para la salud.",
+                "description-text2": "Exploraremos las diversas maneras en que el consumo de guaraná puede mejorar el rendimiento cognitivo y ofrecer apoyo energético gracias a sus propiedades únicas.",
+                "description-text3": "Quédate con nosotros para explorar todos los aspectos de esta planta icónica, utilizada tradicionalmente para combatir la fatiga.",
+                "description-text4": "El guaraná proviene de Brasil, específicamente de la Amazonía brasileña, un ecosistema que alberga una biodiversidad excepcional. La planta deriva su nombre de la tribu Guarani (indígenas americanos).",
+                "description-text5": "Los pueblos indígenas de la Amazonía recolectaban las semillas, tostándolas o secándolas al sol. Tras retirar las cáscaras, obtenían una pasta pelando las semillas, que era amasada y moldeada en palos destinados a almacenarse sobre un fuego durante varios meses.",
+                "description-text6": "Para consumir el guaraná, bastaba con rallar este palo sobre un recipiente y preparar una bebida. Esta práctica era especialmente valorada en tiempos de escasez, ya que la bebida era conocida por reducir el hambre y proporcionar energía.",
+                "description-text7": "Los pueblos indígenas fueron pioneros en descubrir las propiedades excepcionales del guaraná. Sus usos se remontan a la época precolombina, donde esta planta era venerada no solo por sus virtudes energizantes, sino también por sus efectos afrodisíacos. Profundamente arraigada en su cultura, simbolizaba un regalo de la tierra, capaz de revitalizar cuerpo y mente.",
+                "type-title": "Tipo",
+                "type-text": "Energizante",
+                "back-to-products": "Volver a productos",
+                "footer-text": "© 2025 Guaraní Finest Brew. Todos los derechos reservados."
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function translatePage(lang) {
+            currentLanguage = lang;
+            document.documentElement.lang = lang;
+            document.title = `${translations[lang]["product-title"]} - Guaraní Finest Brew`;
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        document.getElementById('language-select').addEventListener('change', (e) => {
+            translatePage(e.target.value);
+        });
+
+        window.onload = () => translatePage('en');
+
         // Logique d'ajout au panier (à implémenter si nécessaire)
-
         // Note : Cette section est laissée vide car le panier semble géré dans index.html
-
     </script>
+</body>
+</html>
