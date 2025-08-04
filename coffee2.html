@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Café Colombien Supremo - Guaraní Finest Brew</title>
+    <title>Colombian Supremo Coffee - Guaraní Finest Brew</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -11,6 +11,31 @@
         .product-image { max-width: 100%; height: auto; border-radius: 0.5rem; }
         .product-card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
         .product-card:hover { transform: translateY(-5px); }
+        .language-select, .currency-select {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        header nav a {
+            font-size: 0.9rem;
+        }
+        header .flex {
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            header .flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .language-select, .currency-select {
+                margin: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 <body class="font-sans bg-beige-50 text-gray-800">
@@ -18,14 +43,19 @@
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-red-800">Guaraní Finest Brew</h1>
             <nav class="space-x-4">
-                <a href="/" class="text-gray-700 hover:text-red-800">Accueil</a>
-                <a href="/#products" class="text-gray-700 hover:text-red-800">Produits</a>
-                <a href="/#about" class="text-gray-700 hover:text-red-800">À propos</a>
-                <a href="/#contact" class="text-gray-700 hover:text-red-800">Contact</a>
-                <a href="/#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
+                <a href="/" class="text-gray-700 hover:text-red-800" data-translate="home">Home</a>
+                <a href="/#products" class="text-gray-700 hover:text-red-800" data-translate="products">Products</a>
+                <a href="/#about" class="text-gray-700 hover:text-red-800" data-translate="about">About</a>
+                <a href="/#contact" class="text-gray-700 hover:text-red-800" data-translate="contact">Contact</a>
+                <a href="/#promotions" class="text-gray-700 hover:text-red-800" data-translate="promotions">Promotions</a>
             </nav>
-            <div class="flex space-x-4">
-                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
+            <div class="flex space-x-4 items-center">
+                <select id="language-select" class="language-select">
+                    <option value="en" selected>English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                </select>
+                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition" data-translate="login">Log In</a>
                 <button id="cart-btn" class="relative">
                     <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
@@ -35,8 +65,8 @@
     </header>
     <section class="hero flex items-center justify-center">
         <div class="text-center px-4">
-            <h2 class="text-3xl font-bold text-red-800 mb-4">Café Colombien Supremo</h2>
-            <p class="text-gray-600 mb-4">Un café d’exception des hautes montagnes des Andes colombiennes.</p>
+            <h2 class="text-3xl font-bold text-red-800 mb-4" data-translate="product-title">Colombian Supremo Coffee</h2>
+            <p class="text-gray-600 mb-4" data-translate="product-desc">An exceptional coffee from the high mountains of the Colombian Andes.</p>
         </div>
     </section>
     <section id="product-detail" class="py-12 bg-white">
@@ -44,35 +74,35 @@
             <div class="flex flex-col md:flex-row gap-6">
                 <div class="md:w-1/2">
                     <div class="product-card">
-                        <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753886869/coffee.jpg" alt="Café Colombien Supremo" class="product-image w-full h-96 object-cover">
+                        <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753886869/coffee.jpg" alt="Colombian Supremo Coffee" class="product-image w-full h-96 object-cover">
                     </div>
                 </div>
                 <div class="md:w-1/2">
                     <div class="product-card p-6">
-                        <h3 class="text-xl font-semibold mb-4">Description</h3>
-                        <p class="text-gray-600 mb-4">Café cultivé dans les hautes montagnes des Andes colombiennes, où la température, le rayonnement solaire et la qualité de la campagne en font l'un des cafés les plus privilégiés au monde.</p>
-                        <p class="text-gray-600 mb-4">Savourez une tasse de café au parfum sucré et parfumé, accompagné d'acidité accentuée, de notes fruitées et florales et d'une excellente douceur au corps velouté.</p>
-                        <p class="text-gray-600 mb-4">Parfait pour ceux qui apprécient une tasse de café avec un corps fort et une acidité vive et citronnée. Idéal à déguster à votre moment préféré de la journée.</p>
-                        <p class="text-gray-600 mb-4">Le Café Colombien Supremo représente la tradition et l'avant-garde dans le monde du café. « Colombiano » provient de cafés cultivés en Colombie d'où ils sont soigneusement transportés pour être torréfiés sur place, garantissant chaque étape du processus. Il contient des grains de café 100 % Arabica de hauteur stricte, sans arômes ajoutés, pour vous offrir une boisson réconfortante et unique.</p>
-                        <p class="text-gray-600 mb-4">Nos maîtres torréfacteurs nous offrent un niveau de torréfaction moyen, pour mettre en valeur les meilleures qualités du café colombien.</p>
-                        <h4 class="text-lg font-semibold mb-2">Pourquoi choisir Café Colombien Supremo ?</h4>
+                        <h3 class="text-xl font-semibold mb-4" data-translate="description-title">Description</h3>
+                        <p class="text-gray-600 mb-4" data-translate="description-text1">Coffee grown in the high mountains of the Colombian Andes, where temperature, solar radiation, and the quality of the land make it one of the most privileged coffees in the world.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text2">Enjoy a cup of coffee with a sweet and fragrant aroma, accompanied by accentuated acidity, fruity and floral notes, and excellent smoothness with a velvety body.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text3">Perfect for those who enjoy a cup of coffee with a strong body and vibrant, lemony acidity. Ideal to savor at your favorite time of the day.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text4">Colombian Supremo Coffee represents tradition and innovation in the coffee world. 'Colombiano' comes from coffees grown in Colombia, carefully transported to be roasted on-site, ensuring every step of the process. It contains 100% strict-height Arabica beans, with no added flavors, offering a comforting and unique beverage.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text5">Our master roasters provide a medium roast level to highlight the best qualities of Colombian coffee.</p>
+                        <h4 class="text-lg font-semibold mb-2" data-translate="why-title">Why Choose Colombian Supremo Coffee?</h4>
                         <ul class="list-disc list-inside text-gray-600 mb-4 space-y-2">
-                            <li>Cultivé dans les Andes colombiennes à haute altitude</li>
-                            <li>Grains 100 % Arabica de qualité supérieure</li>
-                            <li>Parfum sucré avec notes fruitées et florales</li>
-                            <li>Torréfaction moyenne pour un équilibre parfait</li>
-                            <li>Idéal pour un corps fort et une acidité citronnée</li>
+                            <li data-translate="why-altitude">Grown in the Colombian Andes at high altitude</li>
+                            <li data-translate="why-arabica">100% premium Arabica beans</li>
+                            <li data-translate="why-flavor">Sweet aroma with fruity and floral notes</li>
+                            <li data-translate="why-roast">Medium roast for perfect balance</li>
+                            <li data-translate="why-body">Ideal for a strong body and lemony acidity</li>
                         </ul>
-                        <h4 class="text-lg font-semibold mb-2">Avantages</h4>
+                        <h4 class="text-lg font-semibold mb-2" data-translate="benefits-title">Benefits</h4>
                         <ul class="list-disc list-inside text-gray-600 space-y-2">
-                            <li>Origine authentique colombienne</li>
-                            <li>Processus traditionnel de torréfaction sur place</li>
-                            <li>Corps velouté et saveur unique</li>
-                            <li>Parfait pour espresso ou dégustation quotidienne</li>
-                            <li>Sans additifs, 100 % naturel</li>
+                            <li data-translate="benefit-origin">Authentic Colombian origin</li>
+                            <li data-translate="benefit-process">Traditional on-site roasting process</li>
+                            <li data-translate="benefit-body">Velvety body and unique flavor</li>
+                            <li data-translate="benefit-use">Perfect for espresso or daily enjoyment</li>
+                            <li data-translate="benefit-natural">No additives, 100% natural</li>
                         </ul>
                         <div class="mt-6">
-                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition">Retour aux produits</a>
+                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition" data-translate="back-to-products">Back to Products</a>
                         </div>
                     </div>
                 </div>
@@ -81,17 +111,136 @@
     </section>
     <footer class="bg-red-800 text-white py-6">
         <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
+            <p data-translate="footer-text">&copy; 2025 Guaraní Finest Brew. All rights reserved.</p>
         </div>
     </footer>
     <script>
         const products = [
-            { id: 'coffee2', name: 'Café Colombien Supremo', price: 14.50, category: 'coffee', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1753886877/coffee-colombian_up6quo.jpg', description: 'Arômes de chocolat et noisette.' }
+            { id: 'coffee2', name: 'Colombian Supremo Coffee', price: 14.50, category: 'coffee', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1753886877/coffee-colombian_up6quo.jpg', description: 'Chocolate and hazelnut aromas.' }
         ];
         let cart = [];
         const cartBtn = document.getElementById('cart-btn');
         const cartCount = document.getElementById('cart-count');
 
+        const translations = {
+            en: {
+                "home": "Home",
+                "products": "Products",
+                "about": "About",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Log In",
+                "product-title": "Colombian Supremo Coffee",
+                "product-desc": "An exceptional coffee from the high mountains of the Colombian Andes.",
+                "description-title": "Description",
+                "description-text1": "Coffee grown in the high mountains of the Colombian Andes, where temperature, solar radiation, and the quality of the land make it one of the most privileged coffees in the world.",
+                "description-text2": "Enjoy a cup of coffee with a sweet and fragrant aroma, accompanied by accentuated acidity, fruity and floral notes, and excellent smoothness with a velvety body.",
+                "description-text3": "Perfect for those who enjoy a cup of coffee with a strong body and vibrant, lemony acidity. Ideal to savor at your favorite time of the day.",
+                "description-text4": "Colombian Supremo Coffee represents tradition and innovation in the coffee world. 'Colombiano' comes from coffees grown in Colombia, carefully transported to be roasted on-site, ensuring every step of the process. It contains 100% strict-height Arabica beans, with no added flavors, offering a comforting and unique beverage.",
+                "description-text5": "Our master roasters provide a medium roast level to highlight the best qualities of Colombian coffee.",
+                "why-title": "Why Choose Colombian Supremo Coffee?",
+                "why-altitude": "Grown in the Colombian Andes at high altitude",
+                "why-arabica": "100% premium Arabica beans",
+                "why-flavor": "Sweet aroma with fruity and floral notes",
+                "why-roast": "Medium roast for perfect balance",
+                "why-body": "Ideal for a strong body and lemony acidity",
+                "benefits-title": "Benefits",
+                "benefit-origin": "Authentic Colombian origin",
+                "benefit-process": "Traditional on-site roasting process",
+                "benefit-body": "Velvety body and unique flavor",
+                "benefit-use": "Perfect for espresso or daily enjoyment",
+                "benefit-natural": "No additives, 100% natural",
+                "back-to-products": "Back to Products",
+                "footer-text": "© 2025 Guaraní Finest Brew. All rights reserved."
+            },
+            fr: {
+                "home": "Accueil",
+                "products": "Produits",
+                "about": "À propos",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Se connecter",
+                "product-title": "Café Colombien Supremo",
+                "product-desc": "Un café d’exception des hautes montagnes des Andes colombiennes.",
+                "description-title": "Description",
+                "description-text1": "Café cultivé dans les hautes montagnes des Andes colombiennes, où la température, le rayonnement solaire et la qualité de la campagne en font l'un des cafés les plus privilégiés au monde.",
+                "description-text2": "Savourez une tasse de café au parfum sucré et parfumé, accompagné d'acidité accentuée, de notes fruitées et florales et d'une excellente douceur au corps velouté.",
+                "description-text3": "Parfait pour ceux qui apprécient une tasse de café avec un corps fort et une acidité vive et citronnée. Idéal à déguster à votre moment préféré de la journée.",
+                "description-text4": "Le Café Colombien Supremo représente la tradition et l'avant-garde dans le monde du café. « Colombiano » provient de cafés cultivés en Colombie d'où ils sont soigneusement transportés pour être torréfiés sur place, garantissant chaque étape du processus. Il contient des grains de café 100 % Arabica de hauteur stricte, sans arômes ajoutés, pour vous offrir une boisson réconfortante et unique.",
+                "description-text5": "Nos maîtres torréfacteurs nous offrent un niveau de torréfaction moyen, pour mettre en valeur les meilleures qualités du café colombien.",
+                "why-title": "Pourquoi choisir Café Colombien Supremo ?",
+                "why-altitude": "Cultivé dans les Andes colombiennes à haute altitude",
+                "why-arabica": "Grains 100 % Arabica de qualité supérieure",
+                "why-flavor": "Parfum sucré avec notes fruitées et florales",
+                "why-roast": "Torréfaction moyenne pour un équilibre parfait",
+                "why-body": "Idéal pour un corps fort et une acidité citronnée",
+                "benefits-title": "Avantages",
+                "benefit-origin": "Origine authentique colombienne",
+                "benefit-process": "Processus traditionnel de torréfaction sur place",
+                "benefit-body": "Corps velouté et saveur unique",
+                "benefit-use": "Parfait pour espresso ou dégustation quotidienne",
+                "benefit-natural": "Sans additifs, 100 % naturel",
+                "back-to-products": "Retour aux produits",
+                "footer-text": "© 2025 Guaraní Finest Brew. Tous droits réservés."
+            },
+            es: {
+                "home": "Inicio",
+                "products": "Productos",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "promotions": "Promociones",
+                "login": "Iniciar sesión",
+                "product-title": "Café Colombiano Supremo",
+                "product-desc": "Un café excepcional de las altas montañas de los Andes colombianos.",
+                "description-title": "Descripción",
+                "description-text1": "Café cultivado en las altas montañas de los Andes colombianos, donde la temperatura, la radiación solar y la calidad de la tierra lo convierten en uno de los cafés más privilegiados del mundo.",
+                "description-text2": "Disfruta de una taza de café con un aroma dulce y fragante, acompañado de acidez pronunciada, notas frutales y florales y una excelente suavidad con cuerpo aterciopelado.",
+                "description-text3": "Perfecto para quienes disfrutan de una taza de café con cuerpo fuerte y acidez vibrante y cítrica. Ideal para saborear en tu momento favorito del día.",
+                "description-text4": "El Café Colombiano Supremo representa la tradición y la vanguardia en el mundo del café. 'Colombiano' proviene de cafés cultivados en Colombia, cuidadosamente transportados para ser tostados en el lugar, garantizando cada etapa del proceso. Contiene granos de café 100% Arabica de altura estricta, sin sabores añadidos, ofreciendo una bebida reconfortante y única.",
+                "description-text5": "Nuestros maestros tostadores ofrecen un nivel de tostado medio para resaltar las mejores cualidades del café colombiano.",
+                "why-title": "¿Por qué elegir Café Colombiano Supremo?",
+                "why-altitude": "Cultivado en los Andes colombianos a gran altitud",
+                "why-arabica": "Granos 100% Arabica de calidad superior",
+                "why-flavor": "Aroma dulce con notas frutales y florales",
+                "why-roast": "Tostado medio para un equilibrio perfecto",
+                "why-body": "Ideal para un cuerpo fuerte y acidez cítrica",
+                "benefits-title": "Beneficios",
+                "benefit-origin": "Origen auténtico colombiano",
+                "benefit-process": "Proceso tradicional de tostado en el lugar",
+                "benefit-body": "Cuerpo aterciopelado y sabor único",
+                "benefit-use": "Perfecto para espresso o disfrute diario",
+                "benefit-natural": "Sin aditivos, 100% natural",
+                "back-to-products": "Volver a productos",
+                "footer-text": "© 2025 Guaraní Finest Brew. Todos los derechos reservados."
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function translatePage(lang) {
+            currentLanguage = lang;
+            document.documentElement.lang = lang;
+            document.title = `${translations[lang]["product-title"]} - Guaraní Finest Brew`;
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        document.getElementById('language-select').addEventListener('change', (e) => {
+            translatePage(e.target.value);
+        });
+
+        window.onload = () => translatePage('en');
+
         // Logique d'ajout au panier (à implémenter si nécessaire)
         // Note : Cette section est laissée vide car le panier semble géré dans index.html
     </script>
+</body>
+</html>
