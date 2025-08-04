@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,31 @@
         .product-image { max-width: 100%; height: auto; border-radius: 0.5rem; }
         .product-card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
         .product-card:hover { transform: translateY(-5px); }
+        .language-select, .currency-select {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        header nav a {
+            font-size: 0.9rem;
+        }
+        header .flex {
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            header .flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .language-select, .currency-select {
+                margin: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 <body class="font-sans bg-beige-50 text-gray-800">
@@ -18,14 +43,19 @@
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-red-800">Guaraní Finest Brew</h1>
             <nav class="space-x-4">
-                <a href="/" class="text-gray-700 hover:text-red-800">Accueil</a>
-                <a href="/#products" class="text-gray-700 hover:text-red-800">Produits</a>
-                <a href="/#about" class="text-gray-700 hover:text-red-800">À propos</a>
-                <a href="/#contact" class="text-gray-700 hover:text-red-800">Contact</a>
-                <a href="/#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
+                <a href="/" class="text-gray-700 hover:text-red-800" data-translate="home">Home</a>
+                <a href="/#products" class="text-gray-700 hover:text-red-800" data-translate="products">Products</a>
+                <a href="/#about" class="text-gray-700 hover:text-red-800" data-translate="about">About</a>
+                <a href="/#contact" class="text-gray-700 hover:text-red-800" data-translate="contact">Contact</a>
+                <a href="/#promotions" class="text-gray-700 hover:text-red-800" data-translate="promotions">Promotions</a>
             </nav>
-            <div class="flex space-x-4">
-                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
+            <div class="flex space-x-4 items-center">
+                <select id="language-select" class="language-select">
+                    <option value="en" selected>English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                </select>
+                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition" data-translate="login">Log In</a>
                 <button id="cart-btn" class="relative">
                     <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
@@ -35,8 +65,8 @@
     </header>
     <section class="hero flex items-center justify-center">
         <div class="text-center px-4">
-            <h2 class="text-3xl font-bold text-red-800 mb-4">Illy Cafe Classic</h2>
-            <p class="text-gray-600 mb-4">Vivez une expérience unique avec deux variétés exquises de café.</p>
+            <h2 class="text-3xl font-bold text-red-800 mb-4" data-translate="product-title">Illy Cafe Classic</h2>
+            <p class="text-gray-600 mb-4" data-translate="product-desc">Experience a unique blend with two exquisite coffee varieties.</p>
         </div>
     </section>
     <section id="product-detail" class="py-12 bg-white">
@@ -49,30 +79,30 @@
                 </div>
                 <div class="md:w-1/2">
                     <div class="product-card p-6">
-                        <h3 class="text-xl font-semibold mb-4">Description</h3>
-                        <p class="text-gray-600 mb-4">Illy Cafe Classic Grain 250g + Arabica Brasil 250g</p>
-                        <p class="text-gray-600 mb-4">Vivez une expérience unique avec notre forfait qui comprend deux variétés exquises de café.</p>
-                        <p class="text-gray-600 mb-4">Chaque grain est soigneusement sélectionné pour garantir la qualité et la saveur distinctive qui caractérisent Illy. Ce paquet contient deux sacs de 250 grammes, un d'Illy Cafe Grano Clasico et un autre d'Arabica Brasil, tous deux reconnus pour leur arôme et leur corps équilibré.</p>
-                        <p class="text-gray-600 mb-4">Nos grains sont torréfiés à la perfection pour mettre en valeur les notes aromatiques et garantir une tasse de café pleine de saveur et d'harmonie.</p>
-                        <p class="text-gray-600 mb-4">Avec Illy, chaque gorgée est une œuvre d’art qui ravit les sens et embellit vos moments de pause et de plaisir.</p>
-                        <h4 class="text-lg font-semibold mb-2">Pourquoi choisir Illy Cafe Classic ?</h4>
+                        <h3 class="text-xl font-semibold mb-4" data-translate="description-title">Description</h3>
+                        <p class="text-gray-600 mb-4" data-translate="description-text1">Illy Cafe Classic Grain 250g + Arabica Brasil 250g</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text2">Experience a unique blend with our package that includes two exquisite coffee varieties.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text3">Each bean is carefully selected to ensure the quality and distinctive flavor that characterize Illy. This package contains two 250g bags, one of Illy Cafe Grano Clasico and another of Arabica Brasil, both renowned for their balanced aroma and rich body.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text4">Our beans are roasted to perfection to enhance the aromatic notes and ensure a cup of coffee full of flavor and harmony.</p>
+                        <p class="text-gray-600 mb-4" data-translate="description-text5">With Illy, every sip is a work of art that delights the senses and enhances your moments of rest and pleasure.</p>
+                        <h4 class="text-lg font-semibold mb-2" data-translate="why-title">Why Choose Illy Cafe Classic?</h4>
                         <ul class="list-disc list-inside text-gray-600 mb-4 space-y-2">
-                            <li>Deux variétés premium : Illy Cafe Grano Clasico et Arabica Brasil</li>
-                            <li>Grains 100 % Arabica soigneusement sélectionnés</li>
-                            <li>Arôme équilibré et corps riche</li>
-                            <li>Torréfaction parfaite pour des notes aromatiques uniques</li>
-                            <li>Idéal pour espresso, presse française ou filtration</li>
+                            <li data-translate="why-varieties">Two premium varieties: Illy Cafe Grano Clasico and Arabica Brasil</li>
+                            <li data-translate="why-arabica">100% carefully selected Arabica beans</li>
+                            <li data-translate="why-aroma">Balanced aroma and rich body</li>
+                            <li data-translate="why-roast">Perfect roasting for unique aromatic notes</li>
+                            <li data-translate="why-use">Ideal for espresso, French press, or filtration</li>
                         </ul>
-                        <h4 class="text-lg font-semibold mb-2">Avantages</h4>
+                        <h4 class="text-lg font-semibold mb-2" data-translate="benefits-title">Benefits</h4>
                         <ul class="list-disc list-inside text-gray-600 space-y-2">
-                            <li>Forfait de 500g (2 x 250g)</li>
-                            <li>Qualité certifiée Illy</li>
-                            <li>Saveur harmonieuse et intense</li>
-                            <li>Parfait pour les amateurs de café gastronomique</li>
-                            <li>Aucun additif, 100 % naturel</li>
+                            <li data-translate="benefit-package">500g package (2 x 250g)</li>
+                            <li data-translate="benefit-quality">Illy certified quality</li>
+                            <li data-translate="benefit-flavor">Harmonious and intense flavor</li>
+                            <li data-translate="benefit-lovers">Perfect for gourmet coffee lovers</li>
+                            <li data-translate="benefit-natural">No additives, 100% natural</li>
                         </ul>
                         <div class="mt-6">
-                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition">Retour aux produits</a>
+                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition" data-translate="back-to-products">Back to Products</a>
                         </div>
                     </div>
                 </div>
@@ -81,7 +111,7 @@
     </section>
     <footer class="bg-red-800 text-white py-6">
         <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
+            <p data-translate="footer-text">© 2025 Guaraní Finest Brew. All rights reserved.</p>
         </div>
     </footer>
     <script>
@@ -92,6 +122,125 @@
         const cartBtn = document.getElementById('cart-btn');
         const cartCount = document.getElementById('cart-count');
 
+        const translations = {
+            en: {
+                "home": "Home",
+                "products": "Products",
+                "about": "About",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Log In",
+                "product-title": "Illy Cafe Classic",
+                "product-desc": "Experience a unique blend with two exquisite coffee varieties.",
+                "description-title": "Description",
+                "description-text1": "Illy Cafe Classic Grain 250g + Arabica Brasil 250g",
+                "description-text2": "Experience a unique blend with our package that includes two exquisite coffee varieties.",
+                "description-text3": "Each bean is carefully selected to ensure the quality and distinctive flavor that characterize Illy. This package contains two 250g bags, one of Illy Cafe Grano Clasico and another of Arabica Brasil, both renowned for their balanced aroma and rich body.",
+                "description-text4": "Our beans are roasted to perfection to enhance the aromatic notes and ensure a cup of coffee full of flavor and harmony.",
+                "description-text5": "With Illy, every sip is a work of art that delights the senses and enhances your moments of rest and pleasure.",
+                "why-title": "Why Choose Illy Cafe Classic?",
+                "why-varieties": "Two premium varieties: Illy Cafe Grano Clasico and Arabica Brasil",
+                "why-arabica": "100% carefully selected Arabica beans",
+                "why-aroma": "Balanced aroma and rich body",
+                "why-roast": "Perfect roasting for unique aromatic notes",
+                "why-use": "Ideal for espresso, French press, or filtration",
+                "benefits-title": "Benefits",
+                "benefit-package": "500g package (2 x 250g)",
+                "benefit-quality": "Illy certified quality",
+                "benefit-flavor": "Harmonious and intense flavor",
+                "benefit-lovers": "Perfect for gourmet coffee lovers",
+                "benefit-natural": "No additives, 100% natural",
+                "back-to-products": "Back to Products",
+                "footer-text": "© 2025 Guaraní Finest Brew. All rights reserved."
+            },
+            fr: {
+                "home": "Accueil",
+                "products": "Produits",
+                "about": "À propos",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Se connecter",
+                "product-title": "Illy Cafe Classic",
+                "product-desc": "Vivez une expérience unique avec deux variétés exquises de café.",
+                "description-title": "Description",
+                "description-text1": "Illy Cafe Classic Grain 250g + Arabica Brasil 250g",
+                "description-text2": "Vivez une expérience unique avec notre forfait qui comprend deux variétés exquises de café.",
+                "description-text3": "Chaque grain est soigneusement sélectionné pour garantir la qualité et la saveur distinctive qui caractérisent Illy. Ce paquet contient deux sacs de 250 grammes, un d'Illy Cafe Grano Clasico et un autre d'Arabica Brasil, tous deux reconnus pour leur arôme et leur corps équilibré.",
+                "description-text4": "Nos grains sont torréfiés à la perfection pour mettre en valeur les notes aromatiques et garantir une tasse de café pleine de saveur et d'harmonie.",
+                "description-text5": "Avec Illy, chaque gorgée est une œuvre d’art qui ravit les sens et embellit vos moments de pause et de plaisir.",
+                "why-title": "Pourquoi choisir Illy Cafe Classic ?",
+                "why-varieties": "Deux variétés premium : Illy Cafe Grano Clasico et Arabica Brasil",
+                "why-arabica": "Grains 100 % Arabica soigneusement sélectionnés",
+                "why-aroma": "Arôme équilibré et corps riche",
+                "why-roast": "Torréfaction parfaite pour des notes aromatiques uniques",
+                "why-use": "Idéal pour espresso, presse française ou filtration",
+                "benefits-title": "Avantages",
+                "benefit-package": "Forfait de 500g (2 x 250g)",
+                "benefit-quality": "Qualité certifiée Illy",
+                "benefit-flavor": "Saveur harmonieuse et intense",
+                "benefit-lovers": "Parfait pour les amateurs de café gastronomique",
+                "benefit-natural": "Aucun additif, 100 % naturel",
+                "back-to-products": "Retour aux produits",
+                "footer-text": "© 2025 Guaraní Finest Brew. Tous droits réservés."
+            },
+            es: {
+                "home": "Inicio",
+                "products": "Productos",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "promotions": "Promociones",
+                "login": "Iniciar sesión",
+                "product-title": "Illy Cafe Classic",
+                "product-desc": "Vive una experiencia única con dos variedades exquisitas de café.",
+                "description-title": "Descripción",
+                "description-text1": "Illy Cafe Classic Grain 250g + Arabica Brasil 250g",
+                "description-text2": "Vive una experiencia única con nuestro paquete que incluye dos variedades exquisitas de café.",
+                "description-text3": "Cada grano es cuidadosamente seleccionado para garantizar la calidad y el sabor distintivo que caracteriza a Illy. Este paquete contiene dos bolsas de 250 gramos, una de Illy Cafe Grano Clasico y otra de Arabica Brasil, ambas reconocidas por su aroma equilibrado y cuerpo rico.",
+                "description-text4": "Nuestros granos son tostados a la perfección para resaltar las notas aromáticas y asegurar una taza de café llena de sabor y armonía.",
+                "description-text5": "Con Illy, cada sorbo es una obra de arte que deleita los sentidos y realza tus momentos de descanso y placer.",
+                "why-title": "¿Por qué elegir Illy Cafe Classic?",
+                "why-varieties": "Dos variedades premium: Illy Cafe Grano Clasico y Arabica Brasil",
+                "why-arabica": "Granos 100% Arabica cuidadosamente seleccionados",
+                "why-aroma": "Aroma equilibrado y cuerpo rico",
+                "why-roast": "Tostado perfecto para notas aromáticas únicas",
+                "why-use": "Ideal para espresso, prensa francesa o filtración",
+                "benefits-title": "Beneficios",
+                "benefit-package": "Paquete de 500g (2 x 250g)",
+                "benefit-quality": "Calidad certificada Illy",
+                "benefit-flavor": "Sabor armonioso e intenso",
+                "benefit-lovers": "Perfecto para amantes del café gourmet",
+                "benefit-natural": "Sin aditivos, 100% natural",
+                "back-to-products": "Volver a productos",
+                "footer-text": "© 2025 Guaraní Finest Brew. Todos los derechos reservados."
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function translatePage(lang) {
+            currentLanguage = lang;
+            document.documentElement.lang = lang;
+            document.title = `${translations[lang]["product-title"]} - Guaraní Finest Brew`;
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        document.getElementById('language-select').addEventListener('change', (e) => {
+            translatePage(e.target.value);
+        });
+
+        window.onload = () => translatePage('en');
+
         // Logique d'ajout au panier (à implémenter si nécessaire)
         // Note : Cette section est laissée vide car le panier semble géré dans index.html
     </script>
+</body>
+</html>
