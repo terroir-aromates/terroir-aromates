@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Café Época - Guaraní Finest Brew</title>
+    <title>Época Coffee - Guaraní Finest Brew</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -11,6 +11,31 @@
         .product-image { max-width: 100%; height: auto; border-radius: 0.5rem; }
         .product-card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
         .product-card:hover { transform: translateY(-5px); }
+        .language-select, .currency-select {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        header nav a {
+            font-size: 0.9rem;
+        }
+        header .flex {
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            header .flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .language-select, .currency-select {
+                margin: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 <body class="font-sans bg-beige-50 text-gray-800">
@@ -18,14 +43,19 @@
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <h1 class="text-2xl font-bold text-red-800">Guaraní Finest Brew</h1>
             <nav class="space-x-4">
-                <a href="/" class="text-gray-700 hover:text-red-800">Accueil</a>
-                <a href="/#products" class="text-gray-700 hover:text-red-800">Produits</a>
-                <a href="/#about" class="text-gray-700 hover:text-red-800">À propos</a>
-                <a href="/#contact" class="text-gray-700 hover:text-red-800">Contact</a>
-                <a href="/#promotions" class="text-gray-700 hover:text-red-800">Promotions</a>
+                <a href="/" class="text-gray-700 hover:text-red-800" data-translate="home">Home</a>
+                <a href="/#products" class="text-gray-700 hover:text-red-800" data-translate="products">Products</a>
+                <a href="/#about" class="text-gray-700 hover:text-red-800" data-translate="about">About</a>
+                <a href="/#contact" class="text-gray-700 hover:text-red-800" data-translate="contact">Contact</a>
+                <a href="/#promotions" class="text-gray-700 hover:text-red-800" data-translate="promotions">Promotions</a>
             </nav>
-            <div class="flex space-x-4">
-                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition">Se connecter</a>
+            <div class="flex space-x-4 items-center">
+                <select id="language-select" class="language-select">
+                    <option value="en" selected>English</option>
+                    <option value="fr">Français</option>
+                    <option value="es">Español</option>
+                </select>
+                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition" data-translate="login">Log In</a>
                 <button id="cart-btn" class="relative">
                     <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
@@ -35,8 +65,8 @@
     </header>
     <section class="hero flex items-center justify-center">
         <div class="text-center px-4">
-            <h2 class="text-3xl font-bold text-red-800 mb-4">Café Época</h2>
-            <p class="text-gray-600 mb-4">Découvrez les notes de saveur des fruits tropicaux, du chocolat et des noix.</p>
+            <h2 class="text-3xl font-bold text-red-800 mb-4" data-translate="product-title">Época Coffee</h2>
+            <p class="text-gray-600 mb-4" data-translate="product-desc">Discover the flavor notes of tropical fruits, chocolate, and nuts.</p>
         </div>
     </section>
     <section id="product-detail" class="py-12 bg-white">
@@ -44,33 +74,33 @@
             <div class="flex flex-col md:flex-row gap-6">
                 <div class="md:w-1/2">
                     <div class="product-card">
-                        <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753886869/coffee.jpg" alt="Café Época" class="product-image w-full h-96 object-cover">
+                        <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753886869/coffee.jpg" alt="Época Coffee" class="product-image w-full h-96 object-cover">
                     </div>
                 </div>
                 <div class="md:w-1/2">
                     <div class="product-card p-6">
-                        <h3 class="text-xl font-semibold mb-4">Description</h3>
-                        <p class="text-gray-600 mb-4">Découvrez la qualité et la saveur du café de spécialité avec le Café Época, un café aux grains 100 % Arabica, cultivé dans les meilleures régions de Veracruz et du Chiapas, au Mexique.</p>
-                        <h4 class="text-lg font-semibold mb-2">Pourquoi choisir Café Época ?</h4>
+                        <h3 class="text-xl font-semibold mb-4" data-translate="description-title">Description</h3>
+                        <p class="text-gray-600 mb-4" data-translate="description-text1">Discover the quality and flavor of specialty coffee with Época Coffee, a 100% Arabica coffee grown in the best regions of Veracruz and Chiapas, Mexico.</p>
+                        <h4 class="text-lg font-semibold mb-2" data-translate="why-title">Why Choose Época Coffee?</h4>
                         <ul class="list-disc list-inside text-gray-600 mb-4 space-y-2">
-                            <li>Grains de café de spécialité provenant de certaines fermes de haute altitude</li>
-                            <li>Notes de saveur des fruits tropicaux, du chocolat et des noix</li>
-                            <li>Arôme intense et complexe, avec des touches florales et épicées</li>
-                            <li>Corps moyennement foncé et acidité rafraîchissante, idéal pour l'espresso et la filtration</li>
-                            <li>100 % naturel, sans conservateurs ni additifs</li>
-                            <li>Cultivé entre 1 200 et 1 800 mètres d'altitude, ce café mexicain offre un profil aromatique unique et une expérience exceptionnelle dans chaque tasse. Parfait pour ceux qui recherchent un café gastronomique avec une saveur inégalée.</li>
+                            <li data-translate="why-altitude">Specialty coffee beans from high-altitude farms</li>
+                            <li data-translate="why-flavor">Flavor notes of tropical fruits, chocolate, and nuts</li>
+                            <li data-translate="why-aroma">Intense and complex aroma, with floral and spicy touches</li>
+                            <li data-translate="why-body">Medium-dark body and refreshing acidity, ideal for espresso and filtration</li>
+                            <li data-translate="why-natural">100% natural, with no preservatives or additives</li>
+                            <li data-translate="why-unique">Grown between 1,200 and 1,800 meters altitude, this Mexican coffee offers a unique aromatic profile and an exceptional experience in every cup. Perfect for those seeking a gourmet coffee with unmatched flavor.</li>
                         </ul>
-                        <h4 class="text-lg font-semibold mb-2">Avantages</h4>
+                        <h4 class="text-lg font-semibold mb-2" data-translate="benefits-title">Benefits</h4>
                         <ul class="list-disc list-inside text-gray-600 space-y-2">
-                            <li>Café de spécialité 100 % Arabica</li>
-                            <li>Céréales cultivées en altitude (1 200 à 1 800 mètres d'altitude)</li>
-                            <li>Notes gustatives uniques : fruits tropicaux, chocolat et noix</li>
-                            <li>Sans additifs ni conservateurs, totalement naturel</li>
-                            <li>Arôme intense et complexe, avec une touche florale et épicée</li>
-                            <li>Parfait pour les méthodes d'espresso, de presse française, de chemex et de filtrage</li>
+                            <li data-translate="benefit-arabica">100% Arabica specialty coffee</li>
+                            <li data-translate="benefit-altitude">High-altitude grown (1,200 to 1,800 meters)</li>
+                            <li data-translate="benefit-notes">Unique taste notes: tropical fruits, chocolate, and nuts</li>
+                            <li data-translate="benefit-natural">No additives or preservatives, completely natural</li>
+                            <li data-translate="benefit-aroma">Intense and complex aroma, with a floral and spicy touch</li>
+                            <li data-translate="benefit-use">Perfect for espresso, French press, Chemex, and filter methods</li>
                         </ul>
                         <div class="mt-6">
-                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition">Retour aux produits</a>
+                            <a href="/#products" class="inline-block bg-red-800 text-white px-4 py-2 rounded-full hover:bg-red-900 transition" data-translate="back-to-products">Back to Products</a>
                         </div>
                     </div>
                 </div>
@@ -79,18 +109,130 @@
     </section>
     <footer class="bg-red-800 text-white py-6">
         <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2025 Guaraní Finest Brew. Tous droits réservés.</p>
+            <p data-translate="footer-text">© 2025 Guaraní Finest Brew. All rights reserved.</p>
         </div>
     </footer>
     <script>
-        // Script pour le panier (inchangé, à adapter selon besoin)
         const products = [
-            { id: 'coffee4', name: 'Café Época', price: 149.71, category: 'coffee', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896079/coffee-epoca.jpg', description: 'Notes de saveur des fruits tropicaux, du chocolat et des noix.' }
+            { id: 'coffee4', name: 'Época Coffee', price: 149.71, category: 'coffee', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896079/coffee-epoca.jpg', description: 'Flavor notes of tropical fruits, chocolate, and nuts.' }
         ];
         let cart = [];
         const cartBtn = document.getElementById('cart-btn');
         const cartCount = document.getElementById('cart-count');
 
+        const translations = {
+            en: {
+                "home": "Home",
+                "products": "Products",
+                "about": "About",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Log In",
+                "product-title": "Época Coffee",
+                "product-desc": "Discover the flavor notes of tropical fruits, chocolate, and nuts.",
+                "description-title": "Description",
+                "description-text1": "Discover the quality and flavor of specialty coffee with Época Coffee, a 100% Arabica coffee grown in the best regions of Veracruz and Chiapas, Mexico.",
+                "why-title": "Why Choose Época Coffee?",
+                "why-altitude": "Specialty coffee beans from high-altitude farms",
+                "why-flavor": "Flavor notes of tropical fruits, chocolate, and nuts",
+                "why-aroma": "Intense and complex aroma, with floral and spicy touches",
+                "why-body": "Medium-dark body and refreshing acidity, ideal for espresso and filtration",
+                "why-natural": "100% natural, with no preservatives or additives",
+                "why-unique": "Grown between 1,200 and 1,800 meters altitude, this Mexican coffee offers a unique aromatic profile and an exceptional experience in every cup. Perfect for those seeking a gourmet coffee with unmatched flavor.",
+                "benefits-title": "Benefits",
+                "benefit-arabica": "100% Arabica specialty coffee",
+                "benefit-altitude": "High-altitude grown (1,200 to 1,800 meters)",
+                "benefit-notes": "Unique taste notes: tropical fruits, chocolate, and nuts",
+                "benefit-natural": "No additives or preservatives, completely natural",
+                "benefit-aroma": "Intense and complex aroma, with a floral and spicy touch",
+                "benefit-use": "Perfect for espresso, French press, Chemex, and filter methods",
+                "back-to-products": "Back to Products",
+                "footer-text": "© 2025 Guaraní Finest Brew. All rights reserved."
+            },
+            fr: {
+                "home": "Accueil",
+                "products": "Produits",
+                "about": "À propos",
+                "contact": "Contact",
+                "promotions": "Promotions",
+                "login": "Se connecter",
+                "product-title": "Café Época",
+                "product-desc": "Découvrez les notes de saveur des fruits tropicaux, du chocolat et des noix.",
+                "description-title": "Description",
+                "description-text1": "Découvrez la qualité et la saveur du café de spécialité avec le Café Época, un café aux grains 100 % Arabica, cultivé dans les meilleures régions de Veracruz et du Chiapas, au Mexique.",
+                "why-title": "Pourquoi choisir Café Época ?",
+                "why-altitude": "Grains de café de spécialité provenant de certaines fermes de haute altitude",
+                "why-flavor": "Notes de saveur des fruits tropicaux, du chocolat et des noix",
+                "why-aroma": "Arôme intense et complexe, avec des touches florales et épicées",
+                "why-body": "Corps moyennement foncé et acidité rafraîchissante, idéal pour l'espresso et la filtration",
+                "why-natural": "100 % naturel, sans conservateurs ni additifs",
+                "why-unique": "Cultivé entre 1 200 et 1 800 mètres d'altitude, ce café mexicain offre un profil aromatique unique et une expérience exceptionnelle dans chaque tasse. Parfait pour ceux qui recherchent un café gastronomique avec une saveur inégalée.",
+                "benefits-title": "Avantages",
+                "benefit-arabica": "Café de spécialité 100 % Arabica",
+                "benefit-altitude": "Céréales cultivées en altitude (1 200 à 1 800 mètres d'altitude)",
+                "benefit-notes": "Notes gustatives uniques : fruits tropicaux, chocolat et noix",
+                "benefit-natural": "Sans additifs ni conservateurs, totalement naturel",
+                "benefit-aroma": "Arôme intense et complexe, avec une touche florale et épicée",
+                "benefit-use": "Parfait pour les méthodes d'espresso, de presse française, de chemex et de filtrage",
+                "back-to-products": "Retour aux produits",
+                "footer-text": "© 2025 Guaraní Finest Brew. Tous droits réservés."
+            },
+            es: {
+                "home": "Inicio",
+                "products": "Productos",
+                "about": "Acerca de",
+                "contact": "Contacto",
+                "promotions": "Promociones",
+                "login": "Iniciar sesión",
+                "product-title": "Café Época",
+                "product-desc": "Descubre las notas de sabor de frutas tropicales, chocolate y nueces.",
+                "description-title": "Descripción",
+                "description-text1": "Descubre la calidad y el sabor del café de especialidad con Café Época, un café 100% Arabica cultivado en las mejores regiones de Veracruz y Chiapas, México.",
+                "why-title": "¿Por qué elegir Café Época?",
+                "why-altitude": "Granos de café de especialidad de fincas de alta altitud",
+                "why-flavor": "Notas de sabor de frutas tropicales, chocolate y nueces",
+                "why-aroma": "Aroma intenso y complejo, con toques florales y especiados",
+                "why-body": "Cuerpo medio-oscuro y acidez refrescante, ideal para espresso y filtración",
+                "why-natural": "100% natural, sin conservantes ni aditivos",
+                "why-unique": "Cultivado entre 1,200 y 1,800 metros de altitud, este café mexicano ofrece un perfil aromático único y una experiencia excepcional en cada taza. Perfecto para quienes buscan un café gourmet con sabor inigualable.",
+                "benefits-title": "Beneficios",
+                "benefit-arabica": "Café de especialidad 100% Arabica",
+                "benefit-altitude": "Cultivado en alta altitud (1,200 a 1,800 metros)",
+                "benefit-notes": "Notas de sabor únicas: frutas tropicales, chocolate y nueces",
+                "benefit-natural": "Sin aditivos ni conservantes, completamente natural",
+                "benefit-aroma": "Aroma intenso y complejo, con un toque floral y especiado",
+                "benefit-use": "Perfecto para espresso, prensa francesa, Chemex y métodos de filtrado",
+                "back-to-products": "Volver a productos",
+                "footer-text": "© 2025 Guaraní Finest Brew. Todos los derechos reservados."
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function translatePage(lang) {
+            currentLanguage = lang;
+            document.documentElement.lang = lang;
+            document.title = `${translations[lang]["product-title"]} - Guaraní Finest Brew`;
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        document.getElementById('language-select').addEventListener('change', (e) => {
+            translatePage(e.target.value);
+        });
+
+        window.onload = () => translatePage('en');
+
         // Logique d'ajout au panier (à implémenter si nécessaire)
         // Note : Cette section est laissée vide car le panier semble géré dans index.html
     </script>
+</body>
+</html>
