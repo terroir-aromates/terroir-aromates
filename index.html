@@ -311,16 +311,16 @@
     </section>
 
     <section id="about" class="py-12 bg-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold text-red-800 mb-4" data-translate="about-title">About</h2>
-            <p class="text-gray-600 mb-4" data-translate="about-text">Guaraní Finest Brew celebrates authentic flavors from around the world. Since 2025, we carefully select coffees, teas, and essential oils to offer you a unique experience in Paraguay. <a href="about.html" class="text-red-800 underline" data-translate="discover-link">Discover our story</a>.</p>
-            <div class="flex justify-center space-x-4 mt-4">
-                <i class="fab fa-instagram text-2xl text-gray-700 hover:text-red-800"></i>
-                <i class="fab fa-facebook-f text-2xl text-gray-700 hover:text-red-800"></i>
-                <i class="fab fa-twitter text-2xl text-gray-700 hover:text-red-800"></i>
-            </div>
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-2xl font-bold text-red-800 mb-4" data-translate="about-title">About</h2>
+        <p class="text-gray-600 mb-4" data-translate="about-text" data-preserve-html>Guaraní Finest Brew celebrates authentic flavors from around the world. Since 2025, we carefully select coffees, teas, and essential oils to offer you a unique experience in Paraguay. <a href="about.html" class="text-red-800 underline" data-translate="discover-link">Discover our story</a>.</p>
+        <div class="flex justify-center space-x-4 mt-4">
+            <i class="fab fa-instagram text-2xl text-gray-700 hover:text-red-800"></i>
+            <i class="fab fa-facebook-f text-2xl text-gray-700 hover:text-red-800"></i>
+            <i class="fab fa-twitter text-2xl text-gray-700 hover:text-red-800"></i>
         </div>
-    </section>
+    </div>
+</section>
 
     <section id="contact" class="py-12 bg-beige-100">
         <div class="container mx-auto px-4 text-center">
@@ -814,64 +814,89 @@
     }
 };
 
-        const currencyRates = {
-        EUR: 1,
-        USD: 1.1,
-        CHF: 0.95
-    };
 
-    let currentLanguage = 'en'; // Default language set to English based on your input
-    let currentCurrency = 'EUR';
-    // let cart = JSON.parse(localStorage.getItem('cart')) || [];
+const currencyRates = {
+    EUR: 1,
+    USD: 1.1,
+    CHF: 0.95
+};
 
-    function saveCart() {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
+let currentLanguage = localStorage.getItem('selectedLanguage') || 'en'; // Charge la langue sauvegardée ou 'en' par défaut
+let currentCurrency = localStorage.getItem('selectedCurrency') || 'EUR'; // Charge la devise sauvegardée ou 'EUR' par défaut
 
-    function translatePage(lang) {
-        currentLanguage = lang;
-        document.querySelector('html').setAttribute('lang', lang);
-        document.title = translations[lang]["title"];
-        document.querySelectorAll('[data-translate]').forEach(element => {
-            const key = element.getAttribute('data-translate');
-            if (translations[lang][key]) {
-                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                    element.placeholder = translations[lang][key];
-                } else if (element.tagName === 'SELECT' && element.options) {
-                    Array.from(element.options).forEach((option, index) => {
-                        const optionKey = option.getAttribute('data-translate');
-                        if (optionKey) {
-                            option.text = translations[lang][optionKey] || option.text;
-                        }
-                    });
-                } else if (element.tagName === 'A') {
-                    element.innerHTML = translations[lang][key]; // Utilise innerHTML pour préserver le lien
-                } else {
-                    element.innerHTML = translations[lang][key];
-                }
+function saveLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem('selectedLanguage', lang); // Sauvegarde la langue
+    translatePage(lang);
+}
+
+function saveCurrency(currency) {
+    currentCurrency = currency;
+    localStorage.setItem('selectedCurrency', currency); // Sauvegarde la devise
+    updatePrices();
+    updateCart();
+    updatePromotions(); // Met à jour les promotions avec la nouvelle devise
+}
+
+function translatePage(lang) {
+    document.querySelector('html').setAttribute('lang', lang);
+    document.title = translations[lang]["title"];
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang][key]) {
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                element.placeholder = translations[lang][key];
+            } else if (element.tagName === 'SELECT' && element.options) {
+                Array.from(element.options).forEach((option, index) => {
+                    const optionKey = option.getAttribute('data-translate');
+                    if (optionKey) {
+                        option.text = translations[lang][optionKey] || option.text;
+                    }
+                });
+            } else if (element.tagName === 'A') {
+                // Pour les liens, on utilise innerHTML pour garder la structure
+                element.innerHTML = translations[lang][key];
+            } else if (element.hasAttribute('data-preserve-html')) {
+                // Pour les éléments avec du HTML (comme about-text), on utilise innerHTML
+                element.innerHTML = translations[lang][key];
+            } else {
+                // Pour les éléments simples, on utilise textContent
+                element.textContent = translations[lang][key];
             }
-        });
-    }
-
-    // Call the function on load with the default language (e.g., "en")
-    document.addEventListener('DOMContentLoaded', () => {
-        translatePage(currentLanguage || 'en'); // Replace 'en' with your default language if different
-    });
-
-    function updatePrices() {
-        const rate = currencyRates[currentCurrency];
-        document.querySelectorAll('[id^="price-"]').forEach(priceElement => {
-            let originalPrice = parseFloat(priceElement.textContent.replace('€', '').replace('$', '').replace('CHF', '').replace(',', '.'));
-            let newPrice = (originalPrice * rate).toFixed(2);
-            priceElement.textContent = `${newPrice}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}`;
-        });
-        const shippingDetails = document.getElementById('shipping-details');
-        if (shippingDetails.dataset.price) {
-            let shippingPrice = parseFloat(shippingDetails.dataset.price) * rate;
-            shippingDetails.textContent = `Price: ${shippingPrice.toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'} | Delivery: - days`;
         }
-    }
+    });
+    document.getElementById('language-select').value = lang; // Synchronise le select avec la langue actuelle
+}
 
+// Applique la langue et la devise au chargement
+document.addEventListener('DOMContentLoaded', () => {
+    translatePage(currentLanguage); // Applique la langue sauvegardée au chargement
+    document.getElementById('language-select').value = currentLanguage; // Synchronise le select
+    document.getElementById('currency-select').value = currentCurrency; // Synchronise la devise
+    updatePrices(); // Met à jour les prix avec la devise sauvegardée
+});
+
+function updatePrices() {
+    const rate = currencyRates[currentCurrency];
+    document.querySelectorAll('[id^="price-"]').forEach(priceElement => {
+        let originalPrice = parseFloat(priceElement.textContent.replace('€', '').replace('$', '').replace('CHF', '').replace(',', '.'));
+        let newPrice = (originalPrice * rate).toFixed(2);
+        priceElement.textContent = `${newPrice}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}`;
+    });
+    const shippingDetails = document.getElementById('shipping-details');
+    if (shippingDetails.dataset.price) {
+        let shippingPrice = parseFloat(shippingDetails.dataset.price) * rate;
+        shippingDetails.textContent = `Price: ${shippingPrice.toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'} | Delivery: - days`;
+    }
+}
+
+document.getElementById('language-select').addEventListener('change', (e) => {
+    saveLanguage(e.target.value);
+});
+
+document.getElementById('currency-select').addEventListener('change', (e) => {
+    saveCurrency(e.target.value);
+});
     document.getElementById('language-select').addEventListener('change', (e) => {
         translatePage(e.target.value);
     });
@@ -1122,8 +1147,174 @@ chatbotInput.addEventListener('keypress', (e) => {
     }
 
     // Initial rendering
-    renderProducts();
-    updateCart();
+document.addEventListener('DOMContentLoaded', () => {
+    // Force la langue sauvegardée au chargement
+    currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    translatePage(currentLanguage);
+    document.getElementById('language-select').value = currentLanguage;
+    document.getElementById('currency-select').value = currentCurrency;
+
+    // Recharge le panier depuis localStorage
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
+    renderProducts(); // Affiche tous les produits
+    updateCart(); // Met à jour le panier affiché
+    updatePrices(); // Applique la devise sauvegardée
+});
+
+// Ajoute une vérification pour éviter la perte du panier
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Met à jour le panier et sauvegarde après chaque modification
+function updateCart() {
+    const rate = currencyRates[currentCurrency];
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    let totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const shippingCost = parseFloat(shippingDetails.dataset.price) || 0;
+    totalPrice += shippingCost;
+    cartCount.textContent = totalItems;
+    cartTotal.textContent = `${(totalPrice * rate).toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}`;
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p class="text-gray-500 text-center py-4" data-translate="cart-empty">Your cart is empty</p>';
+        confirmBtn.disabled = true;
+        shippingCarrierSelect.disabled = true;
+        shippingMethodSelect.disabled = true;
+        shippingDetails.textContent = `Price: -${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'} | Delivery: - days`;
+        shippingDetails.dataset.price = 0;
+    } else {
+        cartItems.innerHTML = cart.map(item => `
+            <div class="flex items-center py-2 border-b">
+                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+                <div class="ml-3 flex-1">
+                    <h4 class="font-medium text-sm">${item.name} (${item.capacity}${item.caffeine ? ',' + item.caffeine : ''}${item.grind ? ',' + item.grind : ''}${item.type ? ',' + item.type : ''}${item.usage ? ',' + item.usage : ''})</h4>
+                    <p class="text-gray-600 text-xs">${(item.price * rate).toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}</p>
+                </div>
+                <div class="flex items-center">
+                    <button onclick="changeQuantity('${item.compositeId}', -1)" class="text-gray-500 hover:text-red-800 px-1"><i class="fas fa-minus text-xs"></i></button>
+                    <span class="quantity mx-1 text-sm">${item.quantity}</span>
+                    <button onclick="changeQuantity('${item.compositeId}', 1)" class="text-gray-500 hover:text-red-900 px-1"><i class="fas fa-plus text-xs"></i></button>
+                </div>
+            </div>
+        `).join('');
+        confirmBtn.disabled = false;
+        shippingCarrierSelect.disabled = false;
+    }
+    saveCart(); // Sauvegarde après chaque mise à jour
+}
+
+// Assure que changeQuantity sauvegarde aussi
+function changeQuantity(id, delta) {
+    const item = cart.find(i => i.compositeId === id);
+    if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) cart = cart.filter(i => i.compositeId !== id);
+        updateCart();
+    }
+}
+
+// Rend tous les produits sans filtrage par défaut
+function renderProducts(category = 'all') {
+    const filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+    productGrid.innerHTML = filteredProducts.map(product => `
+        <div class="product-card bg-white rounded-lg shadow-md transition">
+            <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded-t-lg">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold" data-translate="${product.id === 'coffee1' ? 'veracruzano-name' : product.id + '-name'}">${translations[currentLanguage][product.id === 'coffee1' ? 'veracruzano-name' : product.id + '-name'] || product.name}</h3>
+                <p class="text-gray-600 text-sm mb-2" data-translate="${product.id === 'coffee1' ? 'veracruzano-desc' : product.id + '-desc'}">${translations[currentLanguage][product.id === 'coffee1' ? 'veracruzano-desc' : product.id + '-desc'] || product.description}</p>
+                <div class="mb-2">
+                    <label for="capacity-${product.id}" class="block text-gray-700 text-sm font-medium mb-1" data-translate="capacity-label">${translations[currentLanguage]["capacity-label"]}</label>
+                    <select id="capacity-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                        ${Object.keys(product.price).map(cap => `<option value="${cap}">${cap}</option>`).join('')}
+                    </select>
+                </div>
+                ${product.category === 'coffee' ? `
+                    <div class="mb-2">
+                        <label for="grind-${product.id}" class="block text-gray-700 text-sm font-medium mb-1" data-translate="grind-label">${translations[currentLanguage]["grind-label"]}</label>
+                        <select id="grind-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                            <option value="whole" data-translate="grind-whole">${translations[currentLanguage]["grind-whole"]}</option>
+                            <option value="ground" data-translate="grind-ground">${translations[currentLanguage]["grind-ground"]}</option>
+                            <option value="espresso" data-translate="grind-espresso">${translations[currentLanguage]["grind-espresso"]}</option>
+                        </select>
+                    </div>
+                    <div class="mb-2 caffeine-options">
+                        <div class="caffeine-option"><input type="radio" id="classic-${product.id}" name="caffeine-${product.id}" value="classic" checked><label for="classic-${product.id}" data-translate="classic-label">${translations[currentLanguage]["classic-label"]}</label></div>
+                        <div class="caffeine-option"><input type="radio" id="decaf-${product.id}" name="caffeine-${product.id}" value="decaf"><label for="decaf-${product.id}" data-translate="decaf-label">${translations[currentLanguage]["decaf-label"]}</label></div>
+                    </div>` : product.category === 'tea' ? `
+                    <div class="mb-2">
+                        <label for="type-${product.id}" class="block text-gray-700 text-sm font-medium mb-1" data-translate="type-label">${translations[currentLanguage]["type-label"]}</label>
+                        <select id="type-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                            <option value="${product.name.includes('Green')?'green':product.name.includes('Classic')?'black':'white'}" data-translate="${product.name.includes('Green')?'green-label':product.name.includes('Classic')?'black-label':'white-label'}">${translations[currentLanguage][product.name.includes('Green')?'green-label':product.name.includes('Classic')?'black-label':'white-label'] || (product.name.includes('Green')?'Green':product.name.includes('Classic')?'Black':'White')}</option>
+                        </select>
+                    </div>` : `
+                    <div class="mb-2">
+                        <label for="usage-${product.id}" class="block text-gray-700 text-sm font-medium mb-1" data-translate="usage-label">${translations[currentLanguage]["usage-label"]}</label>
+                        <select id="usage-${product.id}" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+                            <option value="${product.name.includes('Palo Santo')?'anti-inflammatory':product.name.includes('Pink Berries')?'energizing':product.name.includes('Cynara Oil')?'antioxidant-and-detoxifying':product.name.includes('Melissa Oil')?'sedative-and-soothes-nervous-tension':product.name.includes('Lime Oil')?'anti-inflammatory-antispasmodic':'purifying'}" data-translate="${product.name.includes('Palo Santo')?'oil1-desc':product.name.includes('Pink Berries')?'oil2-desc':product.name.includes('Cynara Oil')?'oil3-desc':product.name.includes('Melissa Oil')?'oil4-desc':product.name.includes('Lime Oil')?'oil5-desc':'oilX-desc'}">${translations[currentLanguage][product.name.includes('Palo Santo')?'oil1-desc':product.name.includes('Pink Berries')?'oil2-desc':product.name.includes('Cynara Oil')?'oil3-desc':product.name.includes('Melissa Oil')?'oil4-desc':product.name.includes('Lime Oil')?'oil5-desc':'oilX-desc'] || (product.name.includes('Palo Santo')?'Anti-inflammatory':product.name.includes('Pink Berries')?'Energizing':product.name.includes('Cynara Oil')?'Antioxidant and detoxifying':product.name.includes('Melissa Oil')?'Sedative and soothes nervous tension':product.name.includes('Lime Oil')?'Anti-inflammatory, antispasmodic':'Purifying')}</option>
+                        </select>
+                    </div>`}
+                <div class="flex justify-between items-center">
+                    <span id="price-${product.id}" class="text-red-800 font-bold">${(Object.values(product.price)[0] * currencyRates[currentCurrency]).toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}</span>
+                    <a href="${product.id}.html" class="text-blue-600 hover:underline" data-translate="details-link">${translations[currentLanguage]["details-link"]}</a>
+                    <button class="add-to-cart bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-id="${product.id}" data-translate="add-to-cart">${translations[currentLanguage]["add-to-cart"]}</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const productId = e.target.dataset.id;
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            const capacity = document.getElementById(`capacity-${productId}`).value;
+            let caffeine = '', grind = '', type = '', usage = '';
+            if (product.category === 'coffee') {
+                caffeine = document.querySelector(`input[name="caffeine-${productId}"]:checked`)?.value || 'classic';
+                grind = document.getElementById(`grind-${product.id}`).value || 'whole';
+                const compositeId = `${productId}-${capacity}-${caffeine}-${grind}`;
+                const price = product.price[capacity] || Object.values(product.price)[0];
+                let existingItem = cart.find(item => item.compositeId === compositeId);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ ...product, compositeId, capacity, caffeine, grind, quantity: 1, price: price });
+                }
+            } else {
+                if (product.category === 'tea') type = document.getElementById(`type-${productId}`).value || '';
+                else usage = document.getElementById(`usage-${productId}`).value || '';
+                const compositeId = `${productId}-${capacity}-${caffeine || ''}-${grind || ''}-${type || ''}-${usage || ''}`;
+                const price = product.price[capacity] || Object.values(product.price)[0];
+                let existingItem = cart.find(item => item.compositeId === compositeId);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ ...product, compositeId, capacity, caffeine, grind, type, usage, quantity: 1, price: price });
+                }
+            }
+            updateCart();
+            toggleModal();
+            const priceElement = document.getElementById(`price-${productId}`);
+            if (priceElement) {
+                priceElement.textContent = `${(product.price[capacity] * currencyRates[currentCurrency]).toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}`;
+            }
+        });
+    });
+    document.querySelectorAll('[id^="capacity-"]').forEach(select => {
+        const productId = select.id.replace('capacity-', '');
+        const product = products.find(p => p.id === productId);
+        select.addEventListener('change', () => {
+            const capacity = select.value;
+            const price = product.price[capacity] * currencyRates[currentCurrency];
+            document.getElementById(`price-${productId}`).textContent = `${price.toFixed(2)}${currentCurrency === 'EUR' ? '€' : currentCurrency === 'USD' ? '$' : 'CHF'}`;
+        });
+    });
+}
+
+document.querySelectorAll('.category-filter').forEach(btn => {
+    btn.addEventListener('click', e => {
+        renderProducts(e.target.dataset.category);
+    });
+});
 </script>
 </body>
 </html>
