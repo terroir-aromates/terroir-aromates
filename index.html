@@ -1,51 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Guaraní Finest Brew</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    .hero{
-      background-image:linear-gradient(rgba(255,255,255,.2),rgba(255,255,255,.2)),url('https://res.cloudinary.com/dweom4cyp/image/upload/v1754132674/garani_finest_brew_o9uplf.jpg');
-      background-size:cover;background-repeat:no-repeat;background-position:center;
-      height:80vh;max-width:3189px;width:100%;margin:0 auto;position:relative
-    }
+    .hero{background-image:linear-gradient(rgba(255,255,255,.2),rgba(255,255,255,.2)),url('https://res.cloudinary.com/dweom4cyp/image/upload/v1754132674/garani_finest_brew_o9uplf.jpg');background-size:cover;background-position:center;height:80vh;max-width:3189px;width:100%;margin:0 auto;position:relative}
     .hero-content{position:absolute;bottom:5%;left:50%;transform:translateX(-50%);text-align:center;width:100%;padding:0 1rem}
+    .product-card:hover{transform:translateY(-5px);box-shadow:0 10px 25px -5px rgba(0,0,0,.1)}
     .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:50;align-items:center;justify-content:center}
     .modal.open{display:flex}
-    .product-card:hover{transform:translateY(-5px);box-shadow:0 10px 25px -5px rgba(0,0,0,.1)}
-    .confirmation-message{position:fixed;top:1rem;right:1rem;background:#10b981;color:#fff;padding:1rem;border-radius:.5rem;z-index:100;box-shadow:0 4px 6px rgba(0,0,0,.1)}
-    .chatbot{position:fixed;bottom:8rem;right:1rem;z-index:100}
-    .chatbot-container{display:none;background:#fff;border-radius:.5rem;box-shadow:0 4px 6px rgba(0,0,0,.1);width:300px;max-height:400px;overflow-y:auto}
-    .chatbot-container.open{display:block}
-    .chat-message{padding:.5rem;margin:.5rem;border-radius:.5rem}
-    .user-message{background:#f3f4f6;text-align:right}
-    .bot-message{background:#fee2e2;text-align:left}
-    .newsletter-banner{position:fixed;bottom:0;left:0;width:100%;background:rgba(245,245,220,.7);color:#4b5563;padding:1rem;text-align:center;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,.1)}
-    .dropdown{position:relative;display:inline-block}
-    .dropdown-content{display:none;position:absolute;background:#fff;min-width:160px;box-shadow:0 8px 16px rgba(0,0,0,.2);z-index:1;border-radius:.25rem}
-    .dropdown:hover .dropdown-content{display:block}
-    .dropdown-content a{color:#4b5563;padding:.5rem 1rem;text-decoration:none;display:block}
-    .dropdown-content a:hover{background:#f3f4f6}
-    .dropdown-content .dropdown-sub{display:none;position:absolute;left:100%;top:0;background:#fff;min-height:160px;box-shadow:0 8px 16px rgba(0,0,0,.2);border-radius:.25rem}
-    .dropdown-content .sub-dropdown:hover .dropdown-sub{display:block}
-    .language-select,.currency-select{display:inline-block;margin-left:.5rem;padding:.3rem .8rem;background:#fff;border:1px solid #d1d5db;border-radius:.25rem;cursor:pointer;font-size:.9rem}
-    header nav a{font-size:.9rem}
-    header .flex{align-items:center}
-    .caffeine-option{display:flex !important;align-items:center;margin-right:1rem}
-    .caffeine-option input[type="radio"]{margin-right:.5rem;display:inline-block !important;width:auto !important}
-    .caffeine-option label{display:inline !important}
-    .caffeine-options{display:flex;flex-direction:row;align-items:center;gap:1rem}
-    @media (max-width:768px){
-      header nav{display:none}
-      header .flex{flex-direction:column;align-items:flex-start}
-      .language-select,.currency-select{margin:.5rem 0}
-    }
+    .caffeine-option{display:flex;align-items:center;margin-right:1rem}
+    .caffeine-option input[type="radio"]{margin-right:.5rem} /* espace pastille → texte */
+    .caffeine-options{display:flex;align-items:center;gap:1.25rem} /* écart entre Classique & Décaféiné */
+    .confirmation-message{position:fixed;top:1rem;right:1rem;background:#16a34a;color:#fff;padding:1rem;border-radius:.5rem;z-index:60;box-shadow:0 4px 6px rgba(0,0,0,.1)}
+    .newsletter-banner{position:fixed;bottom:0;left:0;width:100%;background:rgba(245,245,220,.95);color:#374151;padding:1rem;z-index:60;box-shadow:0 -2px 10px rgba(0,0,0,.1)}
+    .faq-item .faq-answer{display:none}
+    .faq-item.open .faq-answer{display:block}
+    @media (max-width:768px){header nav{display:none}}
   </style>
 </head>
 <body class="font-sans bg-gray-50 text-gray-800">
+
+  <!-- Header -->
   <header class="sticky top-0 z-50 bg-white shadow-md">
     <div class="container mx-auto px-4 py-3 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-red-800">Guaraní Finest Brew</h1>
@@ -55,13 +35,15 @@
         <a href="#contact" class="text-gray-700 hover:text-red-800" data-translate="nav-contact">Contact</a>
         <a href="#promotions" class="text-gray-700 hover:text-red-800" data-translate="nav-promotions">Promotions</a>
       </nav>
-      <div class="flex space-x-4 items-center">
-        <select id="language-select" class="language-select">
+      <div class="flex items-center space-x-3">
+        <!-- Langue simple -->
+        <select id="language-select" class="border rounded px-2 py-1">
           <option value="en">English</option>
           <option value="fr">Français</option>
           <option value="es">Español</option>
         </select>
-        <select id="currency-select" class="currency-select">
+        <!-- Devise simple -->
+        <select id="currency-select" class="border rounded px-2 py-1">
           <option value="EUR">€ (EUR)</option>
           <option value="USD">$ (USD)</option>
           <option value="CHF">CHF (CHF)</option>
@@ -75,6 +57,7 @@
     </div>
   </header>
 
+  <!-- Hero -->
   <section class="hero flex items-center justify-center">
     <div class="hero-content">
       <h2 class="text-3xl font-bold mb-4" style="color:#FFD700" data-translate="hero-title">Exceptional Flavors</h2>
@@ -82,21 +65,21 @@
     </div>
   </section>
 
+  <!-- Products -->
   <section id="products" class="py-12 bg-white">
     <div class="container mx-auto px-4">
       <h2 class="text-2xl font-bold text-center text-red-800 mb-8" data-translate="products-title">Our Products</h2>
       <div class="flex justify-center space-x-4 mb-8">
-        <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="all" data-translate="filter-all">All</button>
+        <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900 active" data-category="all" data-translate="filter-all">All</button>
         <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="coffee" data-translate="filter-coffee">Coffee</button>
         <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="tea" data-translate="filter-tea">Tea</button>
         <button class="category-filter bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900" data-category="oil" data-translate="filter-essential-oils">Essential Oils</button>
       </div>
-      <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Products injected by JS -->
-      </div>
+      <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
     </div>
   </section>
 
+  <!-- Promotions -->
   <section id="promotions" class="py-12 bg-gray-100">
     <div class="container mx-auto px-4">
       <h2 class="text-2xl font-bold text-center text-red-800 mb-8" data-translate="promotions-title">Promotions</h2>
@@ -106,7 +89,7 @@
           <div class="p-4">
             <h3 class="text-lg font-semibold" data-translate="illy-name">Illy Cafe Classic</h3>
             <p class="text-gray-600 text-sm mb-2" data-translate="illy-desc">100% Arabica Brazil</p>
-            <span id="discount-illy" class="bg-red-800 text-white px-2 py-1 rounded text-sm" data-translate="discount-label"></span>
+            <span id="discount-illy" class="bg-red-800 text-white px-2 py-1 rounded text-sm"></span>
             <p id="price-illy" class="text-red-800 font-bold mt-2" data-price="354.25"></p>
           </div>
         </div>
@@ -115,7 +98,7 @@
           <div class="p-4">
             <h3 class="text-lg font-semibold" data-translate="guarana-name">Guarana</h3>
             <p class="text-gray-600 text-sm mb-2" data-translate="guarana-desc">Energy support, cognitive performance</p>
-            <span id="discount-guarana" class="bg-red-800 text-white px-2 py-1 rounded text-sm" data-translate="discount-label"></span>
+            <span id="discount-guarana" class="bg-red-800 text-white px-2 py-1 rounded text-sm"></span>
             <p id="price-guarana" class="text-red-800 font-bold mt-2" data-price="13.50"></p>
           </div>
         </div>
@@ -124,7 +107,7 @@
           <div class="p-4">
             <h3 class="text-lg font-semibold" data-translate="cynara-name">Cynara Oil</h3>
             <p class="text-gray-600 text-sm mb-2" data-translate="cynara-desc">Antioxidant and detoxifying.</p>
-            <span id="discount-cynara" class="bg-red-800 text-white px-2 py-1 rounded text-sm" data-translate="discount-label"></span>
+            <span id="discount-cynara" class="bg-red-800 text-white px-2 py-1 rounded text-sm"></span>
             <p id="price-cynara" class="text-red-800 font-bold mt-2" data-price="11.95"></p>
           </div>
         </div>
@@ -132,6 +115,97 @@
     </div>
   </section>
 
+  <!-- Témoignages -->
+  <section id="testimonials" class="py-12 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold text-center text-red-800 mb-8" data-translate="testimonials-title">Témoignages clients</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center mb-4">
+          <img src="https://i.pravatar.cc/80?img=12" alt="Client" class="w-12 h-12 rounded-full mr-3">
+          <div>
+            <p class="font-semibold">María P.</p>
+            <p class="text-yellow-500" aria-label="5 stars">★★★★★</p>
+          </div>
+        </div>
+        <p class="text-gray-600" data-translate="review1-text">
+          Le café Veracruzano est incroyable – arômes nets, finale douce. Livraison rapide 👍
+        </p>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center mb-4">
+          <img src="https://i.pravatar.cc/80?img=5" alt="Client" class="w-12 h-12 rounded-full mr-3">
+          <div>
+            <p class="font-semibold">Jean D.</p>
+            <p class="text-yellow-500" aria-label="4 stars">★★★★☆</p>
+          </div>
+        </div>
+        <p class="text-gray-600" data-translate="review2-text">
+          Les huiles essentielles sont superbes. La limette est devenue mon indispensable en diffusion.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="flex items-center mb-4">
+          <img src="https://i.pravatar.cc/80?img=33" alt="Client" class="w-12 h-12 rounded-full mr-3">
+          <div>
+            <p class="font-semibold">Laura G.</p>
+            <p class="text-yellow-500" aria-label="5 stars">★★★★★</p>
+          </div>
+        </div>
+        <p class="text-gray-600" data-translate="review3-text">
+          Interface claire, choix top, et le maté vert est très qualitatif. Je recommande.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Notre engagement -->
+  <section id="commitment" class="py-12 bg-gray-100">
+  <div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold text-center text-red-800 mb-8" data-translate="commitment-title">Notre engagement</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+      <div class="bg-white p-6 rounded-lg shadow">
+        <i class="fa-solid fa-handshake-angle text-2xl text-red-800 mb-3"></i>
+        <h3 class="font-semibold mb-2" data-translate="fair-trade-title">Commerce équitable</h3>
+        <p class="text-gray-600 text-sm" data-translate="fair-trade-desc">
+          Relations durables et prix justes avec les producteurs.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow">
+        <i class="fa-solid fa-seedling text-2xl text-red-800 mb-3"></i>
+        <h3 class="font-semibold mb-2" data-translate="sustainable-title">Production durable</h3>
+        <p class="text-gray-600 text-sm" data-translate="sustainable-desc">
+          Procédés économes en eau et énergies renouvelables.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow">
+        <i class="fa-solid fa-leaf text-2xl text-red-800 mb-3"></i>
+        <h3 class="font-semibold mb-2" data-translate="biodiversity-title">Biodiversité</h3>
+        <p class="text-gray-600 text-sm" data-translate="biodiversity-desc">
+          Préservation des écosystèmes & agroforesterie.
+        </p>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow">
+        <i class="fa-solid fa-people-group text-2xl text-red-800 mb-3"></i>
+        <h3 class="font-semibold mb-2" data-translate="local-impact-title">Impact local</h3>
+        <p class="text-gray-600 text-sm" data-translate="local-impact-desc">
+          Emploi, formations et circuits courts au Paraguay.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- About -->
   <section id="about" class="py-12 bg-white">
     <div class="container mx-auto px-4 text-center">
       <h2 class="text-2xl font-bold text-red-800 mb-4" data-translate="about-title">About</h2>
@@ -148,22 +222,71 @@
     </div>
   </section>
 
-  <section id="contact" class="py-12 bg-gray-100">
+  <!-- Contact -->
+  <section id="contact" class="py-12 bg-white">
     <div class="container mx-auto px-4 text-center">
       <h2 class="text-2xl font-bold text-red-800 mb-4" data-translate="contact-title">Contact</h2>
       <p class="text-gray-600 mb-4" data-translate="contact-text">123 Flavor Street, Asunción, Paraguay | Email: contact@guaranifinestbrew.com</p>
       <form id="contact-form" class="max-w-md mx-auto space-y-4">
-        <div>
-          <input type="text" id="contact-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Your name" data-translate="name-placeholder">
-        </div>
-        <div>
-          <input type="email" id="contact-email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Your email" data-translate="email-placeholder">
-        </div>
-        <div>
-          <textarea id="contact-message" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Your message" rows="4" data-translate="message-placeholder"></textarea>
-        </div>
+        <input type="text" id="contact-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Your name" data-translate="name-placeholder">
+        <input type="email" id="contact-email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Your email" data-translate="email-placeholder">
+        <textarea id="contact-message" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Your message" rows="4" data-translate="message-placeholder"></textarea>
         <button type="submit" class="w-full px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition" data-translate="send-button">Send</button>
       </form>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold text-center text-red-800 mb-8">FAQ</h2>
+      <div class="max-w-3xl mx-auto space-y-3">
+        <div class="faq-item bg-white rounded-lg shadow p-4">
+          <button class="w-full flex justify-between items-center text-left">
+            <span class="font-semibold">Livraison (délais, zones, frais)</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </button>
+          <div class="faq-answer mt-3 text-gray-600">
+            Délais selon transporteur (Standard: 10–15 j, Express: 1–4 j). Zones: UE, Amériques, sélection APAC. Les frais sont calculés au panier selon votre adresse et le mode choisi.
+          </div>
+        </div>
+        <div class="faq-item bg-white rounded-lg shadow p-4">
+          <button class="w-full flex justify-between items-center text-left">
+            <span class="font-semibold">Politique de retour</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </button>
+          <div class="faq-answer mt-3 text-gray-600">
+            Vous disposez de 14 jours après réception. Les produits consommables doivent être scellés. Contactez-nous pour une étiquette de retour.
+          </div>
+        </div>
+        <div class="faq-item bg-white rounded-lg shadow p-4">
+          <button class="w-full flex justify-between items-center text-left">
+            <span class="font-semibold">Méthodes de paiement</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </button>
+          <div class="faq-answer mt-3 text-gray-600">
+            Visa, Mastercard, PayPal, Virement bancaire. Les paiements sont sécurisés et chiffrés.
+          </div>
+        </div>
+        <div class="faq-item bg-white rounded-lg shadow p-4">
+          <button class="w-full flex justify-between items-center text-left">
+            <span class="font-semibold">TVA & Devises</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </button>
+          <div class="faq-answer mt-3 text-gray-600">
+            Les prix incluent la TVA locale quand applicable. Multi-devises (EUR, USD, CHF) avec conversion en direct.
+          </div>
+        </div>
+        <div class="faq-item bg-white rounded-lg shadow p-4">
+          <button class="w-full flex justify-between items-center text-left">
+            <span class="font-semibold">Conservation des produits</span>
+            <i class="fas fa-chevron-down text-gray-500"></i>
+          </button>
+          <div class="faq-answer mt-3 text-gray-600">
+            Café: paquet fermé à l’abri de la lumière/air (consommez dans les 3 semaines après ouverture). Huiles: flacons bien fermés, à l’abri de la chaleur et du soleil.
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -174,131 +297,124 @@
         <h3 class="text-xl font-bold text-red-800" data-translate="cart-title">Cart & Order</h3>
         <button id="close-cart" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times text-xl"></i></button>
       </div>
+
       <div id="cart-items" class="mb-4 max-h-[300px] overflow-y-auto">
         <p class="text-gray-500 text-center py-4" data-translate="cart-empty">Your cart is empty</p>
       </div>
-      <div class="border-t pt-4 mb-4">
-        <div class="flex justify-between mb-4">
+
+      <div class="border-t pt-4 mb-4 space-y-1">
+        <div class="flex justify-between">
           <span class="font-medium" data-translate="total-label">Total</span>
+          <span id="cart-subtotal">0.00€</span>
+        </div>
+        <div id="promo-line" class="flex justify-between text-green-700 hidden">
+          <span>WELCOME15 (-15%)</span>
+          <span id="promo-amount">-0.00€</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Shipping</span>
+          <span id="cart-shipping">0.00€</span>
+        </div>
+        <div class="flex justify-between font-semibold text-red-800 text-lg">
+          <span>Grand Total</span>
           <span id="cart-total">0.00€</span>
         </div>
       </div>
+
       <div class="grid grid-cols-2 gap-3 mb-3">
         <div>
           <label for="first-name" class="block text-gray-700 text-sm font-medium mb-1" data-translate="first-name-label">First Name</label>
-          <input type="text" id="first-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="John" data-translate="first-name-placeholder">
+          <input type="text" id="first-name" class="w-full px-3 py-1.5 border rounded" placeholder="John" data-translate="first-name-placeholder">
         </div>
         <div>
           <label for="last-name" class="block text-gray-700 text-sm font-medium mb-1" data-translate="last-name-label">Last Name</label>
-          <input type="text" id="last-name" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Doe" data-translate="last-name-placeholder">
+          <input type="text" id="last-name" class="w-full px-3 py-1.5 border rounded" placeholder="Doe" data-translate="last-name-placeholder">
         </div>
       </div>
       <div class="mb-3">
         <label for="email" class="block text-gray-700 text-sm font-medium mb-1" data-translate="email-label">Email</label>
-        <input type="email" id="email" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="john.doe@gmail.com" data-translate="email-placeholder">
+        <input type="email" id="email" class="w-full px-3 py-1.5 border rounded" placeholder="john.doe@gmail.com" data-translate="email-placeholder">
       </div>
       <div class="mb-3">
         <label for="address" class="block text-gray-700 text-sm font-medium mb-1" data-translate="address-label">Address</label>
-        <input type="text" id="address" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="123 Example Street" data-translate="address-placeholder">
+        <input type="text" id="address" class="w-full px-3 py-1.5 border rounded" placeholder="123 Example Street" data-translate="address-placeholder">
       </div>
       <div class="grid grid-cols-2 gap-3 mb-4">
         <div>
           <label for="city" class="block text-gray-700 text-sm font-medium mb-1" data-translate="city-label">City</label>
-          <input type="text" id="city" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Asunción" data-translate="city-placeholder">
+          <input type="text" id="city" class="w-full px-3 py-1.5 border rounded" placeholder="Asunción" data-translate="city-placeholder">
         </div>
         <div>
           <label for="postal-code" class="block text-gray-700 text-sm font-medium mb-1" data-translate="postal-code-label">Postal Code</label>
-          <input type="text" id="postal-code" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="1234" data-translate="postal-code-placeholder">
+          <input type="text" id="postal-code" class="w-full px-3 py-1.5 border rounded" placeholder="1234" data-translate="postal-code-placeholder">
         </div>
       </div>
       <div class="mb-4">
         <label for="country" class="block text-gray-700 text-sm font-medium mb-1" data-translate="country-label">Country</label>
-        <select id="country" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+        <select id="country" class="w-full px-3 py-1.5 border rounded">
           <option value="" data-translate="country-placeholder">Select a country</option>
-          <option value="FR">France</option>
-          <option value="US">United States</option>
-          <option value="PY">Paraguay</option>
-          <option value="ES">Spain</option>
-          <option value="DE">Germany</option>
-          <option value="IT">Italy</option>
-          <option value="GB">United Kingdom</option>
-          <option value="CA">Canada</option>
-          <option value="AU">Australia</option>
-          <option value="JP">Japan</option>
+          <option value="FR">France</option><option value="US">United States</option><option value="PY">Paraguay</option>
+          <option value="ES">Spain</option><option value="DE">Germany</option><option value="IT">Italy</option>
+          <option value="GB">United Kingdom</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="JP">Japan</option>
         </select>
       </div>
       <div class="mb-4">
         <label for="shipping-carrier" class="block text-gray-700 text-sm font-medium mb-1" data-translate="carrier-label">Carrier</label>
-        <select id="shipping-carrier" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
+        <select id="shipping-carrier" class="w-full px-3 py-1.5 border rounded">
           <option value="" data-translate="carrier-placeholder">Select a carrier</option>
-          <option value="ups">UPS</option>
-          <option value="dhl">DHL</option>
-          <option value="chronopost">Chronopost</option>
-          <option value="mondialrelay">Mondial Relay</option>
+          <option value="ups">UPS</option><option value="dhl">DHL</option><option value="chronopost">Chronopost</option><option value="mondialrelay">Mondial Relay</option>
         </select>
       </div>
       <div class="mb-4">
         <label for="shipping-method" class="block text-gray-700 text-sm font-medium mb-1" data-translate="method-label">Shipping Method</label>
-        <select id="shipping-method" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" disabled>
+        <select id="shipping-method" class="w-full px-3 py-1.5 border rounded" disabled>
           <option value="" data-translate="method-placeholder">Select a method</option>
         </select>
       </div>
       <div class="mb-4">
         <p id="shipping-details" class="text-gray-600 text-sm" data-translate="shipping-details">Price: -€ | Delivery: - days</p>
       </div>
+
       <div class="mb-4">
         <label for="payment" class="block text-gray-700 text-sm font-medium mb-1" data-translate="payment-label">Payment</label>
-        <select id="payment" class="w-full px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800">
-          <option value="visa">Visa</option>
-          <option value="mastercard">Mastercard</option>
-          <option value="paypal">PayPal</option>
+        <select id="payment" class="w-full px-3 py-1.5 border rounded">
+          <option value="visa">Visa</option><option value="mastercard">Mastercard</option><option value="paypal">PayPal</option>
           <option value="bank_transfer" data-translate="bank-transfer">Bank Transfer</option>
         </select>
       </div>
-      <div class="flex justify-end space-x-4">
+
+      <div class="flex justify-end">
         <button id="confirm-btn" class="px-4 py-2 bg-red-800 hover:bg-red-900 text-white rounded transition" disabled data-translate="confirm-button">Confirm Order</button>
       </div>
     </div>
   </div>
 
-  <!-- Chatbot (UI only / dummy) -->
-  <div class="chatbot">
-    <button id="chatbot-toggle" class="bg-red-800 text-white p-3 rounded-full hover:bg-red-900">
-      <i class="fas fa-comment text-xl"></i>
-    </button>
-    <div id="chatbot-container" class="chatbot-container">
-      <div id="chatbot-messages" class="p-4"></div>
-      <div class="p-4 border-t">
-        <input id="chatbot-input" type="text" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Ask your question..." data-translate="chat-placeholder">
+  <!-- Newsletter banner -->
+  <div id="newsletter-banner" class="newsletter-banner hidden">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="text-sm md:text-base">
+        <strong>Inscrivez-vous à la newsletter</strong> & recevez <strong>-15% (WELCOME15)</strong> sur votre première commande.
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="email" id="newsletter-email" class="px-3 py-1.5 border rounded w-64" placeholder="Votre email">
+        <button id="newsletter-submit" class="px-4 py-1.5 bg-red-800 hover:bg-red-900 text-white rounded">S’inscrire</button>
       </div>
     </div>
   </div>
 
-  <div id="newsletter-banner" class="newsletter-banner hidden">
-    <p class="mb-2 text-gray-600" data-translate="newsletter-text">Subscribe to our newsletter for exclusive offers!</p>
-    <div class="flex justify-center space-x-2">
-      <input type="email" id="newsletter-email" class="px-3 py-1.5 border rounded focus:outline-none focus:ring-2 focus:ring-red-800" placeholder="Your email" data-translate="newsletter-email-placeholder">
-      <button id="newsletter-submit" class="px-4 py-1.5 bg-red-800 hover:bg-red-900 text-white rounded transition" data-translate="newsletter-button">Subscribe</button>
-    </div>
-  </div>
-
-  <footer class="bg-red-800 text-white py-6">
+  <!-- Footer -->
+  <footer class="bg-red-800 text-white py-6 mt-16">
     <div class="container mx-auto px-4 text-center">
-      <p class="text-red-100" data-translate="footer-text">© copy 2025 Guaraní Finest Brew. All rights reserved.</p>
+      <p class="text-red-100" data-translate="footer-text">© 2025 Guaraní Finest Brew. All rights reserved.</p>
     </div>
   </footer>
 
   <script>
-  /* =====================
-     TRANSLATIONS (same keys as in your original)
-  ======================*/
+  /* ====== TRANSLATIONS (abrégé, mêmes clés) ====== */
   const translations = {
-    en: {
-      "title":"Guaraní Finest Brew","nav-products":"Products","nav-about":"About","nav-contact":"Contact","nav-promotions":"Promotions",
-      "products-title":"Our Products","veracruzano-name":"Veracruzano Premium Export","veracruzano-desc":"Floral and citrus notes.",
-      "capacity-label":"Quantity","grind-label":"Bean Type","classic-label":"Classic","decaf-label":"Decaf","details-link":"Details","add-to-cart":"Add",
-      "promotions-title":"Promotions","illy-name":"Illy Cafe Classic","illy-desc":"100% Arabica Brazil","discount-label":"off",
-      "guarana-name":"Guarana","guarana-desc":"Energy support, cognitive performance","cynara-name":"Cynara Oil","cynara-desc":"Antioxidant and detoxifying.",
+    en:{ "title":"Guaraní Finest Brew","nav-products":"Products","nav-about":"About","nav-contact":"Contact","nav-promotions":"Promotions",
+      "products-title":"Our Products","hero-title":"Exceptional Flavors","view-products":"View Products",
+      "promotions-title":"Promotions","discount-label":"off",
       "about-title":"About","about-text":"Guaraní Finest Brew celebrates authentic flavors from around the world. Since 2025, we carefully select coffees, teas, and essential oils to offer you a unique experience in Paraguay. <a href='about.html' class='text-red-800 underline'>Discover our story</a>.",
       "discover-link":"Discover our story","contact-title":"Contact","contact-text":"123 Flavor Street, Asunción, Paraguay | Email: contact@guaranifinestbrew.com",
       "name-placeholder":"Your name","email-placeholder":"Your email","message-placeholder":"Your message","send-button":"Send",
@@ -307,30 +423,42 @@
       "city-label":"City","city-placeholder":"Asunción","postal-code-label":"Postal Code","postal-code-placeholder":"1234","country-label":"Country","country-placeholder":"Select a country",
       "carrier-label":"Carrier","carrier-placeholder":"Select a carrier","method-label":"Shipping Method","method-placeholder":"Select a method",
       "shipping-details":"Price: -€ | Delivery: - days","payment-label":"Payment","bank-transfer":"Bank Transfer","confirm-button":"Confirm Order",
-      "chat-placeholder":"Ask your question...","newsletter-text":"Subscribe to our newsletter for exclusive offers!","newsletter-email-placeholder":"Your email",
-      "newsletter-button":"Subscribe","footer-text":"© 2025 Guaraní Finest Brew. All rights reserved.","order-confirmed":"Order placed!",
-      "client-label":"Client: ","payment-method-label":"Method: ","shipping-label":"Shipping: ","thank-you":"Thank you for your purchase!",
-      "login-button":"Log In","hero-title":"Exceptional Flavors","view-products":"View Products",
+      "newsletter-text":"Subscribe to our newsletter for exclusive offers!","newsletter-email-placeholder":"Your email","newsletter-button":"Subscribe",
+      "footer-text":"© 2025 Guaraní Finest Brew. All rights reserved.","order-confirmed":"Order placed!","client-label":"Client: ","payment-method-label":"Method: ","shipping-label":"Shipping: ","thank-you":"Thank you for your purchase!",
+      "login-button":"Log In",
       "filter-all":"All","filter-coffee":"Coffee","filter-tea":"Tea","filter-essential-oils":"Essential Oils",
-      "grind-whole":"Whole","grind-ground":"Ground","grind-espresso":"Espresso",
-      "tea1-name":"Green Maté","tea1-desc":"Between green tea and coffee","tea2-name":"Classic Maté","tea2-desc":"A maté with vegetal and mineral notes, with smoky nuances",
+      "veracruzano-name":"Veracruzano Premium Export","veracruzano-desc":"Floral and citrus notes.",
+      "coffee2-name":"Colombian Supremo Coffee","coffee2-desc":"Chocolate and hazelnut aromas.",
+      "coffee3-name":"Illy Cafe Classic","coffee3-desc":"100% Arabica Brazil",
+      "coffee4-name":"Época Coffee","coffee4-desc":"Notes of tropical fruit, chocolate, and nuts.",
+      "tea1-name":"Green Maté","tea1-desc":"Between green tea and coffee",
+      "tea2-name":"Classic Maté","tea2-desc":"A maté with vegetal and mineral notes, with smoky nuances",
       "tea3-name":"Guarana","tea3-desc":"Energy support, cognitive performance",
       "oil1-name":"Palo Santo","oil1-desc":"Anti-inflammatory",
       "oil2-name":"Pink Berries","oil2-desc":"Energizing",
       "oil3-name":"Cynara Oil","oil3-desc":"Antioxidant and detoxifying",
       "oil4-name":"Melissa Oil","oil4-desc":"Sedative and soothes nervous tension",
       "oil5-name":"Lime Oil","oil5-desc":"Anti-inflammatory, antispasmodic",
-      "type-label":"Type","green-label":"Green","black-label":"Black","white-label":"White","usage-label":"Usage",
-      "coffee2-name":"Colombian Supremo Coffee","coffee2-desc":"Chocolate and hazelnut aromas.",
-      "coffee3-name":"Illy Cafe Classic","coffee3-desc":"100% Arabica Brazil",
-      "coffee4-name":"Época Coffee","coffee4-desc":"Notes of tropical fruit, chocolate, and nuts."
+      "capacity-label":"Quantity","grind-label":"Bean Type","classic-label":"Classic","decaf-label":"Decaf","grind-whole":"Whole","grind-ground":"Ground","grind-espresso":"Espresso","type-label":"Type","green-label":"Green","black-label":"Black","white-label":"White","usage-label":"Usage",
+      "illy-name":"Illy Cafe Classic","illy-desc":"100% Arabica Brazil","guarana-name":"Guarana","guarana-desc":"Energy support, cognitive performance","cynara-name":"Cynara Oil","cynara-desc":"Antioxidant and detoxifying.",
+      "add-to-cart":"Add","details-link":"Details",
+      "testimonials-title":"Customer Testimonials",
+      "review1-text":"The Veracruzano coffee is amazing—clean aromas, smooth finish. Fast delivery 👍",
+      "review2-text":"The essential oils are excellent. Lime has become my go-to for diffusion.",
+      "review3-text":"Clear interface, great selection, and the green maté is top quality. Highly recommend.",
+      "commitment-title":"Our Commitment",
+      "fair-trade-title":"Fair Trade",
+      "fair-trade-desc":"Long-term relationships and fair pricing with producers.",
+      "sustainable-title":"Sustainable Production",
+      "sustainable-desc":"Water-saving processes and renewable energy.",
+      "biodiversity-title":"Biodiversity",
+      "biodiversity-desc":"Ecosystem preservation & agroforestry.",
+     "local-impact-title":"Local Impact",
+     "local-impact-desc":"Jobs, training, and short supply chains in Paraguay.",
     },
-    fr: {
-      "title":"Guaraní Finest Brew","nav-products":"Produits","nav-about":"À propos","nav-contact":"Contact","nav-promotions":"Promotions",
-      "products-title":"Nos Produits","veracruzano-name":"Veracruzano Premium Export","veracruzano-desc":"Notes florales et citronnées.",
-      "capacity-label":"Contenance","grind-label":"Type de grain","classic-label":"Classique","decaf-label":"Décaféiné","details-link":"Détails","add-to-cart":"Ajouter",
-      "promotions-title":"Promotions","illy-name":"Illy Cafe Classique","illy-desc":"100% Arabica Brasil","discount-label":"de réduction",
-      "guarana-name":"Guarana","guarana-desc":"soutien énergétique, performances cognitives","cynara-name":"Huile de Cynara","cynara-desc":"Anti-oxydantes et détoxifiantes.",
+    fr:{ "title":"Guaraní Finest Brew","nav-products":"Produits","nav-about":"À propos","nav-contact":"Contact","nav-promotions":"Promotions",
+      "products-title":"Nos Produits","hero-title":"Saveurs Exceptionnelles","view-products":"Voir les produits",
+      "promotions-title":"Promotions","discount-label":"de réduction",
       "about-title":"À propos","about-text":"Guaraní Finest Brew célèbre les saveurs authentiques du monde entier. Depuis 2025, nous sélectionnons avec soin des cafés, thés et huiles essentielles pour vous offrir une expérience unique au Paraguay. <a href='about.html' class='text-red-800 underline'>Découvrez notre histoire</a>.",
       "discover-link":"Découvrez notre histoire","contact-title":"Contact","contact-text":"123 Rue des Saveurs, Asunción, Paraguay | Email : contact@guaranifinestbrew.com",
       "name-placeholder":"Votre nom","email-placeholder":"Votre email","message-placeholder":"Votre message","send-button":"Envoyer",
@@ -339,30 +467,42 @@
       "city-label":"Ville","city-placeholder":"Asunción","postal-code-label":"Code postal","postal-code-placeholder":"1234","country-label":"Pays","country-placeholder":"Sélectionner un pays",
       "carrier-label":"Transporteur","carrier-placeholder":"Sélectionner un transporteur","method-label":"Mode de livraison","method-placeholder":"Sélectionner un mode",
       "shipping-details":"Prix : -€ | Délai : - jours","payment-label":"Paiement","bank-transfer":"Virement bancaire","confirm-button":"Confirmer la commande",
-      "chat-placeholder":"Posez votre question...","newsletter-text":"Inscrivez-vous à notre newsletter pour des offres exclusives !","newsletter-email-placeholder":"Votre email",
-      "newsletter-button":"S’inscrire","footer-text":"© 2025 Guaraní Finest Brew. Tous droits réservés.","order-confirmed":"Commande passée !",
-      "client-label":"Client: ","payment-method-label":"Méthode: ","shipping-label":"Livraison: ","thank-you":"Merci pour votre achat !",
-      "login-button":"Se connecter","hero-title":"Saveurs Exceptionnelles","view-products":"Voir les produits",
+      "newsletter-text":"Inscrivez-vous à notre newsletter pour des offres exclusives !","newsletter-email-placeholder":"Votre email","newsletter-button":"S’inscrire",
+      "footer-text":"© 2025 Guaraní Finest Brew. Tous droits réservés.","order-confirmed":"Commande passée !","client-label":"Client: ","payment-method-label":"Méthode: ","shipping-label":"Livraison: ","thank-you":"Merci pour votre achat !",
+      "login-button":"Se connecter",
       "filter-all":"Tous","filter-coffee":"Café","filter-tea":"Thé","filter-essential-oils":"Huiles essentielles",
-      "grind-whole":"Entier","grind-ground":"Moulu","grind-espresso":"Espresso",
-      "tea1-name":"Maté Vert","tea1-desc":"Entre thé vert et café","tea2-name":"Maté Classique","tea2-desc":"Un maté aux notes végétales et minérales, avec des nuances fumées",
+      "veracruzano-name":"Veracruzano Premium Export","veracruzano-desc":"Notes florales et citronnées.",
+      "coffee2-name":"Café Supremo Colombien","coffee2-desc":"Arômes de chocolat et de noisette.",
+      "coffee3-name":"Illy Cafe Classique","coffee3-desc":"100% Arabica Brasil",
+      "coffee4-name":"Café Época","coffee4-desc":"Notes de fruits tropicaux, chocolat et noix.",
+      "tea1-name":"Maté Vert","tea1-desc":"Entre thé vert et café",
+      "tea2-name":"Maté Classique","tea2-desc":"Un maté aux notes végétales et minérales, avec des nuances fumées",
       "tea3-name":"Guarana","tea3-desc":"Soutien énergétique, performances cognitives",
       "oil1-name":"Palo Santo","oil1-desc":"Anti-inflammatoire",
       "oil2-name":"Baies Roses","oil2-desc":"Énergisant",
       "oil3-name":"Huile de Cynara","oil3-desc":"Antioxydante et détoxifiante",
       "oil4-name":"Huile de Mélisse","oil4-desc":"Sédatif et apaise les tensions nerveuses",
       "oil5-name":"Huile de Citron Vert","oil5-desc":"Anti-inflammatoire, antispasmodique",
-      "type-label":"Type","green-label":"Vert","black-label":"Noir","white-label":"Blanc","usage-label":"Utilisation",
-      "coffee2-name":"Café Supremo Colombien","coffee2-desc":"Arômes de chocolat et de noisette.",
-      "coffee3-name":"Illy Cafe Classique","coffee3-desc":"100% Arabica Brasil",
-      "coffee4-name":"Café Época","coffee4-desc":"Notes de fruits tropicaux, chocolat et noix."
+      "capacity-label":"Contenance","grind-label":"Type de grain","classic-label":"Classique","decaf-label":"Décaféiné","grind-whole":"Entier","grind-ground":"Moulu","grind-espresso":"Espresso","type-label":"Type","green-label":"Vert","black-label":"Noir","white-label":"Blanc","usage-label":"Utilisation",
+      "illy-name":"Illy Cafe Classique","illy-desc":"100% Arabica Brasil","guarana-name":"Guarana","guarana-desc":"soutien énergétique, performances cognitives","cynara-name":"Huile de Cynara","cynara-desc":"Anti-oxydantes et détoxifiantes.",
+      "add-to-cart":"Ajouter","details-link":"Détails",
+      "testimonials-title":"Témoignages clients",
+      "review1-text":"Le café Veracruzano est incroyable – arômes nets, finale douce. Livraison rapide 👍",
+      "review2-text":"Les huiles essentielles sont superbes. La limette est devenue mon indispensable en diffusion.",
+      "review3-text":"Interface claire, choix top, et le maté vert est très qualitatif. Je recommande.",
+      "commitment-title":"Notre engagement",
+      "fair-trade-title":"Commerce équitable",
+      "fair-trade-desc":"Relations durables et prix justes avec les producteurs.",
+      "sustainable-title":"Production durable",
+      "sustainable-desc":"Procédés économes en eau et énergies renouvelables.",
+      "biodiversity-title":"Biodiversité",
+      "biodiversity-desc":"Préservation des écosystèmes & agroforesterie.",
+      "local-impact-title":"Impact local",
+      "local-impact-desc":"Emploi, formations et circuits courts au Paraguay.",
     },
-    es: {
-      "title":"Guaraní Finest Brew","nav-products":"Productos","nav-about":"Acerca de","nav-contact":"Contacto","nav-promotions":"Promociones",
-      "products-title":"Nuestros Productos","veracruzano-name":"Veracruzano Premium Export","veracruzano-desc":"Notas florales y cítricas.",
-      "capacity-label":"Cantidad","grind-label":"Tipo de grano","classic-label":"Clásico","decaf-label":"Descafeinado","details-link":"Detalles","add-to-cart":"Añadir",
-      "promotions-title":"Promociones","illy-name":"Illy Cafe Clásico","illy-desc":"100% Arabica Brasil","discount-label":"de descuento",
-      "guarana-name":"Guaraná","guarana-desc":"Soporte energético, rendimiento cognitivo","cynara-name":"Aceite de Cynara","cynara-desc":"Antioxidante y desintoxicante.",
+    es:{ "title":"Guaraní Finest Brew","nav-products":"Productos","nav-about":"Acerca de","nav-contact":"Contacto","nav-promotions":"Promociones",
+      "products-title":"Nuestros Productos","hero-title":"Sabores Excepcionales","view-products":"Ver productos",
+      "promotions-title":"Promociones","discount-label":"de descuento",
       "about-title":"Acerca de","about-text":"Guaraní Finest Brew celebra los sabores auténticos de todo el mundo. Desde 2025, seleccionamos cuidadosamente cafés, tés y aceites esenciales para ofrecerte una experiencia única en Paraguay. <a href='about.html' class='text-red-800 underline'>Descubre nuestra historia</a>.",
       "discover-link":"Descubre nuestra historia","contact-title":"Contacto","contact-text":"123 Calle de los Sabores, Asunción, Paraguay | Email: contact@guaranifinestbrew.com",
       "name-placeholder":"Tu nombre","email-placeholder":"Tu email","message-placeholder":"Tu mensaje","send-button":"Enviar",
@@ -371,52 +511,50 @@
       "city-label":"Ciudad","city-placeholder":"Asunción","postal-code-label":"Código postal","postal-code-placeholder":"1234","country-label":"País","country-placeholder":"Seleccionar un país",
       "carrier-label":"Transportista","carrier-placeholder":"Seleccionar transportista","method-label":"Método de envío","method-placeholder":"Seleccionar método",
       "shipping-details":"Precio: -€ | Entrega: - días","payment-label":"Pago","bank-transfer":"Transferencia bancaria","confirm-button":"Confirmar pedido",
-      "chat-placeholder":"Haz tu pregunta...","newsletter-text":"¡Suscríbete a nuestro boletín para ofertas exclusives!","newsletter-email-placeholder":"Tu email",
-      "newsletter-button":"Suscribirse","footer-text":"© 2025 Guaraní Finest Brew. Todos los derechos reservados.","order-confirmed":"¡Pedido realizado!",
-      "client-label":"Cliente: ","payment-method-label":"Método: ","shipping-label":"Envío: ","thank-you":"¡Gracias por tu compra!",
-      "login-button":"Iniciar sesión","hero-title":"Sabores Excepcionales","view-products":"Ver productos",
+      "newsletter-text":"¡Suscríbete a nuestro boletín para ofertas exclusives!","newsletter-email-placeholder":"Tu email","newsletter-button":"Suscribirse",
+      "footer-text":"© 2025 Guaraní Finest Brew. Todos los derechos reservados.","order-confirmed":"¡Pedido realizado!","client-label":"Cliente: ","payment-method-label":"Método: ","shipping-label":"Envío: ","thank-you":"¡Gracias por tu compra!",
+      "login-button":"Iniciar sesión",
       "filter-all":"Todo","filter-coffee":"Café","filter-tea":"Té","filter-essential-oils":"Aceites esenciales",
-      "grind-whole":"Entero","grind-ground":"Molienda","grind-espresso":"Expreso",
-      "tea1-name":"Maté Verde","tea1-desc":"Entre té verde y café","tea2-name":"Maté Clásico","tea2-desc":"Un maté con notas vegetales y minerales, con matices ahumados",
+      "veracruzano-name":"Veracruzano Premium Export","veracruzano-desc":"Notas florales y cítricas.",
+      "coffee2-name":"Café Supremo Colombiano","coffee2-desc":"Arômes de chocolate y avellana.",
+      "coffee3-name":"Illy Cafe Clásico","coffee3-desc":"100% Arabica Brasil",
+      "coffee4-name":"Café Época","coffee4-desc":"Notas de frutas tropicales, chocolate y nueces.",
+      "tea1-name":"Maté Verde","tea1-desc":"Entre té verde y café",
+      "tea2-name":"Maté Clásico","tea2-desc":"Un maté con notas vegetales y minerales, con matices ahumados",
       "tea3-name":"Guaraná","tea3-desc":"Soporte energético, rendimiento cognitivo",
       "oil1-name":"Palo Santo","oil1-desc":"Antiinflamatorio",
       "oil2-name":"Bayas Rosadas","oil2-desc":"Energizante",
       "oil3-name":"Aceite de Cynara","oil3-desc":"Antioxidante y desintoxicante",
       "oil4-name":"Aceite de Melisa","oil4-desc":"Sedante y alivia la tensión nerviosa",
       "oil5-name":"Aceite de Lima","oil5-desc":"Antiinflamatorio, antiespasmódico",
-      "type-label":"Tipo","green-label":"Verde","black-label":"Negro","white-label":"Blanco","usage-label":"Uso",
-      "coffee2-name":"Café Supremo Colombiano","coffee2-desc":"Arômes de chocolate y avellana.",
-      "coffee3-name":"Illy Cafe Clásico","coffee3-desc":"100% Arabica Brasil",
-      "coffee4-name":"Café Época","coffee4-desc":"Notas de frutas tropicales, chocolate y nueces."
+      "capacity-label":"Cantidad","grind-label":"Tipo de grano","classic-label":"Clásico","decaf-label":"Descafeinado","grind-whole":"Entero","grind-ground":"Molienda","grind-espresso":"Expreso","type-label":"Tipo","green-label":"Verde","black-label":"Negro","white-label":"Blanco","usage-label":"Uso",
+      "illy-name":"Illy Cafe Clásico","illy-desc":"100% Arabica Brasil","guarana-name":"Guaraná","guarana-desc":"Soporte energético, rendimiento cognitivo","cynara-name":"Aceite de Cynara","cynara-desc":"Antioxidante y desintoxicante.",
+      "add-to-cart":"Añadir","details-link":"Detalles" ,
+      "testimonials-title":"Testimonios de clientes",
+      "review1-text":"El café Veracruzano es increíble: aromas limpios y final suave. Entrega rápida 👍",
+      "review2-text":"Los aceites esenciales son excelentes. La lima se volvió mi imprescindible para difusión.",
+      "review3-text":"Interfaz clara, gran selección y el mate verde es de alta calidad. Muy recomendable.",
+      "commitment-title":"Nuestro compromiso",
+      "fair-trade-title":"Comercio justo",
+      "fair-trade-desc":"Relaciones a largo plazo y precios justos con los productores.",
+      "sustainable-title":"Producción sostenible",
+      "sustainable-desc":"Procesos de ahorro de agua y energía renovable.",
+      "biodiversity-title":"Biodiversidad",
+      "biodiversity-desc":"Preservación de ecosistemas y agroforestería.",
+      "local-impact-title":"Impacto local",
+      "local-impact-desc":"Empleo, formación y circuitos cortos en Paraguay.",
     }
   };
 
-  /* =====================
-     CURRENCY + PROMOS
-  ======================*/
+  /* ====== CURRENCIES & PROMOS ====== */
   const currencyRates = { EUR: 1, USD: 1.1, CHF: 0.95 };
   let currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
   let currentCurrency = localStorage.getItem('selectedCurrency') || 'EUR';
-
   const discounts = { illy:15, guarana:10, cynara:8 };
 
-  function updatePromotions(){
-    const promoMap = { illy:354.25, guarana:13.50, cynara:11.95 };
-    Object.keys(promoMap).forEach(key=>{
-      const base = promoMap[key];
-      const discounted = base * (1 - discounts[key]/100);
-      const el = document.getElementById(`price-${key}`);
-      const badge = document.getElementById(`discount-${key}`);
-      if(!el || !badge) return;
-      badge.textContent = `${discounts[key]}% ${translations[currentLanguage]["discount-label"] || "off"}`;
-      el.dataset.price = base.toFixed(2);
-      el.innerHTML = `${(discounted * currencyRates[currentCurrency]).toFixed(2)}${currentCurrency==='EUR'?'€':currentCurrency==='USD'?'$':'CHF'} <del>${(base * currencyRates[currentCurrency]).toFixed(2)}${currentCurrency==='EUR'?'€':currentCurrency==='USD'?'$':'CHF'}</del>`;
-    });
-  }
+  function currencySymbol(cur){ return cur==='EUR'?'€':cur==='USD'?'$':'CHF'; }
 
-  /* =====================
-     PRODUCTS
-  ======================*/
+  /* ====== PRODUCTS ====== */
   const products = [
     {id:'coffee1',name:'Veracruzano Premium Export',price:{'250g':88.24,'500g':177.12,'1kg':356.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896069/caf%C3%A9%20de%20Veracruz.jpg',description:'Floral and citrus notes.'},
     {id:'coffee2',name:'Colombian Supremo Coffee',price:{'250g':188.50,'500g':354.00,'1kg':690.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753886877/coffee-colombian_up6quo.jpg',description:'Chocolate and hazelnut aromas.'},
@@ -432,38 +570,7 @@
     {id:'oil5',name:'Lime Oil',price:{'10ml':3.45,'30ml':8.95,'50ml':14.90},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754051938/huile_limette_vvgech.webp',description:'Anti-inflammatory, antispasmodic.'}
   ];
 
-  /* =====================
-     HELPERS
-  ======================*/
-  function currencySymbol(cur){ return cur==='EUR'?'€':cur==='USD'?'$':'CHF'; }
-
-  function translatePage(lang){
-    document.documentElement.lang = lang;
-    document.title = translations[lang]["title"];
-    document.querySelectorAll('[data-translate]').forEach(el=>{
-      const key = el.getAttribute('data-translate');
-      if(!key) return;
-      const val = translations[lang][key];
-      if(!val) return;
-      if(el.tagName==='INPUT' || el.tagName==='TEXTAREA'){ el.placeholder = val; }
-      else if(el.hasAttribute('data-preserve-html')){ el.innerHTML = val; }
-      else { el.textContent = val; }
-    });
-    document.getElementById('language-select').value = lang;
-  }
-
-  function updatePromoCurrency(){
-    // re-render promos numbers in chosen currency based on data-price baselines
-    ["illy","guarana","cynara"].forEach(key=>{
-      const priceEl = document.getElementById(`price-${key}`);
-      if(!priceEl) return;
-      const base = parseFloat(priceEl.dataset.price||"0");
-      const disc = discounts[key]||0;
-      const discounted = base*(1-disc/100);
-      priceEl.innerHTML = `${(discounted * currencyRates[currentCurrency]).toFixed(2)}${currencySymbol(currentCurrency)} <del>${(base * currencyRates[currentCurrency]).toFixed(2)}${currencySymbol(currentCurrency)}</del>`;
-    });
-  }
-
+  /* ====== RENDER PRODUCTS ====== */
   function renderProducts(category='all'){
     const grid = document.getElementById('product-grid');
     const filtered = category==='all' ? products : products.filter(p=>p.category===category);
@@ -492,21 +599,15 @@
               </select>
             </div>
             <div class="mb-2 caffeine-options">
-              <div class="caffeine-option">
-                <input type="radio" id="classic-${p.id}" name="caffeine-${p.id}" value="classic" checked>
-                <label for="classic-${p.id}" data-translate="classic-label">${translations[currentLanguage]["classic-label"]}</label>
-              </div>
-              <div class="caffeine-option">
-                <input type="radio" id="decaf-${p.id}" name="caffeine-${p.id}" value="decaf">
-                <label for="decaf-${p.id}" data-translate="decaf-label">${translations[currentLanguage]["decaf-label"]}</label>
-              </div>
+              <label class="caffeine-option"><input type="radio" name="caffeine-${p.id}" value="classic" checked><span data-translate="classic-label">${translations[currentLanguage]["classic-label"]}</span></label>
+              <label class="caffeine-option"><input type="radio" name="caffeine-${p.id}" value="decaf"><span data-translate="decaf-label">${translations[currentLanguage]["decaf-label"]}</span></label>
             </div>
           ` : p.category==='tea' ? `
             <div class="mb-2">
               <label class="block text-gray-700 text-sm font-medium mb-1" data-translate="type-label">${translations[currentLanguage]["type-label"]}</label>
               <select id="type-${p.id}" class="w-full px-3 py-1.5 border rounded">
                 <option value="${p.name.includes('Green')?'green':p.name.includes('Classic')?'black':'white'}"
-                        data-translate="${p.name.includes('Green')?'green-label':p.name.includes('Classic')?'black-label':'white-label'}">
+                  data-translate="${p.name.includes('Green')?'green-label':p.name.includes('Classic')?'black-label':'white-label'}">
                   ${translations[currentLanguage][p.name.includes('Green')?'green-label':p.name.includes('Classic')?'black-label':'white-label'] || (p.name.includes('Green')?'Green':p.name.includes('Classic')?'Black':'White')}
                 </option>
               </select>
@@ -516,7 +617,7 @@
               <label class="block text-gray-700 text-sm font-medium mb-1" data-translate="usage-label">${translations[currentLanguage]["usage-label"]}</label>
               <select id="usage-${p.id}" class="w-full px-3 py-1.5 border rounded">
                 <option value="${p.name.includes('Palo Santo')?'anti-inflammatory':p.name.includes('Pink Berries')?'energizing':p.name.includes('Cynara Oil')?'antioxidant-and-detoxifying':p.name.includes('Melissa Oil')?'sedative-and-soothes-nervous-tension':p.name.includes('Lime Oil')?'anti-inflammatory-antispasmodic':'purifying'}"
-                        data-translate="${p.name.includes('Palo Santo')?'oil1-desc':p.name.includes('Pink Berries')?'oil2-desc':p.name.includes('Cynara Oil')?'oil3-desc':p.name.includes('Melissa Oil')?'oil4-desc':p.name.includes('Lime Oil')?'oil5-desc':'oilX-desc'}">
+                  data-translate="${p.name.includes('Palo Santo')?'oil1-desc':p.name.includes('Pink Berries')?'oil2-desc':p.name.includes('Cynara Oil')?'oil3-desc':p.name.includes('Melissa Oil')?'oil4-desc':p.name.includes('Lime Oil')?'oil5-desc':'oilX-desc'}">
                   ${translations[currentLanguage][p.name.includes('Palo Santo')?'oil1-desc':p.name.includes('Pink Berries')?'oil2-desc':p.name.includes('Cynara Oil')?'oil3-desc':p.name.includes('Melissa Oil')?'oil4-desc':p.name.includes('Lime Oil')?'oil5-desc':'oilX-desc'] || (p.name.includes('Palo Santo')?'Anti-inflammatory':p.name.includes('Pink Berries')?'Energizing':p.name.includes('Cynara Oil')?'Antioxidant and detoxifying':p.name.includes('Melissa Oil')?'Sedative and soothes nervous tension':p.name.includes('Lime Oil')?'Anti-inflammatory, antispasmodic':'Purifying')}
                 </option>
               </select>
@@ -531,14 +632,13 @@
       </div>`;
     }).join('');
 
-    // bind events
+    // Add to cart
     document.querySelectorAll('.add-to-cart').forEach(btn=>{
-      btn.addEventListener('click',e=>{
+      btn.addEventListener('click', e=>{
         const productId = e.currentTarget.dataset.id;
         const p = products.find(x=>x.id===productId);
         if(!p) return;
-        const capacity = document.getElementById(`capacity-${productId}`).value;
-        // coffee extras
+        const cap = document.getElementById(`capacity-${productId}`).value;
         let caffeine='',grind='',type='',usage='';
         if(p.category==='coffee'){
           caffeine = document.querySelector(`input[name="caffeine-${productId}"]:checked`)?.value || 'classic';
@@ -548,18 +648,17 @@
         }else{
           usage = document.getElementById(`usage-${productId}`).value || '';
         }
-        const compositeId = `${productId}-${capacity}-${caffeine}-${grind}-${type}-${usage}`;
-        const price = p.price[capacity] || Object.values(p.price)[0];
+        const compositeId = `${productId}-${cap}-${caffeine}-${grind}-${type}-${usage}`;
+        const price = p.price[cap] || Object.values(p.price)[0];
         const exist = cart.find(i=>i.compositeId===compositeId);
         if(exist){ exist.quantity++; } else {
-          cart.push({...p, compositeId, capacity, caffeine, grind, type, usage, quantity:1, price});
+          cart.push({...p, compositeId, capacity:cap, caffeine, grind, type, usage, quantity:1, price});
         }
-        updateCart();
-        toggleModal(true);
+        updateCart(); toggleModal(true);
       });
     });
 
-    // capacity change -> price refresh
+    // Capacity -> price refresh
     document.querySelectorAll('[id^="capacity-"]').forEach(sel=>{
       const productId = sel.id.replace('capacity-','');
       const product = products.find(pp=>pp.id===productId);
@@ -573,15 +672,40 @@
     });
   }
 
-  /* =====================
-     CART
-  ======================*/
-  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  /* ====== PROMOTIONS ====== */
+  function updatePromotions(){
+    const promoMap = { illy:354.25, guarana:13.50, cynara:11.95 };
+    Object.keys(promoMap).forEach(key=>{
+      const base = promoMap[key];
+      const discounted = base*(1 - (discounts[key]||0)/100);
+      const el = document.getElementById(`price-${key}`);
+      const badge = document.getElementById(`discount-${key}`);
+      if(!el||!badge) return;
+      badge.textContent = `${discounts[key]}% ${translations[currentLanguage]["discount-label"]||"off"}`;
+      el.dataset.price = base.toFixed(2);
+      el.innerHTML = `${(discounted*currencyRates[currentCurrency]).toFixed(2)}${currencySymbol(currentCurrency)} <del>${(base*currencyRates[currentCurrency]).toFixed(2)}${currencySymbol(currentCurrency)}</del>`;
+    });
+  }
+  function updatePromoCurrency(){
+    ["illy","guarana","cynara"].forEach(key=>{
+      const priceEl = document.getElementById(`price-${key}`);
+      if(!priceEl) return;
+      const base = parseFloat(priceEl.dataset.price||"0");
+      const disc = discounts[key]||0;
+      const discounted = base*(1-disc/100);
+      priceEl.innerHTML = `${(discounted * currencyRates[currentCurrency]).toFixed(2)}${currencySymbol(currentCurrency)} <del>${(base * currencyRates[currentCurrency]).toFixed(2)}${currencySymbol(currentCurrency)}</del>`;
+    });
+  }
+
+  /* ====== CART ====== */
+  let cart = JSON.parse(localStorage.getItem('cart')||'[]');
   const cartBtn = document.getElementById('cart-btn');
   const closeCartBtn = document.getElementById('close-cart');
   const cartModal = document.getElementById('cart-modal');
   const cartItems = document.getElementById('cart-items');
-  const cartTotal = document.getElementById('cart-total');
+  const cartSubtotalEl = document.getElementById('cart-subtotal');
+  const cartShippingEl = document.getElementById('cart-shipping');
+  const cartTotalEl = document.getElementById('cart-total');
   const cartCount = document.getElementById('cart-count');
   const confirmBtn = document.getElementById('confirm-btn');
   const firstNameInput = document.getElementById('first-name');
@@ -595,6 +719,8 @@
   const shippingCarrierSelect = document.getElementById('shipping-carrier');
   const shippingMethodSelect = document.getElementById('shipping-method');
   const shippingDetails = document.getElementById('shipping-details');
+  const promoLine = document.getElementById('promo-line');
+  const promoAmountEl = document.getElementById('promo-amount');
 
   const shippingRates = {
     ups:{standard:{price:5.99,days:'10-15'},express:{price:15.99,days:'2-4'},relay:{price:3.99,days:'7-12'}},
@@ -609,21 +735,33 @@
     else { cartModal.classList.remove('open'); document.body.classList.remove('overflow-hidden'); }
     updateShippingOptions();
   }
-
   cartBtn.addEventListener('click',()=>toggleModal());
   closeCartBtn.addEventListener('click',()=>toggleModal());
 
   function saveCart(){ localStorage.setItem('cart', JSON.stringify(cart)); }
+  function userHasWelcomePromo(){ return localStorage.getItem('newsletter_subscribed') === '1'; }
 
   function updateCart(){
     const rate = currencyRates[currentCurrency];
-    const shipCost = parseFloat(shippingDetails.dataset.price||'0');
+    const shipCostBase = parseFloat(shippingDetails.dataset.price||'0');
     const totalItems = cart.reduce((s,i)=>s+i.quantity,0);
-    let subtotal = cart.reduce((s,i)=>s+i.price*i.quantity,0);
-    let total = subtotal + shipCost;
+    const subtotalBase = cart.reduce((s,i)=>s+i.price*i.quantity,0);
+
+    let promoBase = 0;
+    let totalBase = subtotalBase + shipCostBase;
+    if(userHasWelcomePromo()){
+      promoBase = totalBase * 0.15;
+      totalBase -= promoBase;
+      promoLine.classList.remove('hidden');
+      promoAmountEl.textContent = `-${(promoBase*rate).toFixed(2)}${currencySymbol(currentCurrency)}`;
+    }else{
+      promoLine.classList.add('hidden');
+    }
 
     cartCount.textContent = totalItems;
-    cartTotal.textContent = `${(total * rate).toFixed(2)}${currencySymbol(currentCurrency)}`;
+    cartSubtotalEl.textContent = `${(subtotalBase*rate).toFixed(2)}${currencySymbol(currentCurrency)}`;
+    cartShippingEl.textContent = `${(shipCostBase*rate).toFixed(2)}${currencySymbol(currentCurrency)}`;
+    cartTotalEl.textContent = `${(totalBase*rate).toFixed(2)}${currencySymbol(currentCurrency)}`;
 
     if(cart.length===0){
       cartItems.innerHTML = `<p class="text-gray-500 text-center py-4" data-translate="cart-empty">${translations[currentLanguage]["cart-empty"]}</p>`;
@@ -645,8 +783,7 @@
             <span class="mx-1 text-sm">${item.quantity}</span>
             <button class="text-gray-500 hover:text-red-900 px-1" onclick="changeQuantity('${item.compositeId}',1)"><i class="fas fa-plus text-xs"></i></button>
           </div>
-        </div>
-      `).join('');
+        </div>`).join('');
       confirmBtn.disabled = false;
       shippingCarrierSelect.disabled = false;
     }
@@ -662,7 +799,6 @@
     }
   };
 
-  // Shipping
   function updateShippingOptions(){
     const carrier = shippingCarrierSelect.value;
     if(!carrier || !shippingRates[carrier]){
@@ -681,11 +817,10 @@
   }
 
   function applyShipping(carrier, method){
-    const rate = currencyRates[currentCurrency];
     const entry = shippingRates[carrier][method];
     shippingMethodSelect.value = method;
     shippingDetails.dataset.price = entry.price;
-    shippingDetails.textContent = `Price: ${(entry.price * rate).toFixed(2)}${currencySymbol(currentCurrency)} | Delivery: ${entry.days} days`;
+    shippingDetails.textContent = `Price: ${(entry.price * currencyRates[currentCurrency]).toFixed(2)}${currencySymbol(currentCurrency)} | Delivery: ${entry.days} days`;
     updateCart();
   }
 
@@ -696,61 +831,39 @@
     if(carrier && method){ applyShipping(carrier, method); }
   });
 
-  /* =====================
-     NEWSLETTER + CHATBOT (simple UI)
-  ======================*/
-  const newsletterBanner = document.getElementById('newsletter-banner');
-  const newsletterEmail = document.getElementById('newsletter-email');
-  const newsletterSubmit = document.getElementById('newsletter-submit');
-  setTimeout(()=>newsletterBanner.classList.remove('hidden'), 2000);
-  newsletterSubmit.addEventListener('click', ()=>{
-    if(!newsletterEmail.value.includes('@')){ alert('Please enter a valid email'); return; }
-    newsletterBanner.innerHTML = '<p class="text-green-700 font-medium">Thanks! You are subscribed.</p>';
-    setTimeout(()=>newsletterBanner.classList.add('hidden'), 2000);
-  });
-
-  const chatbotToggle = document.getElementById('chatbot-toggle');
-  const chatbotContainer = document.getElementById('chatbot-container');
-  const chatbotInput = document.getElementById('chatbot-input');
-  const chatbotMessages = document.getElementById('chatbot-messages');
-  chatbotToggle.addEventListener('click', ()=> chatbotContainer.classList.toggle('open'));
-  chatbotInput?.addEventListener('keydown', (e)=>{
-    if(e.key==='Enter' && chatbotInput.value.trim()){
-      const msg = chatbotInput.value.trim();
-      chatbotMessages.insertAdjacentHTML('beforeend', `<div class="chat-message user-message">${msg}</div>`);
-      chatbotMessages.insertAdjacentHTML('beforeend', `<div class="chat-message bot-message">Thanks! We will reply soon.</div>`);
-      chatbotInput.value='';
-      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    }
-  });
-
-  /* =====================
-     LANGUAGE & CURRENCY
-  ======================*/
+  /* ====== LANGUAGE & CURRENCY ====== */
+  function translatePage(lang){
+    document.documentElement.lang = lang;
+    document.title = translations[lang]["title"];
+    document.querySelectorAll('[data-translate]').forEach(el=>{
+      const key = el.getAttribute('data-translate'); if(!key) return;
+      const val = translations[lang][key]; if(!val) return;
+      if(el.tagName==='INPUT' || el.tagName==='TEXTAREA') el.placeholder = val;
+      else if(el.hasAttribute('data-preserve-html')) el.innerHTML = val; /* About/Contact conservent le HTML */
+      else el.textContent = val;
+    });
+    document.getElementById('language-select').value = lang;
+  }
   function saveLanguage(lang){
     currentLanguage = lang;
     localStorage.setItem('selectedLanguage', lang);
     translatePage(lang);
     renderProducts(document.querySelector('.category-filter.active')?.dataset.category || 'all');
-    updatePromoCurrency();
-    updateCart();
+    updatePromotions(); updatePromoCurrency(); updateCart();
   }
   function saveCurrency(cur){
     currentCurrency = cur;
     localStorage.setItem('selectedCurrency', cur);
-    // update every price element with data-price baseline
     document.querySelectorAll('[id^="price-"]').forEach(el=>{
-      const base = parseFloat(el.dataset.price||'0');
-      if(!isNaN(base)){ el.textContent = `${(base*currencyRates[cur]).toFixed(2)}${currencySymbol(cur)}`; }
+      const base = parseFloat(el.dataset.price||'');
+      if(!isNaN(base)) el.textContent = `${(base*currencyRates[cur]).toFixed(2)}${currencySymbol(cur)}`;
     });
-    updatePromoCurrency();
-    updateCart();
+    updatePromoCurrency(); updateCart();
   }
-
   document.getElementById('language-select').addEventListener('change', e=> saveLanguage(e.target.value));
   document.getElementById('currency-select').addEventListener('change', e=> saveCurrency(e.target.value));
 
-  // Category filtering
+  // Category filter
   document.querySelectorAll('.category-filter').forEach(btn=>{
     btn.addEventListener('click', e=>{
       document.querySelectorAll('.category-filter').forEach(b=>b.classList.remove('active'));
@@ -759,76 +872,146 @@
     });
   });
 
-  /* =====================
-     CONFIRM ORDER
-  ======================*/
-  function showConfirmationMessage(firstName, lastName, email, address, city, postalCode, country, paymentMethod, total, shipping){
-    const div = document.createElement('div');
-    div.className = 'confirmation-message';
-    div.innerHTML = `<p class="font-bold" data-translate="order-confirmed">${translations[currentLanguage]["order-confirmed"]}</p>
+  /* ====== NEWSLETTER + PROMO WELCOME15 ====== */
+  const newsletterBanner = document.getElementById('newsletter-banner');
+  const newsletterEmail = document.getElementById('newsletter-email');
+  const newsletterSubmit = document.getElementById('newsletter-submit');
+
+  function refreshNewsletterBanner(){
+    if(localStorage.getItem('newsletter_subscribed')==='1'){
+      newsletterBanner.classList.add('hidden');
+    }else{
+      newsletterBanner.classList.remove('hidden');
+    }
+  }
+
+  newsletterSubmit.addEventListener('click', async ()=>{
+    const email = (newsletterEmail.value||'').trim();
+    if(!email || !email.includes('@')){ alert('Email invalide'); return; }
+    try{
+      await fetch('/api/newsletter/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+    }catch(e){/* demo */ }
+    localStorage.setItem('newsletter_subscribed','1');
+    alert('Merci ! Votre code WELCOME15 (-15%) est appliqué automatiquement au panier.');
+    refreshNewsletterBanner();
+    updateCart();
+  });
+
+  /* ====== CONFIRM ORDER ====== */
+  function showConfirmationMessage(firstName, lastName, email, address, city, postalCode, country, paymentMethod){
+    const msg = document.createElement('div');
+    msg.className = 'confirmation-message';
+    msg.innerHTML = `<p class="font-bold">${translations[currentLanguage]["order-confirmed"]}</p>
       <p>${translations[currentLanguage]["client-label"]}${firstName} ${lastName}</p>
       <p>${translations[currentLanguage]["email-label"]} ${email}</p>
       <p>${translations[currentLanguage]["address-label"]} ${address}, ${city}, ${postalCode}, ${country}</p>
-      <p>${translations[currentLanguage]["payment-method-label"]}${paymentMethod}</p>
-      <p>${translations[currentLanguage]["shipping-label"]}${shipping.carrier} - ${shipping.method} (${shipping.price}${currencySymbol(currentCurrency)}, ${shipping.days} days)</p>
-      <p>${translations[currentLanguage]["total-label"]}: ${total.toFixed(2)}${currencySymbol(currentCurrency)}</p>
-      <p class="font-bold mt-2" data-translate="thank-you">${translations[currentLanguage]["thank-you"]}</p>`;
-    document.body.appendChild(div);
-    setTimeout(()=>div.remove(), 6000);
+      <p>${translations[currentLanguage]["payment-method-label"]}${paymentMethod}</p>`;
+    document.body.appendChild(msg);
+    setTimeout(()=>msg.remove(), 6000);
   }
 
   document.getElementById('confirm-btn').addEventListener('click', ()=>{
-    if(cart.length===0){ alert(translations[currentLanguage]["cart-empty"]); return; }
+    if (cart.length === 0) { 
+      alert(translations[currentLanguage]["cart-empty"]); 
+      return; 
+    }
     const firstName = firstNameInput.value.trim();
-    const lastName = lastNameInput.value.trim();
-    const email = emailInput.value.trim();
-    const address = addressInput.value.trim();
-    const city = cityInput.value.trim();
-    const postal = postalCodeInput.value.trim();
-    const country = countrySelect.value.trim();
-    const carrier = shippingCarrierSelect.value;
-    const method = shippingMethodSelect.value;
-    const pay = paymentSelect.value;
+    const lastName  = lastNameInput.value.trim();
+    const email     = emailInput.value.trim();
+    const address   = addressInput.value.trim();
+    const city      = cityInput.value.trim();
+    const postal    = postalCodeInput.value.trim();
+    const country   = countrySelect.value.trim();
+    const carrier   = shippingCarrierSelect.value;
+    const method    = shippingMethodSelect.value;
+    const pay       = paymentSelect.value;
 
     if(!firstName || !lastName || !email.includes('@') || !address || !city || !postal || !country || !carrier || !method){
       alert('Please complete all required fields (shipping + contact).');
       return;
     }
-    const shipBase = parseFloat(shippingDetails.dataset.price||'0');
-    const subtotal = cart.reduce((s,i)=>s+i.price*i.quantity,0);
-    const total = (subtotal + shipBase) * currencyRates[currentCurrency];
 
-    showConfirmationMessage(firstName,lastName,email,address,city,postal,country,
-      pay.toUpperCase(), total, {
-        carrier: carrier[0].toUpperCase()+carrier.slice(1),
-        method: method[0].toUpperCase()+method.slice(1),
-        price: (shipBase * currencyRates[currentCurrency]).toFixed(2),
-        days: shippingRates[carrier][method].days
-      });
+    const shipBase     = parseFloat(shippingDetails.dataset.price || '0');
+    const subtotalBase = cart.reduce((s,i)=>s + i.price * i.quantity, 0);
+    let totalBase      = subtotalBase + shipBase;
+
+    const hasWelcomePromo = (localStorage.getItem('newsletter_subscribed') === '1');
+    if (hasWelcomePromo) totalBase *= 0.85;
+
+    const rate = currencyRates[currentCurrency];
+    const totalDisplay = (totalBase * rate).toFixed(2);
+
+    const div = document.createElement('div');
+    div.className = 'fixed top-4 right-4 bg-green-600 text-white px-4 py-3 rounded shadow';
+    div.innerHTML = `
+      <strong>${translations[currentLanguage]["order-confirmed"]}</strong><br>
+      ${translations[currentLanguage]["client-label"]}${firstName} ${lastName}<br>
+      ${translations[currentLanguage]["email-label"]} ${email}<br>
+      ${translations[currentLanguage]["address-label"]} ${address}, ${city}, ${postal}, ${country}<br>
+      ${translations[currentLanguage]["payment-method-label"]}${pay.toUpperCase()}<br>
+      ${translations[currentLanguage]["total-label"]}: ${totalDisplay}${currencySymbol(currentCurrency)}
+    `;
+    document.body.appendChild(div);
+    setTimeout(()=>div.remove(), 6000);
 
     cart = [];
-    saveCart();
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCart();
-    // reset form
-    ['first-name','last-name','email','address','city','postal-code'].forEach(id=>document.getElementById(id).value='');
+
+    ['first-name','last-name','email','address','city','postal-code'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.value = '';
+    });
     countrySelect.value = '';
-    shippingCarrierSelect.value='';
-    updateShippingOptions();
+    shippingCarrierSelect.value = '';
+    shippingMethodSelect.innerHTML = `<option value="">${translations[currentLanguage]["method-placeholder"]}</option>`;
+    shippingMethodSelect.disabled = true;
+    shippingDetails.textContent = translations[currentLanguage]["shipping-details"];
+    shippingDetails.dataset.price = 0;
+
+    if (cartModal.classList.contains('open')) {
+      cartModal.classList.remove('open');
+      document.body.classList.remove('overflow-hidden');
+    }
   });
 
-  /* =====================
-     INIT
-  ======================*/
-  document.addEventListener('DOMContentLoaded', ()=>{
-    translatePage(currentLanguage);
-    document.getElementById('language-select').value = currentLanguage;
-    document.getElementById('currency-select').value = currentCurrency;
-    renderProducts('all');
-    updatePromotions();
-    updatePromoCurrency();
-    updateCart();
-  });
+  /* ====== INIT (fixe la langue AU CHARGEMENT pour About/Contact) ====== */
+  (function initOnce(){
+    try {
+      document.querySelectorAll('.category-filter').forEach(btn=>{
+        btn.addEventListener('click', e=>{
+          document.querySelectorAll('.category-filter').forEach(b=>b.classList.remove('active'));
+          e.currentTarget.classList.add('active');
+          renderProducts(e.currentTarget.dataset.category);
+        });
+      });
+
+      const langSel = document.getElementById('language-select');
+      const curSel  = document.getElementById('currency-select');
+      if (langSel) langSel.value = currentLanguage;
+      if (curSel)  curSel.value  = currentCurrency;
+
+      /* >>> Application immédiate des traductions
+      /* >>> Application immédiate des traductions */
+      translatePage(currentLanguage);          // Applique la langue aux sections statiques (About/Contact inclus)
+      renderProducts('all');                   // Affiche les produits (avec traductions dynamiques)
+      updatePromotions();                      // Calcule et affiche les promos
+      updatePromoCurrency();                   // Ajuste les montants promos à la devise
+      refreshNewsletterBanner();               // Affiche/masque la bannière newsletter
+      updateCart();                            // Calcule le panier (devise, remise WELCOME15, etc.)
+
+      // FAQ: toggle open/close
+      document.querySelectorAll('#faq .faq-item > button').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const item = btn.closest('.faq-item');
+          item.classList.toggle('open');
+        });
+      });
+
+    } catch(e) {
+      console.error('Init error:', e);
+    }
+  })();
   </script>
 </body>
 </html>
-""")
