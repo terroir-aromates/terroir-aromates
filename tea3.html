@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Guarana - Guaraní Finest Brew</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,30 +11,14 @@
         .product-image { max-width: 100%; height: auto; border-radius: 0.5rem; }
         .product-card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
         .product-card:hover { transform: translateY(-5px); }
-        .language-select, .currency-select {
-            display: inline-block;
-            margin-left: 0.5rem;
-            padding: 0.3rem 0.8rem;
-            background-color: #fff;
-            border: 1px solid #d1d5db;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            font-size: 0.9rem;
+        .language-select{
+            display:inline-block;margin-left:.5rem;padding:.3rem .8rem;background:#fff;border:1px solid #d1d5db;border-radius:.25rem;cursor:pointer;font-size:.9rem;
         }
-        header nav a {
-            font-size: 0.9rem;
-        }
-        header .flex {
-            align-items: center;
-        }
-        @media (max-width: 768px) {
-            header .flex {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .language-select, .currency-select {
-                margin: 0.5rem 0;
-            }
+        header nav a { font-size:.9rem; }
+        header .flex { align-items:center; }
+        @media (max-width:768px){
+            header .flex{flex-direction:column;align-items:flex-start}
+            .language-select{margin:.5rem 0}
         }
     </style>
 </head>
@@ -49,26 +33,25 @@
                 <a href="/#contact" class="text-gray-700 hover:text-red-800" data-translate="contact">Contact</a>
                 <a href="/#promotions" class="text-gray-700 hover:text-red-800" data-translate="promotions">Promotions</a>
             </nav>
-            <div class="flex space-x-4 items-center">
-                <select id="language-select" class="language-select">
+            <div class="flex items-center">
+                <select id="language-select" class="language-select" aria-label="Select language">
                     <option value="en" selected>English</option>
                     <option value="fr">Français</option>
                     <option value="es">Español</option>
                 </select>
-                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition" data-translate="login">Log In</a>
-                <button id="cart-btn" class="relative">
-                    <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                </button>
+                <a href="/login.html" class="ml-3 bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition" data-translate="login">Log In</a>
+                <!-- Panier supprimé -->
             </div>
         </div>
     </header>
+
     <section class="hero flex items-center justify-center">
         <div class="text-center px-4">
             <h2 class="text-3xl font-bold text-red-800 mb-4" data-translate="product-title">Guarana</h2>
             <p class="text-gray-600 mb-4" data-translate="product-desc">Energy support, cognitive performance.</p>
         </div>
     </section>
+
     <section id="product-detail" class="py-12 bg-white">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row gap-6">
@@ -97,29 +80,19 @@
             </div>
         </div>
     </section>
+
     <footer class="bg-red-800 text-white py-6">
         <div class="container mx-auto px-4 text-center">
             <p data-translate="footer-text">© 2025 Guaraní Finest Brew. All rights reserved.</p>
         </div>
     </footer>
-    <script>
-        const products = [
-            { id: 'tea3', name: 'Guarana', category: 'tea', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp', description: 'Energy support, cognitive performance.' }
-        ];
-        let cart = [];
-        const cartBtn = document.getElementById('cart-btn');
-        const cartCount = document.getElementById('cart-count');
 
+    <script>
+        // --- Dictionnaire de traductions ---
         const translations = {
             en: {
-                "home": "Home",
-                "products": "Products",
-                "about": "About",
-                "contact": "Contact",
-                "promotions": "Promotions",
-                "login": "Log In",
-                "product-title": "Guarana",
-                "product-desc": "Energy support, cognitive performance.",
+                "home": "Home","products": "Products","about": "About","contact": "Contact","promotions": "Promotions","login": "Log In",
+                "product-title": "Guarana","product-desc": "Energy support, cognitive performance.",
                 "description-title": "Description",
                 "description-text1": "Originating from the Brazilian Amazon, guarana is a shrub whose seeds are prized for their stimulating properties. In this article, we invite you to discover the multiple health benefits of guarana.",
                 "description-text2": "We will explore the various ways in which guarana consumption can improve cognitive performance and provide energy support thanks to its unique properties.",
@@ -128,20 +101,13 @@
                 "description-text5": "Amazonian Indigenous peoples harvested the seeds, roasting or drying them in the sun. After removing the husks, they obtained a paste by peeling the seeds, which was kneaded and rolled into sticks intended to be stored above a fire for several months.",
                 "description-text6": "To consume guarana, it was enough to grate this stick over a container and make a drink. This practice was particularly valued during times of scarcity, as the drink was known to reduce hunger and provide energy.",
                 "description-text7": "Indigenous peoples were pioneers in discovering the exceptional properties of guarana. Their uses date back to pre-Columbian times, where this plant was revered not only for its energizing virtues but also for its aphrodisiac effects. Deeply rooted in their culture, it symbolized a gift from the earth, capable of revitalizing both body and mind.",
-                "type-title": "Type",
-                "type-text": "Energizing",
+                "type-title": "Type","type-text": "Energizing",
                 "back-to-products": "Back to Products",
                 "footer-text": "© 2025 Guaraní Finest Brew. All rights reserved."
             },
             fr: {
-                "home": "Accueil",
-                "products": "Produits",
-                "about": "À propos",
-                "contact": "Contact",
-                "promotions": "Promotions",
-                "login": "Se connecter",
-                "product-title": "Guarana",
-                "product-desc": "Soutien énergétique, performances cognitives.",
+                "home": "Accueil","products": "Produits","about": "À propos","contact": "Contact","promotions": "Promotions","login": "Se connecter",
+                "product-title": "Guarana","product-desc": "Soutien énergétique, performances cognitives.",
                 "description-title": "Description",
                 "description-text1": "Originaire de l’Amazonie brésilienne, le guarana est un arbuste dont les graines sont prisées pour leurs propriétés stimulantes. Dans cet article, nous vous invitons à découvrir les multiples bienfaits du guarana sur la santé.",
                 "description-text2": "Nous aborderons les différentes façons dont la consommation de guarana peut améliorer les performances cognitives et offrir un soutien énergétique grâce à ses propriétés uniques.",
@@ -150,20 +116,13 @@
                 "description-text5": "Les Amérindiens d’Amazonie récoltaient les graines qu’ils torréfiaient ou séchaient au soleil. Une fois les écorces retirées, ils obtenaient une pâte après avoir décortiqué les graines, laquelle était malaxée puis roulée en bâton prévu pour être conservé au-dessus d’un feu pendant plusieurs mois.",
                 "description-text6": "Pour consommer le guarana, il suffisait de râper ce bâton au-dessus d’un récipient et d’en faire une boisson. Cette pratique était particulièrement valorisée dans les périodes de disette, car la boisson était réputée pour atténuer la sensation de faim et fournir de l’énergie.",
                 "description-text7": "Les peuples amérindiens ont été les pionniers dans la découverte des propriétés exceptionnelles du guarana. Leurs usages remontent à l’époque précolombienne, où cette plante était vénérée non seulement pour ses vertus énergisantes, mais aussi pour son effet aphrodisiaque. Enracinée profondément dans leur culture, elle symbolisait un don de la terre, capable de revigorer le corps et l’esprit.",
-                "type-title": "Type",
-                "type-text": "Énergisant",
+                "type-title": "Type","type-text": "Énergisant",
                 "back-to-products": "Retour aux produits",
                 "footer-text": "© 2025 Guaraní Finest Brew. Tous droits réservés."
             },
             es: {
-                "home": "Inicio",
-                "products": "Productos",
-                "about": "Acerca de",
-                "contact": "Contacto",
-                "promotions": "Promociones",
-                "login": "Iniciar sesión",
-                "product-title": "Guaraná",
-                "product-desc": "Apoyo energético, rendimiento cognitivo.",
+                "home": "Inicio","products": "Productos","about": "Acerca de","contact": "Contacto","promotions": "Promociones","login": "Iniciar sesión",
+                "product-title": "Guaraná","product-desc": "Apoyo energético, rendimiento cognitivo.",
                 "description-title": "Descripción",
                 "description-text1": "Originario de la Amazonía brasileña, el guaraná es un arbusto cuyas semillas son valoradas por sus propiedades estimulantes. En este artículo, te invitamos a descubrir los múltiples beneficios del guaraná para la salud.",
                 "description-text2": "Exploraremos las diversas maneras en que el consumo de guaraná puede mejorar el rendimiento cognitivo y ofrecer apoyo energético gracias a sus propiedades únicas.",
@@ -172,39 +131,38 @@
                 "description-text5": "Los pueblos indígenas de la Amazonía recolectaban las semillas, tostándolas o secándolas al sol. Tras retirar las cáscaras, obtenían una pasta pelando las semillas, que era amasada y moldeada en palos destinados a almacenarse sobre un fuego durante varios meses.",
                 "description-text6": "Para consumir el guaraná, bastaba con rallar este palo sobre un recipiente y preparar una bebida. Esta práctica era especialmente valorada en tiempos de escasez, ya que la bebida era conocida por reducir el hambre y proporcionar energía.",
                 "description-text7": "Los pueblos indígenas fueron pioneros en descubrir las propiedades excepcionales del guaraná. Sus usos se remontan a la época precolombina, donde esta planta era venerada no solo por sus virtudes energizantes, sino también por sus efectos afrodisíacos. Profundamente arraigada en su cultura, simbolizaba un regalo de la tierra, capaz de revitalizar cuerpo y mente.",
-                "type-title": "Tipo",
-                "type-text": "Energizante",
+                "type-title": "Tipo","type-text": "Energizante",
                 "back-to-products": "Volver a productos",
                 "footer-text": "© 2025 Guaraní Finest Brew. Todos los derechos reservados."
             }
         };
 
-        let currentLanguage = 'en';
-
-        function translatePage(lang) {
-            currentLanguage = lang;
+        // --- Traduction + persistance ---
+        function translatePage(lang){
             document.documentElement.lang = lang;
             document.title = `${translations[lang]["product-title"]} - Guaraní Finest Brew`;
-            document.querySelectorAll('[data-translate]').forEach(element => {
-                const key = element.getAttribute('data-translate');
-                if (translations[lang][key]) {
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = translations[lang][key];
-                    } else {
-                        element.textContent = translations[lang][key];
-                    }
-                }
+            document.querySelectorAll('[data-translate]').forEach(el=>{
+                const key = el.getAttribute('data-translate');
+                const val = translations[lang][key];
+                if(!val) return;
+                if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA'){ el.placeholder = val; }
+                else { el.textContent = val; }
             });
         }
 
-        document.getElementById('language-select').addEventListener('change', (e) => {
-            translatePage(e.target.value);
+        document.addEventListener('DOMContentLoaded', ()=>{
+            // Lire la langue mémorisée sur le site (depuis l’index)
+            const saved = localStorage.getItem('selectedLanguage') || 'en';
+            const select = document.getElementById('language-select');
+            select.value = saved;
+            translatePage(saved);
         });
 
-        window.onload = () => translatePage('en');
-
-        // Logique d'ajout au panier (à implémenter si nécessaire)
-        // Note : Cette section est laissée vide car le panier semble géré dans index.html
+        document.getElementById('language-select').addEventListener('change', (e)=>{
+            const lang = e.target.value;
+            localStorage.setItem('selectedLanguage', lang);
+            translatePage(lang);
+        });
     </script>
 </body>
 </html>
