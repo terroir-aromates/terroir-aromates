@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Green Maté - Guaraní Finest Brew</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,30 +11,14 @@
         .product-image { max-width: 100%; height: auto; border-radius: 0.5rem; }
         .product-card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s; }
         .product-card:hover { transform: translateY(-5px); }
-        .language-select, .currency-select {
-            display: inline-block;
-            margin-left: 0.5rem;
-            padding: 0.3rem 0.8rem;
-            background-color: #fff;
-            border: 1px solid #d1d5db;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            font-size: 0.9rem;
+        .language-select{
+            display:inline-block;margin-left:.5rem;padding:.3rem .8rem;background:#fff;border:1px solid #d1d5db;border-radius:.25rem;cursor:pointer;font-size:.9rem;
         }
-        header nav a {
-            font-size: 0.9rem;
-        }
-        header .flex {
-            align-items: center;
-        }
-        @media (max-width: 768px) {
-            header .flex {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .language-select, .currency-select {
-                margin: 0.5rem 0;
-            }
+        header nav a { font-size:.9rem; }
+        header .flex { align-items:center; }
+        @media (max-width:768px){
+            header .flex{flex-direction:column;align-items:flex-start}
+            .language-select{margin:.5rem 0}
         }
     </style>
 </head>
@@ -49,26 +33,25 @@
                 <a href="/#contact" class="text-gray-700 hover:text-red-800" data-translate="contact">Contact</a>
                 <a href="/#promotions" class="text-gray-700 hover:text-red-800" data-translate="promotions">Promotions</a>
             </nav>
-            <div class="flex space-x-4 items-center">
-                <select id="language-select" class="language-select">
+            <div class="flex items-center">
+                <select id="language-select" class="language-select" aria-label="Select language">
                     <option value="en" selected>English</option>
                     <option value="fr">Français</option>
                     <option value="es">Español</option>
                 </select>
-                <a href="/login.html" class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition" data-translate="login">Log In</a>
-                <button id="cart-btn" class="relative">
-                    <i class="fas fa-shopping-cart text-xl text-gray-700 hover:text-red-800"></i>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-800 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                </button>
+                <a href="/login.html" class="ml-3 bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-full transition" data-translate="login">Log In</a>
+                <!-- Panier supprimé -->
             </div>
         </div>
     </header>
+
     <section class="hero flex items-center justify-center">
         <div class="text-center px-4">
             <h2 class="text-3xl font-bold text-red-800 mb-4" data-translate="product-title">Green Maté</h2>
             <p class="text-gray-600 mb-4" data-translate="product-desc">Between green tea and coffee.</p>
         </div>
     </section>
+
     <section id="product-detail" class="py-12 bg-white">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row gap-6">
@@ -94,105 +77,81 @@
             </div>
         </div>
     </section>
+
     <footer class="bg-red-800 text-white py-6">
         <div class="container mx-auto px-4 text-center">
             <p data-translate="footer-text">© 2025 Guaraní Finest Brew. All rights reserved.</p>
         </div>
     </footer>
-    <script>
-        const products = [
-            { id: 'tea1', name: 'Green Maté', category: 'tea', image: 'https://res.cloudinary.com/dweom4cyp/image/upload/v1753962586/mat%C3%A9_vert_ccnjeu.jpg', description: 'Between green tea and coffee.' }
-        ];
-        let cart = [];
-        const cartBtn = document.getElementById('cart-btn');
-        const cartCount = document.getElementById('cart-count');
 
+    <script>
+        // --- Dictionnaire de traductions ---
         const translations = {
             en: {
-                "home": "Home",
-                "products": "Products",
-                "about": "About",
-                "contact": "Contact",
-                "promotions": "Promotions",
-                "login": "Log In",
-                "product-title": "Green Maté",
-                "product-desc": "Between green tea and coffee.",
+                "home": "Home","products": "Products","about": "About","contact": "Contact","promotions": "Promotions","login": "Log In",
+                "product-title": "Green Maté","product-desc": "Between green tea and coffee.",
                 "description-title": "Description",
                 "description-text1": "An excellent green maté, the Original Maté is our flagship product, a green maté that appeals to both those discovering maté and the greatest enthusiasts of this beverage.",
                 "description-text2": "Each sip reveals a taste halfway between green tea and coffee, perfectly balanced, immersing you in the heart of South American rituals.",
                 "description-text3": "No frills, just the pure essence of maté. Natural, balanced, and deeply rooted in tradition. It’s the ideal companion for those seeking a natural and powerful drink, perfect for starting the day with energy and mental clarity.",
                 "description-text4": "Our matés are certified 100% natural and free from artificial flavors.",
-                "type-title": "Type",
-                "type-text": "Green",
+                "type-title": "Type","type-text": "Green",
                 "back-to-products": "Back to Products",
                 "footer-text": "© 2025 Guaraní Finest Brew. All rights reserved."
             },
             fr: {
-                "home": "Accueil",
-                "products": "Produits",
-                "about": "À propos",
-                "contact": "Contact",
-                "promotions": "Promotions",
-                "login": "Se connecter",
-                "product-title": "Maté Vert",
-                "product-desc": "Entre le thé vert et le café.",
+                "home": "Accueil","products": "Produits","about": "À propos","contact": "Contact","promotions": "Promotions","login": "Se connecter",
+                "product-title": "Maté Vert","product-desc": "Entre le thé vert et le café.",
                 "description-title": "Description",
                 "description-text1": "Maté vert d’excellence, le Maté Original est notre produit phare, un maté vert qui plaît autant à ceux qui découvrent le maté qu’aux plus grands amateurs de cette boisson.",
                 "description-text2": "Chaque gorgée révèle un goût à mi-chemin entre le thé vert et le café, parfaitement équilibré, qui vous plonge au cœur des rituels sud-américains.",
                 "description-text3": "Sans fioritures, juste l’essence même du maté. Naturel, équilibré et profondément enraciné dans la tradition. C’est le compagnon idéal pour ceux qui cherchent une boisson naturelle et puissante, idéale pour démarrer la journée avec énergie et clarté d’esprit.",
                 "description-text4": "Nos matés sont certifié 100% naturel et sans arômes artificiels.",
-                "type-title": "Type",
-                "type-text": "Vert",
+                "type-title": "Type","type-text": "Vert",
                 "back-to-products": "Retour aux produits",
                 "footer-text": "© 2025 Guaraní Finest Brew. Tous droits réservés."
             },
             es: {
-                "home": "Inicio",
-                "products": "Productos",
-                "about": "Acerca de",
-                "contact": "Contacto",
-                "promotions": "Promociones",
-                "login": "Iniciar sesión",
-                "product-title": "Maté Verde",
-                "product-desc": "Entre té verde y café.",
+                "home": "Inicio","products": "Productos","about": "Acerca de","contact": "Contacto","promotions": "Promociones","login": "Iniciar sesión",
+                "product-title": "Maté Verde","product-desc": "Entre té verde y café.",
                 "description-title": "Descripción",
                 "description-text1": "Un maté verde de excelencia, el Maté Original es nuestro producto estrella, un maté verde que atrae tanto a quienes descubren el maté como a los mayores entusiastas de esta bebida.",
                 "description-text2": "Cada sorbo revela un sabor a medio camino entre el té verde y el café, perfectamente equilibrado, que te sumerge en el corazón de los rituales sudamericanos.",
                 "description-text3": "Sin adornos, solo la esencia pura del maté. Natural, equilibrado y profundamente arraigado en la tradición. Es el compañero ideal para quienes buscan una bebida natural y poderosa, perfecta para comenzar el día con energía y claridad mental.",
                 "description-text4": "Nuestros matés están certificados 100% naturales y libres de sabores artificiales.",
-                "type-title": "Tipo",
-                "type-text": "Verde",
+                "type-title": "Tipo","type-text": "Verde",
                 "back-to-products": "Volver a productos",
                 "footer-text": "© 2025 Guaraní Finest Brew. Todos los derechos reservados."
             }
         };
 
-        let currentLanguage = 'en';
-
-        function translatePage(lang) {
-            currentLanguage = lang;
+        // --- Traduction + persistance ---
+        function translatePage(lang){
             document.documentElement.lang = lang;
             document.title = `${translations[lang]["product-title"]} - Guaraní Finest Brew`;
-            document.querySelectorAll('[data-translate]').forEach(element => {
-                const key = element.getAttribute('data-translate');
-                if (translations[lang][key]) {
-                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                        element.placeholder = translations[lang][key];
-                    } else {
-                        element.textContent = translations[lang][key];
-                    }
-                }
+            document.querySelectorAll('[data-translate]').forEach(el=>{
+                const key = el.getAttribute('data-translate');
+                const val = translations[lang][key];
+                if(!val) return;
+                if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA'){ el.placeholder = val; }
+                else { el.textContent = val; }
             });
         }
 
-        document.getElementById('language-select').addEventListener('change', (e) => {
-            translatePage(e.target.value);
+        document.addEventListener('DOMContentLoaded', ()=>{
+            // Lire la langue mémorisée, sinon garder celle du <html> ou 'en'
+            const saved = localStorage.getItem('selectedLanguage');
+            const initial = saved || document.documentElement.lang || 'en';
+            const select = document.getElementById('language-select');
+            select.value = initial;
+            translatePage(initial);
         });
 
-        window.onload = () => translatePage('en');
-
-        // Logique d'ajout au panier (à implémenter si nécessaire)
-        // Note : Cette section est laissée vide car le panier semble géré dans index.html
+        document.getElementById('language-select').addEventListener('change', (e)=>{
+            const lang = e.target.value;
+            localStorage.setItem('selectedLanguage', lang);
+            translatePage(lang);
+        });
     </script>
 </body>
 </html>
