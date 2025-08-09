@@ -85,7 +85,7 @@
       <h2 class="text-2xl font-bold text-center text-red-800 mb-8" data-translate="promotions-title">Promotions</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="product-card bg-white rounded-lg shadow-md">
-          <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753896691/Illy%20Cafe%20Classic.jpg" alt="Illy Cafe Classic" class="w-full h-48 object-cover rounded-t-lg">
+          <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754733356/guarani_illy_clasico_800x800_k7qzjd.webp" alt="Illy Cafe Classic" class="w-full aspect-square object-cover rounded-t-lg">
           <div class="p-4">
             <h3 class="text-lg font-semibold" data-translate="illy-name">Illy Cafe Classic</h3>
             <p class="text-gray-600 text-sm mb-2" data-translate="illy-desc">100% Arabica Brazil</p>
@@ -94,7 +94,7 @@
           </div>
         </div>
         <div class="product-card bg-white rounded-lg shadow-md">
-          <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp" alt="Guarana" class="w-full h-48 object-cover rounded-t-lg">
+          <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754737688/guarani_guarana_800x800_kdsygf.webp" alt="Guarana" class="w-full aspect-square object-cover rounded-t-lg">
           <div class="p-4">
             <h3 class="text-lg font-semibold" data-translate="guarana-name">Guarana</h3>
             <p class="text-gray-600 text-sm mb-2" data-translate="guarana-desc">Energy support, cognitive performance</p>
@@ -103,7 +103,7 @@
           </div>
         </div>
         <div class="product-card bg-white rounded-lg shadow-md">
-          <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754049551/Huile_cynara_ykxtvq.png" alt="Cynara Oil" class="w-full h-48 object-cover rounded-t-lg">
+          <img src="https://res.cloudinary.com/dweom4cyp/image/upload/v1754738787/guarani_aceite_cynara_800x800_qxodqm.webp" alt="Cynara Oil" class="w-full aspect-square object-cover rounded-t-lg">
           <div class="p-4">
             <h3 class="text-lg font-semibold" data-translate="cynara-name">Cynara Oil</h3>
             <p class="text-gray-600 text-sm mb-2" data-translate="cynara-desc">Antioxidant and detoxifying.</p>
@@ -605,18 +605,18 @@
 
   /* ====== PRODUCTS ====== */
   const products = [
-    {id:'coffee1',name:'Veracruzano Premium Export',price:{'250g':88.24,'500g':177.12,'1kg':356.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896069/caf%C3%A9%20de%20Veracruz.jpg',description:'Floral and citrus notes.'},
-    {id:'coffee2',name:'Colombian Supremo Coffee',price:{'250g':188.50,'500g':354.00,'1kg':690.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753886877/coffee-colombian_up6quo.jpg',description:'Chocolate and hazelnut aromas.'},
-    {id:'coffee3',name:'Illy Cafe Classic',price:{'250g':301.11,'500g':602.23,'1kg':1186.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896691/Illy%20Cafe%20Classic.jpg',description:'100% Arabica Brazil'},
-    {id:'coffee4',name:'Época Coffee',price:{'250g':149.71,'500g':299.42,'1kg':598.84},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753896079/coffee-epoca.jpg',description:'Notes of tropical fruit, chocolate, and nuts.'},
-    {id:'tea1',name:'Green Maté',price:{'100g':11.60,'200g':22.40,'500g':52.70},category:'tea',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753962586/mat%C3%A9_vert_ccnjeu.jpg',description:'Between green tea and coffee'},
-    {id:'tea2',name:'Classic Maté',price:{'100g':11.30,'200g':22.15,'500g':52.00},category:'tea',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753962575/mat%C3%A9_clsssico_lgyzud.jpg',description:'A maté with vegetal and mineral notes, with smoky nuances'},
-    {id:'tea3',name:'Guarana',price:{'100g':12.15,'200g':23.40,'500g':54.00},category:'tea',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1753961202/guarana-bio.webp',description:'Energy support, cognitive performance'},
-    {id:'oil1',name:'Palo Santo',price:{'10ml':42.90,'30ml':71.80,'50ml':128.30},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754046769/palo-santo_juw6dl.webp',description:'Anti-inflammatory.'},
-    {id:'oil2',name:'Pink Berries',price:{'10ml':9.90,'30ml':26.60,'50ml':39.60},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754048586/huile-essentielle-de-baies-roses_duj4a0.png',description:'Energizing.'},
-    {id:'oil3',name:'Cynara Oil',price:{'10ml':10.99,'30ml':22.73,'50ml':34.22},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754049551/Huile_cynara_ykxtvq.png',description:'Antioxidant and detoxifying.'},
-    {id:'oil4',name:'Melissa Oil',price:{'10ml':33.71,'30ml':65.40,'50ml':96.90},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754050805/huile-essentielle-de-melisse_yfgwna.png',description:'Sedative and soothes nervous tension.'},
-    {id:'oil5',name:'Lime Oil',price:{'10ml':3.45,'30ml':8.95,'50ml':14.90},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754051938/huile_limette_vvgech.webp',description:'Anti-inflammatory, antispasmodic.'}
+    {id:'coffee1',name:'Veracruzano Premium Export',price:{'250g':88.24,'500g':177.12,'1kg':356.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754733356/guarani_veracruzano_800x800_klcc3a.webp',description:'Floral and citrus notes.'},
+    {id:'coffee2',name:'Colombian Supremo Coffee',price:{'250g':188.50,'500g':354.00,'1kg':690.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754733356/guarani_supremocolombiano_800x800_akcorz.webp',description:'Chocolate and hazelnut aromas.'},
+    {id:'coffee3',name:'Illy Cafe Classic',price:{'250g':301.11,'500g':602.23,'1kg':1186.00},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754733356/guarani_illy_clasico_800x800_k7qzjd.webp',description:'100% Arabica Brazil'},
+    {id:'coffee4',name:'Época Coffee',price:{'250g':149.71,'500g':299.42,'1kg':598.84},category:'coffee',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754733356/guarani_cafe_epoca_800x800_rdtbm2.webp',description:'Notes of tropical fruit, chocolate, and nuts.'},
+    {id:'tea1',name:'Green Maté',price:{'100g':11.60,'200g':22.40,'500g':52.70},category:'tea',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754737688/guarani_mate_verde_premium_800x800_mniids.webp',description:'Between green tea and coffee'},
+    {id:'tea2',name:'Classic Maté',price:{'100g':11.30,'200g':22.15,'500g':52.00},category:'tea',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754737688/guarani_mate_clasico_800x800_pityc8.webp',description:'A maté with vegetal and mineral notes, with smoky nuances'},
+    {id:'tea3',name:'Guarana',price:{'100g':12.15,'200g':23.40,'500g':54.00},category:'tea',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754737688/guarani_guarana_800x800_kdsygf.webp',description:'Energy support, cognitive performance'},
+    {id:'oil1',name:'Palo Santo',price:{'10ml':42.90,'30ml':71.80,'50ml':128.30},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754740131/guarani_aceite_palo_santo_800x800_j4jj2a.webp',description:'Anti-inflammatory.'},
+    {id:'oil2',name:'Pink Berries',price:{'10ml':9.90,'30ml':26.60,'50ml':39.60},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754740131/guarani_aceite_bayas_rosadas_800x800_tuhbu2.webp',description:'Energizing.'},
+    {id:'oil3',name:'Cynara Oil',price:{'10ml':10.99,'30ml':22.73,'50ml':34.22},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754738787/guarani_aceite_cynara_800x800_qxodqm.webp',description:'Antioxidant and detoxifying.'},
+    {id:'oil4',name:'Melissa Oil',price:{'10ml':33.71,'30ml':65.40,'50ml':96.90},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754740131/guarani_aceite_melisa_800x800_v5wtuz.webp',description:'Sedative and soothes nervous tension.'},
+    {id:'oil5',name:'Lime Oil',price:{'10ml':3.45,'30ml':8.95,'50ml':14.90},category:'oil',image:'https://res.cloudinary.com/dweom4cyp/image/upload/v1754740430/guarani_aceite_lima_800x800_jtf6wi.webp',description:'Anti-inflammatory, antispasmodic.'}
   ];
 
   /* ====== RENDER PRODUCTS ====== */
@@ -628,7 +628,7 @@
       const base = p.price[firstKey];
       return `
       <div class="product-card bg-white rounded-lg shadow-md transition">
-        <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover rounded-t-lg">
+        <img src="${p.image}" alt="${p.name}" class="w-full aspect-square object-cover rounded-t-lg">
         <div class="p-4">
           <h3 class="text-lg font-semibold" data-translate="${p.id==='coffee1'?'veracruzano-name':p.id+'-name'}">${(translations[currentLanguage][p.id==='coffee1'?'veracruzano-name':p.id+'-name'])||p.name}</h3>
           <p class="text-gray-600 text-sm mb-2" data-translate="${p.id==='coffee1'?'veracruzano-desc':p.id+'-desc'}">${(translations[currentLanguage][p.id==='coffee1'?'veracruzano-desc':p.id+'-desc'])||p.description}</p>
